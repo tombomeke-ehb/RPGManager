@@ -8,13 +8,11 @@ namespace RPGManager
         {
             Console.WriteLine("Welcome to my RPGManager");
 
-            Character character = new Character(56);
+            Character character = new("Tom", 100, DateTime.Now, 1);
 
-            Console.WriteLine(character);
+            character.Heal(10);
 
-            character.Heal(20);
-            Console.WriteLine(character);
-            character.Damage(50);
+            character.Damage(20);
         }
     }
 }
