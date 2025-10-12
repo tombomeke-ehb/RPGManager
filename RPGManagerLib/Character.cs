@@ -1,8 +1,14 @@
-﻿namespace RPGManagerLib
+﻿using RPGManagerLib.Exceptions;
+
+namespace RPGManagerLib
 {
     /// <summary>
-    /// Represents a character in the RPG system, containing attributes such as name, health, creation date, and power level.
+    /// Represents a character in the system with attributes such as name, health, creation date, and power level.
     /// </summary>
+    /// <remarks>The <see cref="Character"/> class provides functionality to manage a character's state,
+    /// including health management through healing and damage operations. It also allows for the initialization of
+    /// characters with default or custom values and provides a textual representation of the character's current
+    /// state.</remarks>
     public class Character
     {
         /// <summary>
@@ -11,12 +17,7 @@
         /// <remarks>This field stores the current health of the entity as a double-precision
         /// floating-point value. The value is intended to be used internally to track the entity's health
         /// status.</remarks>
-        private double Health;
-
-        /// <summary>
-        /// Gets the current health value of the entity.
-        /// </summary>
-        public double health => Health;
+        public double Health { get; private set; }
 
         /// <summary>
         /// Gets or sets the character's name.
@@ -47,41 +48,44 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with custom values.
         /// </summary>
-        /// <param name="Name">The character's name.</param>
-        /// <param name="Health">The initial health value (0–100).</param>
-        /// <param name="CreationDate">The creation date of the character.</param>
-        /// <param name="PowerLevel">The starting power level.</param>
-        public Character(string Name, double Health, DateTime CreationDate, int PowerLevel)
+        /// <param name="name">The character's name.</param>
+        /// <param name="health">The initial health value (0–100).</param>
+        /// <param name="creationDate">The creation date of the character.</param>
+        /// <param name="powerLevel">The starting power level.</param>
+        public Character(string name, double health, DateTime creationDate, int powerLevel)
         {
-            this.Name = Name;
-            this.Health = Health;
-            this.CreationDate = CreationDate;
-            this.PowerLevel = PowerLevel;
+            this.Name = name;
+            this.Health = health;
+            this.CreationDate = creationDate;
+            this.PowerLevel = powerLevel;
         }
 
         /// <summary>
         /// Increases the character's health by the specified number of points, up to a maximum of 100.
         /// </summary>
         /// <remarks>
-        /// If <paramref name="Points"/> would cause health to exceed 100, it is capped at 100.
-        /// If <paramref name="Points"/> is negative, the method does not modify health and writes a warning message to the console.
+        /// If <paramref name="points"/> would cause health to exceed 100, it is capped at 100.
+        /// If <paramref name="points"/> is negative, the method does not modify health and writes a warning message to the console.
         /// </remarks>
-        /// <param name="Points">The number of health points to restore. Must be non-negative.</param>
-        public void Heal(double Points)
+        /// <param name="points">The number of health points to restore. Must be non-negative.</param>
+        public void Heal(double points)
         {
-            if (Points < 0)
-            {
-                Console.WriteLine("Cannot heal negative points.");
+            try { 
+                if(points < 0)
+                {
+                    throw new NegativeHealException();
+                }
+                if (points + Health > 100)
+                {
+                    throw new OverhealException();
+                }
+
+                Health += points;
+                Console.WriteLine($"Healed {points} health points");
             }
-            else if (Points + Health > 100)
+            catch (CharacterException ex)
             {
-                Health = 100;
-                Console.WriteLine("Health capped at 100 points.");
-            }
-            else
-            {
-                Health += Points;
-                Console.WriteLine($"Healed {Points} health points.");
+                Console.WriteLine($"Heal failed: {ex.Message}");
             }
         }
 
@@ -89,25 +93,37 @@
         /// Reduces the character's health by the specified number of points.
         /// </summary>
         /// <remarks>
-        /// If <paramref name="Points"/> is negative, the method does not modify health and writes a warning message to the console.
+        /// If <paramref name="points"/> is negative, the method does not modify health and writes a warning message to the console.
         /// If the resulting health falls below zero, it is set to zero and a death message is displayed.
         /// </remarks>
-        /// <param name="Points">The amount of health to subtract. Must be non-negative.</param>
-        public void Damage(double Points)
+        /// <param name="points">The amount of health to subtract. Must be non-negative.</param>
+        public void Damage(double points)
         {
-            if (Points < 0)
+            try
             {
-                Console.WriteLine("Cannot damage negative points.");
+                if (points < 0) {
+                    throw new NegativeDamageException();
+                }
+
+                if (Health - points < -100)
+                {
+                    throw new OverkillException();
+                }
+
+                Health -= points;
+
+                if (Health <= 0)
+                {
+                    Console.WriteLine("Character has died.");
+                }
+                else
+                {
+                    Console.WriteLine($"Damaged {points} health points.");
+                }
             }
-            else if (Health - Points <= 0)
+            catch (CharacterException ex)
             {
-                Health = 0;
-                Console.WriteLine("Character has died.");
-            }
-            else
-            {
-                Health -= Points;
-                Console.WriteLine($"Damaged {Points} health points.");
+                Console.WriteLine($"Damage failed: {ex.Message}");
             }
         }
 
