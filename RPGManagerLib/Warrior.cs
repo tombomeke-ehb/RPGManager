@@ -25,6 +25,17 @@
         }
 
         /// <summary>
+        /// Initializes a new instaces of the <see cref="Warrior"/> class with a name value and list of weapons
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="weapons"></param>
+        public Warrior(string name, List<string> weapons)
+            : base(name)
+        {
+            Weapons = weapons ?? new List<string>();
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Warrior"/> class with custom values.
         /// </summary>
         /// <param name="name"></param>

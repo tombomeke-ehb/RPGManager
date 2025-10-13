@@ -46,6 +46,18 @@ namespace RPGManagerLib
         }
 
         /// <summary>
+        /// Initializes a new instaces of the <see cref="Character"/> class with custom values.
+        /// </summary>
+        /// <param name="name">The character's name.</param>
+        public Character(string name)
+        {
+            Name = name;
+            Health = 100.0;
+            CreationDate = DateTime.Now;
+            PowerLevel = 1;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with custom values.
         /// </summary>
         /// <param name="name">The character's name.</param>

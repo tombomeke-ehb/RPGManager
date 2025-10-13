@@ -12,6 +12,17 @@
             ManaBoost = 50.0;
         }
 
+        public Mage(double ManaBoost) : base()
+        {
+            ManaBoost = ManaBoost;
+        }
+
+        public Mage(string name) : base(name)
+        {
+            name = name;
+            ManaBoost = 50.0;
+        }
+
         /// <summary>
         /// Returns a formatted string describing the character's current state.
         /// </summary>
