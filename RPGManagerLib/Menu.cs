@@ -16,43 +16,43 @@
                 Console.WriteLine("Choose your class:\n1: Warrior\n2: Mage");
                 string typeOfClass = Console.ReadLine().ToLower();
 
-                if (typeOfClass == "1" || typeOfClass == "warrior")
+                switch (typeOfClass)
                 {
-                    Console.WriteLine("You chose Warrior!");
-                    Console.WriteLine("Now choose your weapons (type 'q' to finish):");
+                    case "1":
+                    case "warrior":
+                        Console.WriteLine("You chose Warrior!");
+                        Console.WriteLine("Now choose your weapons (type 'q' to finish):");
 
-                    List<string> weapons = new List<string>();
-                    while (true)
-                    {
-                        Console.Write("Add weapon: ");
-                        string weapon = Console.ReadLine();
+                        List<string> weapons = new List<string>();
+                        while (true)
+                        {
+                            Console.Write("Add weapon: ");
+                            string weapon = Console.ReadLine();
+                            if (weapon.ToLower() == "q") break;
+                            weapons.Add(weapon);
+                        }
 
-                        if (weapon.ToLower() == "q")
-                            break;
+                        newChar = new Warrior(name, weapons);
+                        validChoice = true;
+                        break;
 
-                        weapons.Add(weapon);
-                    }
+                    case "2":
+                    case "mage":
+                        Console.WriteLine("You chose Mage!");
+                        newChar = new Mage(name);
+                        validChoice = true;
+                        break;
 
-                    newChar = new Warrior(name, weapons);
-                    validChoice = true;
-                }
-                else if (typeOfClass == "2" || typeOfClass == "mage")
-                {
-                    Console.WriteLine("You chose Mage!");
-                    newChar = new Mage(name);
-                    validChoice = true;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid choice, please try again.\n");
+                    default:
+                        Console.WriteLine("Invalid choice, please try again.\n");
+                        break;
                 }
             }
 
-            Console.WriteLine($"\nCharacter created successfully!");
+            Console.WriteLine("\nCharacter created successfully!");
             Console.WriteLine(newChar.ToString());
 
-            Console.WriteLine("\nYou are now entering the adventure as " + newChar.Name + "...");
-            // Later, you can call StartGame(newChar);
+            Console.WriteLine($"\nYou are now entering the adventure as {newChar.Name}, the {newChar.CharacterType}...");
         }
     }
 }

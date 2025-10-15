@@ -9,7 +9,7 @@ namespace RPGManagerLib
     /// including health management through healing and damage operations. It also allows for the initialization of
     /// characters with default or custom values and provides a textual representation of the character's current
     /// state.</remarks>
-    public class Character
+    public abstract class Character
     {
         /// <summary>
         /// Represents the health value of an entity.
@@ -37,6 +37,9 @@ namespace RPGManagerLib
         /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with default values.
         /// </summary>
+        /// 
+
+        public abstract string CharacterType { get; }
         public Character()
         {
             Name = "Unknown";

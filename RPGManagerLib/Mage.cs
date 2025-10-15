@@ -3,6 +3,7 @@
     public class Mage : Character
     {
         public double ManaBoost { get; set; }
+        public override String CharacterType => "Mage";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Mage"/> class with default values.

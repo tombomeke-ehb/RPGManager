@@ -19,6 +19,8 @@
         /// </summary>
         /// <remarks>This constructor initializes the <see cref="Warrior"/> instance and sets up the
         /// default state, including an empty list of weapons.</remarks>
+        /// 
+        public override string CharacterType => "Warrior";
         public Warrior() : base()
         {
             Weapons = new List<string>();
