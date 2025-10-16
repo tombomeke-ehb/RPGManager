@@ -1,4 +1,6 @@
-﻿namespace RPGManagerLib
+﻿using RPGManagerLib.Weapons;
+
+namespace RPGManagerLib
 {
     /// <summary>
     /// Represents a warrior character with a collection of weapons.
@@ -12,7 +14,7 @@
         /// <summary>
         /// Gets or sets the collection of weapon names.
         /// </summary>
-        public List<string> Weapons { get; set; }
+        public List<Weapon> Weapons { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warrior"/> class.
@@ -23,7 +25,7 @@
         public override string CharacterType => "Warrior";
         public Warrior() : base()
         {
-            Weapons = new List<string>();
+            Weapons = new List<Weapon>();
         }
 
         /// <summary>
@@ -31,10 +33,10 @@
         /// </summary>
         /// <param name="name"></param>
         /// <param name="weapons"></param>
-        public Warrior(string name, List<string> weapons)
+        public Warrior(string name, List<Weapon> weapons)
             : base(name)
         {
-            Weapons = weapons ?? new List<string>();
+            Weapons = weapons ?? new List<Weapon>();
         }
 
         /// <summary>
@@ -45,10 +47,10 @@
         /// <param name="creationDate"></param>
         /// <param name="powerLevel"></param>
         /// <param name="weapons"></param>
-        public Warrior(string name, double health, DateTime creationDate, int powerLevel, List<string> weapons)
+        public Warrior(string name, double health, DateTime creationDate, int powerLevel, List<Weapon> weapons)
             : base(name, health, creationDate, powerLevel)
         {
-            Weapons = weapons ?? new List<string>();
+            Weapons = weapons ?? new List<Weapon>();
         }
 
         /// <summary>

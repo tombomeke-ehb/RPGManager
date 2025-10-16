@@ -13,14 +13,14 @@
             ManaBoost = 50.0;
         }
 
-        public Mage(double ManaBoost) : base()
+        public Mage(double manaboost) : base()
         {
-            ManaBoost = ManaBoost;
+            ManaBoost = manaboost;
         }
 
         public Mage(string name) : base(name)
         {
-            name = name;
+            Name = name;
             ManaBoost = 50.0;
         }
 
