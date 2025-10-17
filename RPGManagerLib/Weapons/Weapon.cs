@@ -9,17 +9,19 @@
         public string Name { get; set; }
         public WeaponType Type { get; set; }
         public Element Element { get; set; } = Element.NONE;
+        public double CooldownTime { get; set; }
         public InventorySpaceAmount InventorySpaceAmount { get; set; }
 
-        public Weapon(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType type, Element element, InventorySpaceAmount inventorySpaceAmount)
+        public Weapon(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element,double cooldownTime, InventorySpaceAmount inventorySpaceAmount)
         {
             DamageAmount = damageAmount;
             Durability = durability;
             Rarity = rarity;
             Level = level;
             Name = name;
-            Type = type;
+            Type = weaponType;
             Element = element;
+            CooldownTime = cooldownTime;
             InventorySpaceAmount = inventorySpaceAmount;
         }
 
@@ -40,6 +42,6 @@
 
     public enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY }
     public enum InventorySpaceAmount { SMALL, LARGE }
-    public enum WeaponType { SWORD, BOW, STAFF }
-    public enum Element { NONE, FIRE, ICE, LIGHTNING }
+    public enum WeaponType { SWORD, BOW, STAFF, AXE, SPEAR }
+    public enum Element { NONE, FIRE, ICE, LIGHTNING, POISON }
 }

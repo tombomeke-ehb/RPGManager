@@ -1,4 +1,4 @@
-﻿using RPGManagerLib;
+﻿using RPGManagerLib.UI;
 
 namespace RPGManager
 {
@@ -44,7 +44,7 @@ namespace RPGManager
             Console.Write("Press any key to enter the realm...");
             Console.ReadKey(true);
             Console.Clear();
-            Menu.MakeCharacter();
+            GameMenu.Start();
         }
     }
 }
