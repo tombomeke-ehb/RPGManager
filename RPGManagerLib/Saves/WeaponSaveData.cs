@@ -1,4 +1,6 @@
 ﻿using RPGManagerLib.Weapons;
+using RPGManagerLib.Weapons.Bows;
+using RPGManagerLib.Weapons.Melee;
 public class WeaponSaveData
 {
     public WeaponType WeaponType { get; set; }
@@ -51,6 +53,16 @@ public class WeaponSaveData
                 InventorySpaceAmount
             ),
             WeaponType.SPEAR => new Spear(
+                DamageAmount,
+                Durability,
+                Rarity,
+                Level,
+                Name,
+                Element,
+                CoolDownTime,
+                InventorySpaceAmount
+            ),
+            WeaponType.SIMPLEBOW => new SimpleBow(
                 DamageAmount,
                 Durability,
                 Rarity,

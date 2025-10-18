@@ -1,4 +1,7 @@
 ﻿using RPGManagerLib.Characters;
+using RPGManagerLib.Weapons;
+using RPGManagerLib.Weapons.Melee;
+using RPGManagerLib.Weapons.Bows;
 
 namespace RPGManagerLib.UI
 {
@@ -28,17 +31,19 @@ namespace RPGManagerLib.UI
 
             while (true)
             {
-                Console.Write($"Add weapon (Sword, Bow, Staff, Axe, Spear or 'q' to finish) — {usedSlots}/{maxSlots}: ");
+                Console.Write($"Add weapon (Sword, Bow, Staff, Axe, Spear, Dagger or 'q' to finish) — {usedSlots}/{maxSlots}: ");
                 string input = Console.ReadLine().ToLower();
                 if (input == "q") break;
 
                 try
                 {
-                    Weapons.Weapon weapon = input switch
+                    Weapon weapon = input switch
                     {
-                        "sword" => new Weapons.Sword(),
-                        "axe" => new Weapons.Axe(),
-                        "spear" => new Weapons.Spear(),
+                        "sword" => new Sword(),
+                        "axe" => new Axe(),
+                        "spear" => new Spear(),
+                        "dagger" => new Dagger(),
+                        "bow" => new SimpleBow(),
                         _ => throw new Weapons.InvalidWeaponException(input)
                     };
 

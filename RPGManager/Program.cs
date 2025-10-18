@@ -1,4 +1,7 @@
 ﻿using RPGManagerLib.UI;
+using RPGManagerLib.Weapons.Melee;
+using RPGManagerLib.Weapons.Bows;
+using RPGManagerLib.Weapons;
 
 namespace RPGManager
 {

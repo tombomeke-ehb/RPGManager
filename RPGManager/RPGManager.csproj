@@ -11,8 +11,4 @@
     <ProjectReference Include="..\RPGManagerLib\RPGManagerLib.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Save\" />
-  </ItemGroup>
-
 </Project>

@@ -1,9 +1,10 @@
-﻿namespace RPGManagerLib.Weapons
+﻿namespace RPGManagerLib.Weapons.Melee
 {
     public class Sword : Weapon
     {
         public Sword()
-            : base(damageAmount: 13, 
+            : base
+                  (damageAmount: 13, 
                   durability: 100, 
                   rarity: Rarity.COMMON, 
                   level: 1, 

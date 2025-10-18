@@ -38,10 +38,22 @@
 
         public int GetEffectiveDamage() => (int)(DamageAmount * GetRarityMultiplier());
         public int GetEffectiveDurability() => (int)(Durability * GetRarityMultiplier());
+
+        public Rarity UpgradeWeapon() { 
+            Rarity = Rarity switch
+            {
+                Rarity.COMMON => Rarity.UNCOMMON,
+                Rarity.UNCOMMON => Rarity.RARE,
+                Rarity.RARE => Rarity.EPIC,
+                Rarity.EPIC => Rarity.LEGENDARY,
+                _ => throw new NotImplementedException()
+            };
+            return Rarity;
+        }
     }
 
     public enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY }
     public enum InventorySpaceAmount { SMALL, LARGE }
-    public enum WeaponType { SWORD, BOW, STAFF, AXE, SPEAR }
+    public enum WeaponType { SWORD, STAFF, AXE, SPEAR, DAGGER, SIMPLEBOW }
     public enum Element { NONE, FIRE, ICE, LIGHTNING, POISON }
 }
