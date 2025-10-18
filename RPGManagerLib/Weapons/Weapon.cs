@@ -1,4 +1,6 @@
-﻿namespace RPGManagerLib.Weapons
+﻿using RPGManagerLib.Exceptions;
+
+namespace RPGManagerLib.Weapons
 {
     public abstract class Weapon
     {
@@ -46,7 +48,7 @@
                 Rarity.UNCOMMON => Rarity.RARE,
                 Rarity.RARE => Rarity.EPIC,
                 Rarity.EPIC => Rarity.LEGENDARY,
-                _ => throw new NotImplementedException()
+                _ => Rarity
             };
             return Rarity;
         }

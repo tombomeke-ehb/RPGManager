@@ -47,7 +47,14 @@ namespace RPGManager
             Console.Write("Press any key to enter the realm...");
             Console.ReadKey(true);
             Console.Clear();
-            GameMenu.Start();
+            
+            Axe axe = new();
+            axe.UpgradeWeapon();
+            axe.UpgradeWeapon();
+            axe.UpgradeWeapon();
+            axe.UpgradeWeapon();
+            axe.UpgradeWeapon();
+            axe.UpgradeWeapon();
         }
     }
 }
