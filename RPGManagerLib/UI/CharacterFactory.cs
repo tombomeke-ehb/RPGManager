@@ -1,7 +1,10 @@
 ﻿using RPGManagerLib.Characters;
+using RPGManagerLib.Items;
+using RPGManagerLib.Items.Weapons;
+using RPGManagerLib.Items.Weapons.Bows;
+using RPGManagerLib.Items.Weapons.Melee;
+using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.Weapons;
-using RPGManagerLib.Weapons.Melee;
-using RPGManagerLib.Weapons.Bows;
 
 namespace RPGManagerLib.UI
 {
@@ -17,54 +20,56 @@ namespace RPGManagerLib.UI
 
             return input switch
             {
-                "1" or "warrior" => new Warrior(name, WeaponSelectionMenu()),
+                "1" or "warrior" => new Warrior(name, EquipableSelectionMenu()),
                 "2" or "mage" => new Mage(name),
-                _ => new Warrior(name, new List<Weapons.Weapon>()) // fallback
+                _ => new Warrior(name, new List<IEquipable>()) // fallback
             };
         }
 
-        private static List<Weapons.Weapon> WeaponSelectionMenu()
+        private static List<IEquipable> EquipableSelectionMenu()
         {
-            List<Weapons.Weapon> weapons = new();
+            List<IEquipable> equipables = new();
             int usedSlots = 0;
             const int maxSlots = 4;
 
             while (true)
             {
-                Console.Write($"Add weapon (Sword, Bow, Staff, Axe, Spear, Dagger or 'q' to finish) — {usedSlots}/{maxSlots}: ");
+                Console.Write($"Add item (Sword, Bow, Quiver, Axe, Spear, Dagger or 'q' to finish) — {usedSlots}/{maxSlots}: ");
                 string input = Console.ReadLine().ToLower();
                 if (input == "q") break;
 
                 try
                 {
-                    Weapon weapon = input switch
+                    IEquipable item = input switch
                     {
                         "sword" => new Sword(),
                         "axe" => new Axe(),
                         "spear" => new Spear(),
                         "dagger" => new Dagger(),
                         "bow" => new SimpleBow(),
-                        _ => throw new Weapons.InvalidWeaponException(input)
+                        "quiver" => new SmallQuiver(),
+                        _ => throw new InvalidWeaponException(input)
                     };
 
-                    int weaponSize = weapon.InventorySpaceAmount == Weapons.InventorySpaceAmount.SMALL ? 1 : 2;
-                    if (usedSlots + weaponSize > maxSlots)
+                    int itemSize = item.InventorySpaceAmount == InventorySpaceAmount.SMALL ? 1 : 2;
+
+                    if (usedSlots + itemSize > maxSlots)
                     {
-                        Console.WriteLine("Not enough space for that weapon!");
+                        Console.WriteLine("Not enough space for that item!");
                         continue;
                     }
 
-                    weapons.Add(weapon);
-                    usedSlots += weaponSize;
-                    Console.WriteLine($"{weapon.Name} added!");
+                    equipables.Add(item);
+                    usedSlots += itemSize;
+                    Console.WriteLine($"{item.Name} added!");
                 }
-                catch (Weapons.InvalidWeaponException ex)
+                catch (InvalidWeaponException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
 
-            return weapons;
+            return equipables;
         }
     }
 }

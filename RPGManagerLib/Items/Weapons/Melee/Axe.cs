@@ -1,4 +1,6 @@
-﻿namespace RPGManagerLib.Weapons.Melee
+﻿using RPGManagerLib.Items.Weapons;
+
+namespace RPGManagerLib.Items.Weapons.Melee
 {
     public class Axe : Weapon
     {

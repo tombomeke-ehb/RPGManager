@@ -1,4 +1,6 @@
-﻿namespace RPGManagerLib.Weapons.Melee
+﻿using RPGManagerLib.Items.Weapons;
+
+namespace RPGManagerLib.Items.Weapons.Melee
 {
     public class Dagger : Weapon
     {
@@ -12,7 +14,6 @@
                   element: Element.NONE,
                   cooldownTime: 1,
                   inventorySpaceAmount: InventorySpaceAmount.SMALL
-
             )
         { }
 

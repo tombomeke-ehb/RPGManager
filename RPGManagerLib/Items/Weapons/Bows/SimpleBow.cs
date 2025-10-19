@@ -1,4 +1,6 @@
-﻿namespace RPGManagerLib.Weapons.Bows
+﻿using RPGManagerLib.Items.Weapons;
+
+namespace RPGManagerLib.Items.Weapons.Bows
 {
     internal class SimpleBow : Bow
     {

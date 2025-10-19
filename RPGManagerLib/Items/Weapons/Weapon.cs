@@ -1,8 +1,8 @@
 ﻿using RPGManagerLib.Exceptions;
 
-namespace RPGManagerLib.Weapons
+namespace RPGManagerLib.Items.Weapons
 {
-    public abstract class Weapon
+    public abstract class Weapon : IEquipable
     {
         public int DamageAmount { get; set; }
         public int Durability { get; set; }
@@ -13,6 +13,7 @@ namespace RPGManagerLib.Weapons
         public Element Element { get; set; } = Element.NONE;
         public double CooldownTime { get; set; }
         public InventorySpaceAmount InventorySpaceAmount { get; set; }
+        public EquipableType EquipableType => EquipableType.WEAPON;
 
         public Weapon(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element,double cooldownTime, InventorySpaceAmount inventorySpaceAmount)
         {

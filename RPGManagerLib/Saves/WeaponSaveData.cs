@@ -1,6 +1,6 @@
-﻿using RPGManagerLib.Weapons;
-using RPGManagerLib.Weapons.Bows;
-using RPGManagerLib.Weapons.Melee;
+﻿using RPGManagerLib.Items.Weapons;
+using RPGManagerLib.Items.Weapons.Bows;
+using RPGManagerLib.Items.Weapons.Melee;
 public class WeaponSaveData
 {
     public WeaponType WeaponType { get; set; }

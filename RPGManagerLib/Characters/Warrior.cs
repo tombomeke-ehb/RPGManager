@@ -1,4 +1,5 @@
-﻿using RPGManagerLib.Weapons;
+﻿using RPGManagerLib.Items.Weapons;
+using RPGManagerLib.Items;
 
 namespace RPGManagerLib.Characters
 {
@@ -14,7 +15,7 @@ namespace RPGManagerLib.Characters
         /// <summary>
         /// Gets or sets the collection of weapon names.
         /// </summary>
-        public List<Weapon> Weapons { get; set; }
+        public List<IEquipable> Weapons { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warrior"/> class.
@@ -25,7 +26,7 @@ namespace RPGManagerLib.Characters
         public override string CharacterType => "Warrior";
         public Warrior() : base()
         {
-            Weapons = new List<Weapon>();
+            Weapons = new List<IEquipable>();
         }
 
         /// <summary>
@@ -33,10 +34,10 @@ namespace RPGManagerLib.Characters
         /// </summary>
         /// <param name="name"></param>
         /// <param name="weapons"></param>
-        public Warrior(string name, List<Weapon> weapons)
+        public Warrior(string name, List<IEquipable> weapons)
             : base(name)
         {
-            Weapons = weapons ?? new List<Weapon>();
+            Weapons = weapons ?? new List<IEquipable>();
         }
 
         /// <summary>
@@ -47,10 +48,10 @@ namespace RPGManagerLib.Characters
         /// <param name="creationDate"></param>
         /// <param name="powerLevel"></param>
         /// <param name="weapons"></param>
-        public Warrior(string name, double health, DateTime creationDate, int powerLevel, List<Weapon> weapons)
+        public Warrior(string name, double health, DateTime creationDate, int powerLevel, List<IEquipable> weapons)
             : base(name, health, creationDate, powerLevel)
         {
-            Weapons = weapons ?? new List<Weapon>();
+            Weapons = weapons ?? new List<IEquipable>();
         }
 
         /// <summary>
