@@ -1,6 +1,6 @@
 ﻿using RPGManagerLib.UI;
-using RPGManagerLib.Weapons.Bows;
-using RPGManagerLib.Weapons;
+using RPGManagerLib.Items.Weapons.Bows;
+using RPGManagerLib.Items.Weapons;
 using RPGManagerLib.Items.Weapons.Melee;
 
 namespace RPGManager
