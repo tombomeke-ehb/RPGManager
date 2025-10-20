@@ -1,7 +1,8 @@
-﻿using RPGManagerLib.Items.Weapons;
-
-namespace RPGManagerLib.Items.Weapons.Bows
+﻿namespace RPGManagerLib.Items.Weapons.Bows
 {
+    /// <summary>
+    /// Base type for bow-style ranged weapons.
+    /// </summary>
     public abstract class Bow : Weapon
     {
         protected Bow(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element, double cooldownTime, InventorySpaceAmount inventorySpaceAmount)

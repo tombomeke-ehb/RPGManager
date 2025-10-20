@@ -3,11 +3,17 @@ using RPGManagerLib.Saves;
 
 namespace RPGManagerLib.UI
 {
+    /// <summary>
+    /// High-level console game loop and character management menu.
+    /// </summary>
     public static class GameMenu
     {
         private static List<Character> characters = new();
         private static Character? currentCharacter = null;
 
+        /// <summary>
+        /// Initializes state, loads characters, and enters the main menu.
+        /// </summary>
         public static void Start()
         {
             // Load saved characters
@@ -34,6 +40,13 @@ namespace RPGManagerLib.UI
             ShowMainMenu();
         }
 
+        /// <summary>
+        /// Displays the main menu and handles user interactions for managing characters and gameplay options.
+        /// </summary>
+        /// <remarks>The main menu provides options to create a new character, switch between existing
+        /// characters,  view the current character, explore, engage in combat, or quit the application. Each option 
+        /// performs the corresponding action and may involve saving character data or updating the current  character
+        /// state. The menu runs in a loop until the user chooses to quit.</remarks>
         private static void ShowMainMenu()
         {
             var mainMenu = new MenuSystem("MAIN MENU");
@@ -75,6 +88,14 @@ namespace RPGManagerLib.UI
                 Console.ReadLine();
             }
         }
+
+        /// <summary>
+        /// Allows the user to switch the currently active character by selecting from a list of available characters.
+        /// </summary>
+        /// <remarks>If no characters are available, the method displays a message and exits without
+        /// making any changes. The user is prompted to select a character by entering the corresponding number from the
+        /// displayed list. If the input is invalid or out of range, an error message is displayed, and the active
+        /// character remains unchanged.</remarks>
         private static void SwitchCharacter()
         {
             if (characters.Count == 0)
@@ -100,6 +121,12 @@ namespace RPGManagerLib.UI
             }
         }
 
+        /// <summary>
+        /// Initiates an exploration action for the currently selected character.
+        /// </summary>
+        /// <remarks>This method outputs a message indicating the exploration activity of the selected
+        /// character. If no character is selected, a message prompting the user to select a character is
+        /// displayed.</remarks>
         private static void Explore()
         {
             if (currentCharacter == null)
@@ -111,6 +138,11 @@ namespace RPGManagerLib.UI
             Console.WriteLine($"{currentCharacter.Name} is exploring the world...");
         }
 
+        /// <summary>
+        /// Initiates a battle sequence for the currently selected character.
+        /// </summary>
+        /// <remarks>This method requires a character to be selected before it is called.  If no character
+        /// is selected, a message will be displayed, and the method will exit without performing any action.</remarks>
         private static void Fight()
         {
             if (currentCharacter == null)

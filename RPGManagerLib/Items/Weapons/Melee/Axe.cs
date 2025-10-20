@@ -2,9 +2,15 @@
 
 namespace RPGManagerLib.Items.Weapons.Melee
 {
+    /// <summary>
+    /// A heavy melee weapon with strong base damage and slower cooldown.
+    /// </summary>
     public class Axe : Weapon
     {
 
+        /// <summary>
+        /// Initializes a new <see cref="Axe"/> with default values.
+        /// </summary>
         public Axe()
             : base
                   (damageAmount: 20,
@@ -18,6 +24,10 @@ namespace RPGManagerLib.Items.Weapons.Melee
                   inventorySpaceAmount: InventorySpaceAmount.LARGE)
         {
         }
+
+        /// <summary>
+        /// Initializes a new <see cref="Axe"/> with explicit properties.
+        /// </summary>
         public Axe(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, double coolDownTime, InventorySpaceAmount inventorySpaceAmount)
             : base(damageAmount, durability, rarity, level, name, WeaponType.AXE, element, coolDownTime, inventorySpaceAmount)
         {

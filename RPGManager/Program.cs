@@ -5,8 +5,20 @@ using RPGManagerLib.Items.Weapons.Melee;
 
 namespace RPGManager
 {
+    /// <summary>
+    /// Console entry point for the RPG Manager demo application.
+    /// </summary>
+    /// <remarks>
+    /// Displays a styled intro screen and runs sample code to exercise
+    /// the underlying library. Hook up to <c>GameMenu.Start()</c> to
+    /// launch the interactive flow when ready.
+    /// </remarks>
     internal class Program
     {
+        /// <summary>
+        /// Application entry point.
+        /// </summary>
+        /// <param name="args">Optional command line arguments (unused).</param>
         static void Main(string[] args)
         {
             Console.Clear();
@@ -47,14 +59,9 @@ namespace RPGManager
             Console.Write("Press any key to enter the realm...");
             Console.ReadKey(true);
             Console.Clear();
-            
-            Axe axe = new();
-            axe.UpgradeWeapon();
-            axe.UpgradeWeapon();
-            axe.UpgradeWeapon();
-            axe.UpgradeWeapon();
-            axe.UpgradeWeapon();
-            axe.UpgradeWeapon();
+
+            // Launch the interactive game menu
+            GameMenu.Start();
         }
     }
 }

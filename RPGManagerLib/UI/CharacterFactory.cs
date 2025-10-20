@@ -4,12 +4,26 @@ using RPGManagerLib.Items.Weapons;
 using RPGManagerLib.Items.Weapons.Bows;
 using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Weapons.Quivers;
-using RPGManagerLib.Weapons;
+using RPGManagerLib.Exceptions;
 
 namespace RPGManagerLib.UI
 {
+    /// <summary>
+    /// Provides functionality to create character instances based on user input.
+    /// </summary>
+    /// <remarks>This factory class interacts with the user via the console to gather input for character
+    /// creation. It allows the user to specify a name and select a character class (e.g., Warrior or Mage).  For
+    /// Warriors, the user can also select equipment through an interactive menu.</remarks>
     public static class CharacterFactory
     {
+        /// <summary>
+        /// Creates a new character based on user input.
+        /// </summary>
+        /// <remarks>This method prompts the user to enter a name and select a class for the character. 
+        /// The available classes are Warrior and Mage. If the input does not match a valid class,  a Warrior with
+        /// default equipment is created as a fallback.</remarks>
+        /// <returns>A <see cref="Character"/> instance representing the newly created character.  The specific type of the
+        /// character will be either <see cref="Warrior"/> or <see cref="Mage"/>  depending on the user's selection.</returns>
         public static Character CreateCharacter()
         {
             Console.WriteLine("What is your name?");
@@ -26,6 +40,15 @@ namespace RPGManagerLib.UI
             };
         }
 
+        /// <summary>
+        /// Displays a menu for selecting equipable items and returns a list of the selected items.
+        /// </summary>
+        /// <remarks>The menu allows the user to select from a predefined set of equipable items, such as
+        /// "Sword", "Bow",  "Quiver", "Axe", "Spear", and "Dagger". The user can add items until the maximum inventory
+        /// space  of 4 slots is reached. Each item occupies either 1 or 2 slots depending on its size. The user can 
+        /// exit the menu by entering 'q'.</remarks>
+        /// <returns>A list of equipable items selected by the user. The list will contain zero or more items, depending  on the
+        /// user's input.</returns>
         private static List<IEquipable> EquipableSelectionMenu()
         {
             List<IEquipable> equipables = new();

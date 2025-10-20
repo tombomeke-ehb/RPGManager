@@ -2,8 +2,14 @@
 
 namespace RPGManagerLib.Items.Weapons.Melee
 {
+    /// <summary>
+    /// A reach melee weapon with solid durability and moderate cooldown.
+    /// </summary>
     public class Spear : Weapon
     {
+        /// <summary>
+        /// Initializes a new <see cref="Spear"/> with default values.
+        /// </summary>
         public Spear() 
             : base
                   (damageAmount: 17,
@@ -16,6 +22,9 @@ namespace RPGManagerLib.Items.Weapons.Melee
                   cooldownTime: 2,
                   inventorySpaceAmount: InventorySpaceAmount.LARGE) { }
 
+        /// <summary>
+        /// Initializes a new <see cref="Spear"/> with explicit properties.
+        /// </summary>
         public Spear(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, double cooldownTime, InventorySpaceAmount inventorySpaceAmount)
             : base(damageAmount, durability, rarity, level, name, WeaponType.SPEAR, element, cooldownTime, inventorySpaceAmount)
         {

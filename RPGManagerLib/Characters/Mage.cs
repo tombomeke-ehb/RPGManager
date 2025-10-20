@@ -2,8 +2,14 @@
 
 namespace RPGManagerLib.Characters
 {
+    /// <summary>
+    /// A magic-focused character with an inherent mana boost.
+    /// </summary>
     public class Mage : Character
     {
+        /// <summary>
+        /// Additional mana capacity or effectiveness granted to the mage.
+        /// </summary>
         public double ManaBoost { get; set; }
         public override string CharacterType => "Mage";
 
@@ -15,12 +21,18 @@ namespace RPGManagerLib.Characters
             ManaBoost = 50.0;
         }
 
+        /// <summary>
+        /// Initializes a new <see cref="Mage"/> with a custom name and default stats.
+        /// </summary>
         public Mage(string name) : base(name, 100, DateTime.Now, 1)
         {
             ManaBoost = 50.0;
         }
 
 
+        /// <summary>
+        /// Initializes a new <see cref="Mage"/> with explicit properties.
+        /// </summary>
         public Mage(string name, double health, DateTime creationDate, int powerLevel, double manaboost) : base(name, health, creationDate, powerLevel)
         {
             ManaBoost = manaboost;

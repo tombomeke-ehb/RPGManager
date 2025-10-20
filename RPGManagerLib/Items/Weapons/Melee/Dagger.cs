@@ -2,8 +2,14 @@
 
 namespace RPGManagerLib.Items.Weapons.Melee
 {
+    /// <summary>
+    /// A fast melee weapon with low damage and short cooldown.
+    /// </summary>
     public class Dagger : Weapon
     {
+        /// <summary>
+        /// Initializes a new <see cref="Dagger"/> with default values.
+        /// </summary>
         public Dagger()
             : base(damageAmount: 8,
                   durability: 50,
@@ -17,6 +23,9 @@ namespace RPGManagerLib.Items.Weapons.Melee
             )
         { }
 
+        /// <summary>
+        /// Initializes a new <see cref="Dagger"/> with explicit properties.
+        /// </summary>
         public Dagger(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element, double cooldownTime, InventorySpaceAmount inventorySpaceAmount)
             : base(damageAmount, durability, rarity, level, name, weaponType, element, cooldownTime, inventorySpaceAmount)
         {
