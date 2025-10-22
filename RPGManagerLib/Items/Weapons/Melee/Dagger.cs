@@ -26,8 +26,8 @@ namespace RPGManagerLib.Items.Weapons.Melee
         /// <summary>
         /// Initializes a new <see cref="Dagger"/> with explicit properties.
         /// </summary>
-        public Dagger(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element, double cooldownTime, InventorySpaceAmount inventorySpaceAmount)
-            : base(damageAmount, durability, rarity, level, name, weaponType, element, cooldownTime, inventorySpaceAmount)
+        public Dagger(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, double cooldownTime, InventorySpaceAmount inventorySpaceAmount)
+            : base(damageAmount, durability, rarity, level, name, WeaponType.DAGGER, element, cooldownTime, inventorySpaceAmount)
         {
         }
     }

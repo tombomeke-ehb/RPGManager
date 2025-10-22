@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using RPGManagerLib.Characters;
+using RPGManagerLib.Characters.Heroes;
 
 namespace RPGManagerLib.Saves
 {

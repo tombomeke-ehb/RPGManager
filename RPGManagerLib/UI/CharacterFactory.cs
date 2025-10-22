@@ -1,10 +1,10 @@
-﻿using RPGManagerLib.Characters;
-using RPGManagerLib.Items;
+﻿using RPGManagerLib.Items;
 using RPGManagerLib.Items.Weapons;
 using RPGManagerLib.Items.Weapons.Bows;
 using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.Exceptions;
+using RPGManagerLib.Characters.Heroes;
 
 namespace RPGManagerLib.UI
 {

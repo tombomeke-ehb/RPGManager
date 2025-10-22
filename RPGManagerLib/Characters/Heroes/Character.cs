@@ -1,6 +1,6 @@
 ﻿using RPGManagerLib.Exceptions;
 
-namespace RPGManagerLib.Characters
+namespace RPGManagerLib.Characters.Heroes
 {
     /// <summary>
     /// Represents a character in the system with attributes such as name, health, creation date, and power level.

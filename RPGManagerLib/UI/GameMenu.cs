@@ -1,4 +1,4 @@
-﻿using RPGManagerLib.Characters;
+﻿using RPGManagerLib.Characters.Heroes;
 using RPGManagerLib.Saves;
 
 namespace RPGManagerLib.UI

@@ -26,7 +26,7 @@ namespace RPGManagerLib.Items.Weapons.Melee
         /// <summary>
         /// Initializes a new <see cref="Sword"/> with explicit properties.
         /// </summary>
-        public Sword(int damageAmount, int durability, Rarity rarity, int level, string name,Element element, double coolDownTime, InventorySpaceAmount inventorySpaceAmount)
+        public Sword(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, double coolDownTime, InventorySpaceAmount inventorySpaceAmount)
             : base(damageAmount, durability, rarity, level, name, WeaponType.SWORD, element, coolDownTime, inventorySpaceAmount)
         { }
     }

@@ -1,4 +1,4 @@
-using RPGManagerLib.Characters;
+using RPGManagerLib.Characters.Heroes;
 using RPGManagerLib.Items;
 using RPGManagerLib.Items.Weapons;
 

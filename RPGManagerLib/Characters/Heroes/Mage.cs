@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace RPGManagerLib.Characters
+namespace RPGManagerLib.Characters.Heroes
 {
     /// <summary>
     /// A magic-focused character with an inherent mana boost.

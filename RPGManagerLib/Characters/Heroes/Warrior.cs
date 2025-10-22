@@ -1,7 +1,7 @@
 ﻿using RPGManagerLib.Items.Weapons;
 using RPGManagerLib.Items;
 
-namespace RPGManagerLib.Characters
+namespace RPGManagerLib.Characters.Heroes
 {
     /// <summary>
     /// Represents a warrior character with a collection of weapons.
