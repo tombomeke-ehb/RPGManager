@@ -193,7 +193,7 @@ namespace RPGManagerLib.UI
 
             Console.WriteLine($"\nPeople at {loc.Name}:");
             for (int i = 0; i < loc.NPCs.Count; i++)
-                Console.WriteLine($"{i + 1}. {loc.NPCs[i].name}");
+                Console.WriteLine($"{i + 1}. {loc.NPCs[i].Name}");
 
             Console.Write("Talk to whom? (number or 'q'): ");
             var npcInput = Console.ReadLine();

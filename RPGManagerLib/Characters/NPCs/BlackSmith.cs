@@ -1,4 +1,12 @@
-﻿using RPGManagerLib.Locations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using RPGManagerLib.Characters.Heroes;
+using RPGManagerLib.Items.Weapons;
+using RPGManagerLib.Locations;
+using RPGManagerLib.Quests;
+using RPGManagerLib.Saves;
+using RPGManagerLib.UI;
 
 namespace RPGManagerLib.Characters.NPCs
 {
@@ -7,9 +15,18 @@ namespace RPGManagerLib.Characters.NPCs
     /// </summary>
     public class BlackSmith : NPC
     {
-        private bool questOffered = false;
-        private bool questCompleted = false;
-        private RPGManagerLib.Quests.Quest? smithQuest;
+        private const string QuestTitle = "Iron Procurement";
+        private const string QuestDescription = "Bring 3 iron ore to the blacksmith.";
+
+        /// <summary>
+        /// Percentage increase applied to weapon damage each time the smith upgrades it.
+        /// </summary>
+        private const double DamageUpgradeMultiplier = 1.10;
+
+        private Quest? smithQuest;
+
+        private bool QuestOffered => smithQuest != null;
+        private bool QuestCompleted => smithQuest?.State == QuestState.Completed;
 
         public BlackSmith(Location location)
             : base("Black Smith", location)
@@ -37,158 +54,278 @@ namespace RPGManagerLib.Characters.NPCs
         /// <summary>
         /// Adds smith-specific actions to the interaction menu.
         /// </summary>
-        protected override void AddMenuOptions(UI.MenuSystem menu, Heroes.Character player)
+        protected override void AddMenuOptions(MenuSystem menu, Character player)
         {
             EnsureQuestState(player);
             menu.AddOption("u", "Upgrade a weapon", () => UpgradeWeaponFlow(player));
-            menu.AddOption("w", questOffered ? (questCompleted ? "Quest complete!" : "Ask about the job") : "Ask for work",
-                () => HandleQuestFlow(player));
+
+            var questLabel = QuestOffered
+                ? (QuestCompleted ? "Quest complete!" : "Ask about the job")
+                : "Ask for work";
+
+            menu.AddOption("w", questLabel, () => HandleQuestFlow(player));
         }
 
         /// <summary>
         /// Handles the console flow for upgrading a weapon for gold.
         /// </summary>
-        private void UpgradeWeaponFlow(Heroes.Character player)
+        private void UpgradeWeaponFlow(Character player)
         {
-            // Currently only Warrior has a weapons list
-            if (player is not Heroes.Warrior warrior || warrior.Weapons == null || warrior.Weapons.Count == 0)
+            if (player is not Warrior warrior)
             {
-                Console.WriteLine($"{name}: You don't carry any weapons I can work on.");
-                Console.WriteLine("(Press ENTER)");
-                Console.ReadLine();
+                Speak("You don't carry any weapons I can work on.");
+                WaitForPlayer();
                 return;
             }
 
-            // Filter to actual weapons
-            var weapons = warrior.Weapons.OfType<Items.Weapons.Weapon>().ToList();
+            var weapons = GetUpgradableWeapons(warrior);
             if (weapons.Count == 0)
             {
-                Console.WriteLine($"{name}: I only upgrade weapons, not other gear.");
-                Console.WriteLine("(Press ENTER)");
-                Console.ReadLine();
+                Speak("I only upgrade weapons, not other gear.");
+                WaitForPlayer();
                 return;
             }
 
-            Console.WriteLine("Choose a weapon to upgrade:");
-            for (int i = 0; i < weapons.Count; i++)
+            var selected = PromptWeaponSelection(weapons);
+            if (selected == null)
             {
-                var w = weapons[i];
-                var minLvlForCurrent = Items.Weapons.Weapon.GetMinLevelForRarity(w.Rarity);
-                var nextThreshold = w.GetNextRarityThresholdLevel();
-                string progress = nextThreshold is int nt
-                    ? $"Progress: {Math.Max(0, w.Level - minLvlForCurrent)}/{nt - minLvlForCurrent} to next tier"
-                    : "Max tier reached";
-                Console.WriteLine($"{i + 1}. {w.Name} (Lvl {w.Level}, {w.Rarity}, Damage {w.DamageAmount} | Eff {w.GetEffectiveDamage()}, Dur {w.Durability} | Eff {w.GetEffectiveDurability()}) — {progress}");
-            }
-            Console.Write("Number (or 'q' to cancel): ");
-            var input = Console.ReadLine();
-            if (string.Equals(input, "q", StringComparison.OrdinalIgnoreCase)) return;
-            if (!int.TryParse(input, out int choice) || choice < 1 || choice > weapons.Count) return;
-
-            var selected = weapons[choice - 1];
-
-            // Simple price model: base 50 + 25 per level + 100 per rarity tier (COMMON=0)
-            int rarityIndex = (int)selected.Rarity; // enum order from COMMON upwards
-            int price = 50 + (25 * selected.Level) + (100 * rarityIndex);
-
-            Console.WriteLine($"Price to upgrade {selected.Name}: {price} gold. You have {player.Gold}.");
-            if (player.Gold < price)
-            {
-                Console.WriteLine($"{name}: Come back with more coin.");
-                Console.WriteLine("(Press ENTER)");
-                Console.ReadLine();
                 return;
             }
 
-            Console.Write("Proceed with upgrade? (y/n): ");
-            var confirm = Console.ReadLine()?.Trim().ToLower();
-            if (confirm != "y") return;
+            int price = CalculateUpgradePrice(selected);
+            if (!TryChargeForUpgrade(player, selected, price))
+            {
+                return;
+            }
 
-            player.Gold -= price;
-            selected.Level += 1;
-            selected.DamageAmount = (int)(selected.DamageAmount * 1.10); // +10% base damage on upgrade
-            bool rarityChanged = selected.SyncRarityWithLevel();
-
-            var minAfter = Items.Weapons.Weapon.GetMinLevelForRarity(selected.Rarity);
-            var nextAfter = selected.GetNextRarityThresholdLevel();
-            string progressAfter = nextAfter is int nt2
-                ? $"Progress: {Math.Max(0, selected.Level - minAfter)}/{nt2 - minAfter} to next tier"
-                : "Max tier reached";
-
-            Console.WriteLine($"{name}: Done. {selected.Name} is now Lvl {selected.Level} [{selected.Rarity}]" + (rarityChanged ? " — rarity increased!" : "."));
-            Console.WriteLine($"Damage {selected.DamageAmount} | Eff {selected.GetEffectiveDamage()}, Dur {selected.Durability} | Eff {selected.GetEffectiveDurability()}");
-            Console.WriteLine(progressAfter);
-            Console.WriteLine($"Gold remaining: {player.Gold}");
-            Console.WriteLine("(Press ENTER)");
-            Console.ReadLine();
-
-            // Persist immediately in case of crash
-            RPGManagerLib.Saves.SaveManager.SaveOrUpdateCharacter(player);
+            ApplyUpgrade(player, selected);
         }
 
         /// <summary>
         /// Minimal placeholder quest interaction flow.
         /// </summary>
-        private void HandleQuestFlow(Heroes.Character player)
+        private void HandleQuestFlow(Character player)
         {
             EnsureQuestState(player);
-            if (!questOffered)
+            if (!QuestOffered)
             {
-                questOffered = true;
-                smithQuest = new RPGManagerLib.Quests.Quest(
-                    title: "Iron Procurement",
-                    description: "Bring 3 iron ore to the blacksmith."
-                );
-                smithQuest.Start();
-                // Track quest on the player if it doesn't already exist
-                if (!player.Quests.Any(q => string.Equals(q.Title, smithQuest.Title, StringComparison.OrdinalIgnoreCase)))
-                    player.Quests.Add(smithQuest);
-                RPGManagerLib.Saves.SaveManager.SaveOrUpdateCharacter(player);
-                AdvanceDialoguePhase(DialoguePhase.QuestOffered);
-                Console.WriteLine($"{name}: {GetNextDialogueLine()}");
-                Console.WriteLine($"{name}: {GetNextDialogueLine()}");
-                Console.WriteLine("(Press ENTER)");
-                Console.ReadLine();
+                OfferQuest(player);
                 return;
             }
 
-            if (!questCompleted)
+            if (!QuestCompleted && !TryCompleteQuest(player))
             {
-                Console.WriteLine($"{name}: Still waiting on those ore chunks.");
-                Console.Write("Mark quest as completed for demo? (y/n): ");
-                var done = Console.ReadLine()?.Trim().ToLower();
-                if (done == "y")
-                {
-                    questCompleted = true;
-                    smithQuest?.Complete();
-                    RPGManagerLib.Saves.SaveManager.SaveOrUpdateCharacter(player);
-                }
-                else
-                {
-                    Console.WriteLine("(Press ENTER)");
-                    Console.ReadLine();
-                    return;
-                }
+                return;
             }
 
-            // If you had a way to check inventory, you could flip questCompleted
-            AdvanceDialoguePhase(DialoguePhase.QuestCompleted);
-            Console.WriteLine($"{name}: {GetNextDialogueLine()}");
-            Console.WriteLine("(Press ENTER)");
-            Console.ReadLine();
-            RPGManagerLib.Saves.SaveManager.SaveOrUpdateCharacter(player);
+            CelebrateQuestCompletion(player);
         }
 
-        private void EnsureQuestState(Heroes.Character player)
+        /// <summary>
+        /// Ensures the in-memory quest reference matches what the player already knows
+        /// about the smith's quest. This avoids duplicating quest entries when the
+        /// player returns later in the conversation.
+        /// </summary>
+        /// <param name="player">The interacting player character.</param>
+        private void EnsureQuestState(Character player)
         {
-            // Align local flags to player's quest list so state survives reloads
-            var existing = player.Quests?.FirstOrDefault(q => string.Equals(q.Title, "Iron Procurement", StringComparison.OrdinalIgnoreCase));
+            var existing = player.Quests?
+                .FirstOrDefault(q => string.Equals(q.Title, QuestTitle, StringComparison.OrdinalIgnoreCase));
             if (existing != null)
             {
                 smithQuest = existing;
-                questOffered = true;
-                questCompleted = existing.State == RPGManagerLib.Quests.QuestState.Completed;
             }
+        }
+
+        /// <summary>
+        /// Returns a list of weapons owned by the warrior that can be upgraded.
+        /// </summary>
+        /// <param name="warrior">The warrior whose inventory is being examined.</param>
+        private static List<Weapon> GetUpgradableWeapons(Warrior warrior)
+        {
+            return warrior.Weapons?
+                .OfType<Weapon>()
+                .ToList() ?? new List<Weapon>();
+        }
+
+        /// <summary>
+        /// Shows an indexed list of weapons and returns the chosen option.
+        /// </summary>
+        /// <param name="weapons">Weapons that the smith can upgrade.</param>
+        /// <returns>The selected weapon, or null if the player cancels.</returns>
+        private Weapon? PromptWeaponSelection(IReadOnlyList<Weapon> weapons)
+        {
+            Console.WriteLine("Choose a weapon to upgrade:");
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {FormatWeaponSummary(weapons[i])}");
+            }
+
+            Console.Write("Number (or 'q' to cancel): ");
+            var input = Console.ReadLine();
+            if (string.Equals(input, "q", StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            if (!int.TryParse(input, out int choice) || choice < 1 || choice > weapons.Count)
+            {
+                return null;
+            }
+
+            return weapons[choice - 1];
+        }
+
+        /// <summary>
+        /// Builds a human-readable, single line description of the weapon including
+        /// its stats and upgrade progress.
+        /// </summary>
+        private static string FormatWeaponSummary(Weapon weapon)
+        {
+            int effectiveDamage = weapon.GetEffectiveDamage();
+            int effectiveDurability = weapon.GetEffectiveDurability();
+            string progress = DescribeUpgradeProgress(weapon);
+
+            var parts = new[]
+            {
+                $"{weapon.Name} — Level {weapon.Level} ({weapon.Rarity})",
+                $"Damage {weapon.DamageAmount} (Effective {effectiveDamage})",
+                $"Durability {weapon.Durability} (Effective {effectiveDurability})",
+                progress
+            };
+
+            return string.Join(" | ", parts);
+        }
+
+        /// <summary>
+        /// Describes how far the weapon is from reaching the next rarity tier.
+        /// </summary>
+        private static string DescribeUpgradeProgress(Weapon weapon)
+        {
+            var minLvlForCurrent = Weapon.GetMinLevelForRarity(weapon.Rarity);
+            var nextThreshold = weapon.GetNextRarityThresholdLevel();
+            if (nextThreshold is int nextRarityLevel)
+            {
+                int progressTowardNext = Math.Max(0, weapon.Level - minLvlForCurrent);
+                int levelsRequired = nextRarityLevel - minLvlForCurrent;
+                return $"Progress {progressTowardNext}/{levelsRequired} toward next rarity tier";
+            }
+
+            return "Maximum rarity reached";
+        }
+
+        /// <summary>
+        /// Calculates the gold cost for upgrading the provided weapon.
+        /// </summary>
+        private static int CalculateUpgradePrice(Weapon weapon)
+        {
+            int rarityIndex = (int)weapon.Rarity;
+            return 50 + (25 * weapon.Level) + (100 * rarityIndex);
+        }
+
+        /// <summary>
+        /// Confirms the player has enough gold and wants to spend it on the upgrade.
+        /// </summary>
+        /// <param name="player">The interacting character paying for the work.</param>
+        /// <param name="selected">Weapon being upgraded.</param>
+        /// <param name="price">Quoted gold cost.</param>
+        /// <returns>True if the gold was taken and the flow can continue.</returns>
+        private bool TryChargeForUpgrade(Character player, Weapon selected, int price)
+        {
+            Console.WriteLine($"Price to upgrade {selected.Name}: {price} gold. You have {player.Gold}.");
+            if (player.Gold < price)
+            {
+                Speak("Come back with more coin.");
+                WaitForPlayer();
+                return false;
+            }
+
+            if (!PromptYesNo("Proceed with upgrade? (y/n): "))
+            {
+                return false;
+            }
+
+            player.Gold -= price;
+            return true;
+        }
+
+        /// <summary>
+        /// Applies the mechanical upgrade, persists the change, and presents the result
+        /// to the player in a readable summary.
+        /// </summary>
+        private void ApplyUpgrade(Character player, Weapon weapon)
+        {
+            weapon.Level += 1;
+            weapon.DamageAmount = (int)Math.Round(weapon.DamageAmount * DamageUpgradeMultiplier, MidpointRounding.AwayFromZero);
+            bool rarityChanged = weapon.SyncRarityWithLevel();
+
+            DisplayUpgradeSummary(player, weapon, rarityChanged);
+            SaveManager.SaveOrUpdateCharacter(player);
+        }
+
+        /// <summary>
+        /// Writes a concise report of the new weapon stats and informs the player about
+        /// any rarity increases or gold spent.
+        /// </summary>
+        private void DisplayUpgradeSummary(Character player, Weapon weapon, bool rarityChanged)
+        {
+            Speak($"The work is done. {weapon.Name} is now level {weapon.Level} ({weapon.Rarity})." +
+                (rarityChanged ? " Its rarity has improved!" : string.Empty));
+
+            Console.WriteLine("Updated weapon stats:");
+            Console.WriteLine($"  Damage: {weapon.DamageAmount} (Effective {weapon.GetEffectiveDamage()})");
+            Console.WriteLine($"  Durability: {weapon.Durability} (Effective {weapon.GetEffectiveDurability()})");
+            Console.WriteLine($"  {DescribeUpgradeProgress(weapon)}");
+            Console.WriteLine($"Gold remaining: {player.Gold}");
+            WaitForPlayer();
+        }
+
+        /// <summary>
+        /// Starts the smith's quest for the first time and notifies the player.
+        /// </summary>
+        private void OfferQuest(Character player)
+        {
+            smithQuest = new Quest(QuestTitle, QuestDescription);
+            smithQuest.Start();
+
+            if (!player.Quests.Any(q => string.Equals(q.Title, QuestTitle, StringComparison.OrdinalIgnoreCase)))
+            {
+                player.Quests.Add(smithQuest);
+            }
+
+            SaveManager.SaveOrUpdateCharacter(player);
+            AdvanceDialoguePhase(DialoguePhase.QuestOffered);
+            Speak(GetNextDialogueLine());
+            Speak(GetNextDialogueLine());
+            WaitForPlayer();
+        }
+
+        /// <summary>
+        /// Provides a placeholder completion flow that can be extended later.
+        /// </summary>
+        private bool TryCompleteQuest(Character player)
+        {
+            Speak("Still waiting on those ore chunks.");
+            if (!PromptYesNo("Mark quest as completed for demo? (y/n): "))
+            {
+                WaitForPlayer();
+                return false;
+            }
+
+            smithQuest?.Complete();
+            SaveManager.SaveOrUpdateCharacter(player);
+            return true;
+        }
+
+        /// <summary>
+        /// Plays the dialogue and persistence steps once the quest is marked complete.
+        /// </summary>
+        private void CelebrateQuestCompletion(Character player)
+        {
+            AdvanceDialoguePhase(DialoguePhase.QuestCompleted);
+            Speak(GetNextDialogueLine());
+            WaitForPlayer();
+            SaveManager.SaveOrUpdateCharacter(player);
         }
     }
 }

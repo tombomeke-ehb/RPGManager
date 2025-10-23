@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using RPGManagerLib.Locations;
 using RPGManagerLib.Characters.Heroes;
 using RPGManagerLib.UI;
@@ -13,12 +16,12 @@ namespace RPGManagerLib.Characters.NPCs
         /// <summary>
         /// Display name of the NPC.
         /// </summary>
-        public string name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// The location this NPC belongs to.
         /// </summary>
-        public Location location;
+        public Location Location { get; }
 
         /// <summary>
         /// Dialogue phases (states) used to vary lines over time.
@@ -47,8 +50,8 @@ namespace RPGManagerLib.Characters.NPCs
         /// </summary>
         public NPC(string name, Location location)
         {
-            this.name = name;
-            this.location = location;
+            Name = name;
+            Location = location;
         }
 
         /// <summary>
@@ -60,13 +63,12 @@ namespace RPGManagerLib.Characters.NPCs
             bool exit = false;
             while (!exit)
             {
-                var menu = new MenuSystem($"{name} — What do you want to do?");
+                var menu = new MenuSystem($"{Name} — What do you want to do?");
                 menu.AddOption("t", "Talk", () =>
                 {
                     var line = GetNextDialogueLine();
-                    Console.WriteLine($"{name}: {line}");
-                    Console.WriteLine("(Press ENTER)");
-                    Console.ReadLine();
+                    Speak(line);
+                    WaitForPlayer();
                 });
 
                 // Allow subclasses to append their actions
@@ -115,6 +117,33 @@ namespace RPGManagerLib.Characters.NPCs
             idx = (idx + 1) % lines.Count;
             phaseIndices[currentPhase] = idx;
             return line;
+        }
+
+        /// <summary>
+        /// Writes a formatted line spoken by this NPC.
+        /// </summary>
+        protected void Speak(string message)
+        {
+            Console.WriteLine($"{Name}: {message}");
+        }
+
+        /// <summary>
+        /// Waits for the player to press enter, used to pause dialog flows.
+        /// </summary>
+        protected void WaitForPlayer()
+        {
+            Console.WriteLine("(Press ENTER)");
+            Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Simple yes/no confirmation helper shared by NPC interactions.
+        /// </summary>
+        protected static bool PromptYesNo(string prompt)
+        {
+            Console.Write(prompt);
+            var response = Console.ReadLine()?.Trim().ToLowerInvariant();
+            return response == "y" || response == "yes";
         }
     }
 }
