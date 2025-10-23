@@ -102,10 +102,17 @@ Artifacts will be in `RPGManager/bin/Release/<target>/publish/`.
 
 ## Downloads
 
-Latest builds are always available on the GitHub Releases page. Direct links to the latest release assets:
+Latest builds are available on the GitHub Releases page. Direct links to the latest stable release assets:
 - Windows x64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-win-x64.zip
-- macOS x64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-osx-x64.zip
+- Windows ARM64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-win-arm64.zip
+- macOS Intel (x64): https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-osx-x64.zip
+- macOS Apple Silicon (ARM64): https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-osx-arm64.zip
 - Linux x64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-linux-x64.zip
+- Linux ARM64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-linux-arm64.zip
+
+Notes:
+- “Latest” links only resolve to the most recent stable release. If there are only pre-releases, these URLs will 404. Use the specific tag download instead, e.g.:
+  - https://github.com/tombomeke-ehb/RPGManager/releases/download/v0.1.0/RPGManager-win-x64.zip
 
 To publish a new release:
 1) Update the version in `RPGManager/RPGManager.csproj` if needed.

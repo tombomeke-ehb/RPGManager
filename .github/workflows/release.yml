@@ -9,9 +9,11 @@ jobs:
   build-and-release:
     name: Build and upload release assets
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       matrix:
-        rid: [win-x64, osx-x64, linux-x64]
+        rid: [win-x64, win-arm64, osx-x64, osx-arm64, linux-x64, linux-arm64]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
