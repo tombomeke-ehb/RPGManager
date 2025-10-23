@@ -66,5 +66,16 @@ namespace RPGManagerLib.Saves
             File.WriteAllText(SaveFile, json);
             Console.WriteLine($"Saved to: {SaveFile}");
         }
+
+        /// <summary>
+        /// Saves or updates a single character by name, preserving other characters in the save file.
+        /// </summary>
+        public static void SaveOrUpdateCharacter(Character character)
+        {
+            var existing = LoadCharacters();
+            int idx = existing.FindIndex(c => string.Equals(c.Name, character.Name, StringComparison.OrdinalIgnoreCase));
+            if (idx >= 0) existing[idx] = character; else existing.Add(character);
+            SaveCharacters(existing);
+        }
     }
 }

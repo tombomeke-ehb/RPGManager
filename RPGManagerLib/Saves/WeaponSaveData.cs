@@ -43,6 +43,16 @@ namespace RPGManagerLib.Saves
         public int Level { get; set; }
 
         /// <summary>
+        /// Baseline damage before level scaling.
+        /// </summary>
+        public int BaseDamage { get; set; }
+
+        /// <summary>
+        /// Baseline durability before rarity scaling.
+        /// </summary>
+        public int BaseDurability { get; set; }
+
+        /// <summary>
         /// Elemental affinity.
         /// </summary>
         public Element Element { get; set; }
@@ -77,6 +87,10 @@ namespace RPGManagerLib.Saves
             Element = weapon.Element;
             CoolDownTime = weapon.CooldownTime;
             InventorySpaceAmount = weapon.InventorySpaceAmount;
+
+            // Derive baselines so we can reconstruct consistently on load
+            BaseDamage = (int)Math.Round(weapon.DamageAmount / Math.Pow(1.10, Math.Max(0, weapon.Level)));
+            BaseDurability = (int)Math.Round(weapon.Durability / weapon.GetRarityMultiplier());
         }
 
         /// <summary>
@@ -91,7 +105,12 @@ namespace RPGManagerLib.Saves
         /// <exception cref="Exception">Thrown if the <see cref="WeaponType"/> property contains an unknown or unsupported value.</exception>
         public Weapon ToWeapon()
         {
-            return WeaponType switch
+            // Fall back if older saves don't have baselines
+            int baseDmg = BaseDamage > 0 ? BaseDamage : (int)Math.Round(DamageAmount / Math.Pow(1.10, Math.Max(0, Level)));
+            double savedMultiplier = Weapon.GetMultiplierForRarity(Rarity);
+            int baseDur = BaseDurability > 0 ? BaseDurability : (int)Math.Round(Durability / savedMultiplier);
+
+            Weapon w = WeaponType switch
             {
                 WeaponType.SWORD => new Sword(
                     DamageAmount,
@@ -145,6 +164,18 @@ namespace RPGManagerLib.Saves
                 ),
                 _ => throw new Exception($"Unknown weapon type: {WeaponType}")
             };
+
+            // Now recalc consistency using the constructed weapon's own multiplier
+            // Ensure rarity is at least what level implies, but never downgrade saved rarity
+            var savedRarity = w.Rarity;
+            w.SyncRarityWithLevel();
+            if (savedRarity > w.Rarity) w.Rarity = savedRarity;
+
+            // Re-derive stats from baselines (failsafe)
+            w.DamageAmount = (int)Math.Round(baseDmg * Math.Pow(1.10, Math.Max(0, w.Level)));
+            w.Durability = (int)Math.Round(baseDur * w.GetRarityMultiplier());
+
+            return w;
         }
     }
 }

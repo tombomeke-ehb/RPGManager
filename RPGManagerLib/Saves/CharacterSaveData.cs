@@ -1,6 +1,7 @@
 using RPGManagerLib.Characters.Heroes;
 using RPGManagerLib.Items;
 using RPGManagerLib.Items.Weapons;
+using RPGManagerLib.Quests;
 
 namespace RPGManagerLib.Saves
 {
@@ -35,6 +36,16 @@ public class CharacterSaveData
     public int PowerLevel { get; set; }
 
     /// <summary>
+    /// Amount of gold the character carries.
+    /// </summary>
+    public int Gold { get; set; }
+
+    /// <summary>
+    /// Quests tracked for this character.
+    /// </summary>
+    public List<QuestSaveData> Quests { get; set; } = new();
+
+    /// <summary>
     /// Serialized weapons for warriors.
     /// </summary>
     public List<WeaponSaveData> Weapons { get; set; } = new();
@@ -55,7 +66,11 @@ public class CharacterSaveData
         Health = c.Health;
         CreationDate = c.CreationDate;
         PowerLevel = c.PowerLevel;
+        Gold = c.Gold;
         CharacterType = c.CharacterType;
+
+        if (c.Quests != null)
+            Quests = c.Quests.Select(q => new QuestSaveData(q)).ToList();
 
         if (c is Warrior w)
             Weapons = w.Weapons
@@ -71,7 +86,7 @@ public class CharacterSaveData
     /// </summary>
     public Character ToCharacter()
     {
-        return CharacterType switch
+        Character character = CharacterType switch
         {
             "Warrior" => new Warrior(
                 Name,
@@ -83,6 +98,11 @@ public class CharacterSaveData
             "Mage" => new Mage(Name, Health, CreationDate, PowerLevel, ManaBoost),
             _ => throw new Exception($"Unknown character type: {CharacterType}")
         };
+
+        character.Gold = Gold;
+        if (Quests != null)
+            character.Quests = Quests.Select(q => q.ToQuest()).ToList();
+        return character;
     }
 }
 }
