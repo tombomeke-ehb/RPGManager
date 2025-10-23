@@ -75,6 +75,7 @@ namespace RPGManagerLib.UI
 
             mainMenu.AddOption("4", "Explore", () => Explore());
             mainMenu.AddOption("5", "Fight", () => Fight());
+            mainMenu.AddOption("7", "Interact with NPCs", () => InteractWithNpcs());
             mainMenu.AddOption("6", "Quit", () =>
             {
                 SaveManager.SaveCharacters(characters);
@@ -152,6 +153,55 @@ namespace RPGManagerLib.UI
             }
 
             Console.WriteLine($"{currentCharacter.Name} is preparing for battle!");
+        }
+
+        /// <summary>
+        /// Allows the current character to choose a location and NPC to interact with.
+        /// </summary>
+        private static void InteractWithNpcs()
+        {
+            if (currentCharacter == null)
+            {
+                Console.WriteLine("Select a character first!");
+                return;
+            }
+
+            World.World.EnsureInitialized();
+            var locations = World.World.Locations;
+
+            if (locations.Count == 0)
+            {
+                Console.WriteLine("There are no places to visit yet.");
+                return;
+            }
+
+            Console.WriteLine("Choose a location:");
+            for (int i = 0; i < locations.Count; i++)
+                Console.WriteLine($"{i + 1}. {locations[i].Name}");
+
+            Console.Write("Enter number (or 'q' to cancel): ");
+            var locInput = Console.ReadLine();
+            if (string.Equals(locInput, "q", StringComparison.OrdinalIgnoreCase)) return;
+            if (!int.TryParse(locInput, out int locIdx) || locIdx < 1 || locIdx > locations.Count) return;
+
+            var loc = locations[locIdx - 1];
+            if (loc.NPCs.Count == 0)
+            {
+                Console.WriteLine("No one is here right now.");
+                return;
+            }
+
+            Console.WriteLine($"\nPeople at {loc.Name}:");
+            for (int i = 0; i < loc.NPCs.Count; i++)
+                Console.WriteLine($"{i + 1}. {loc.NPCs[i].name}");
+
+            Console.Write("Talk to whom? (number or 'q'): ");
+            var npcInput = Console.ReadLine();
+            if (string.Equals(npcInput, "q", StringComparison.OrdinalIgnoreCase)) return;
+            if (!int.TryParse(npcInput, out int npcIdx) || npcIdx < 1 || npcIdx > loc.NPCs.Count) return;
+
+            var npc = loc.NPCs[npcIdx - 1];
+            npc.Interact(currentCharacter);
         }
 
     }
