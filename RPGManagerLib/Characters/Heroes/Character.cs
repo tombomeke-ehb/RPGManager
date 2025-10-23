@@ -1,4 +1,5 @@
-﻿using RPGManagerLib.Exceptions;
+using RPGManagerLib.Exceptions;
+using RPGManagerLib.Quests;
 
 namespace RPGManagerLib.Characters.Heroes
 {
@@ -35,6 +36,16 @@ namespace RPGManagerLib.Characters.Heroes
         public int PowerLevel { get; set; }
 
         /// <summary>
+        /// Currency carried by the character.
+        /// </summary>
+        public int Gold { get; set; }
+
+        /// <summary>
+        /// Quests tracked by this character.
+        /// </summary>
+        public System.Collections.Generic.List<RPGManagerLib.Quests.Quest> Quests { get; set; } = new();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with default values.
         /// </summary>
         /// 
@@ -46,6 +57,7 @@ namespace RPGManagerLib.Characters.Heroes
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
+            Gold = 100;
         }
 
         /// <summary>
@@ -58,13 +70,14 @@ namespace RPGManagerLib.Characters.Heroes
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
+            Gold = 100;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with custom values.
         /// </summary>
         /// <param name="name">The character's name.</param>
-        /// <param name="health">The initial health value (0–100).</param>
+        /// <param name="health">The initial health value (0â€“100).</param>
         /// <param name="creationDate">The creation date of the character.</param>
         /// <param name="powerLevel">The starting power level.</param>
         public Character(string name, double health, DateTime creationDate, int powerLevel)
@@ -73,6 +86,7 @@ namespace RPGManagerLib.Characters.Heroes
             Health = health;
             CreationDate = creationDate;
             PowerLevel = powerLevel;
+            Gold = 100;
         }
 
         /// <summary>

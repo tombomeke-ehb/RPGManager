@@ -102,6 +102,19 @@ namespace RPGManagerLib.Items.Weapons
             };
 
         /// <summary>
+        /// Static helper to get the rarity multiplier for a given tier.
+        /// </summary>
+        public static double GetMultiplierForRarity(Rarity rarity) => rarity switch
+        {
+            Rarity.COMMON => 1.0,
+            Rarity.UNCOMMON => 1.2,
+            Rarity.RARE => 1.5,
+            Rarity.EPIC => 2.0,
+            Rarity.LEGENDARY => 3.0,
+            _ => 1.0
+        };
+
+        /// <summary>
         /// Returns damage adjusted by the rarity multiplier.
         /// </summary>
         public int GetEffectiveDamage() => (int)(DamageAmount * GetRarityMultiplier());
@@ -112,19 +125,61 @@ namespace RPGManagerLib.Items.Weapons
         public int GetEffectiveDurability() => (int)(Durability * GetRarityMultiplier());
 
         /// <summary>
-        /// Promotes the weapon to the next rarity tier if possible.
+        /// Returns the minimum rarity implied by the current <see cref="Level"/>.
         /// </summary>
-        /// <returns>The updated <see cref="Rarity"/> after the upgrade.</returns>
-        public Rarity UpgradeWeapon() { 
-            Rarity = Rarity switch
+        /// <remarks>
+        /// This models a progression where item level gradually unlocks higher rarity tiers over time.
+        /// Finding a high-rarity item at a low level is valid; we never downgrade rarity.
+        /// Example thresholds (tweak as desired):
+        /// 0-4: Common, 5-9: Uncommon, 10-14: Rare, 15-19: Epic, 20+: Legendary.
+        /// </remarks>
+        public Rarity GetTargetRarityForLevel()
+        {
+            if (Level >= 20) return Rarity.LEGENDARY;
+            if (Level >= 15) return Rarity.EPIC;
+            if (Level >= 10) return Rarity.RARE;
+            if (Level >= 5) return Rarity.UNCOMMON;
+            return Rarity.COMMON;
+        }
+
+        /// <summary>
+        /// Ensures <see cref="Rarity"/> is at least the rarity implied by <see cref="Level"/>.
+        /// Does not downgrade; returns true if rarity changed.
+        /// </summary>
+        public bool SyncRarityWithLevel()
+        {
+            var target = GetTargetRarityForLevel();
+            if (target > Rarity)
             {
-                Rarity.COMMON => Rarity.UNCOMMON,
-                Rarity.UNCOMMON => Rarity.RARE,
-                Rarity.RARE => Rarity.EPIC,
-                Rarity.EPIC => Rarity.LEGENDARY,
-                _ => Rarity
-            };
-            return Rarity;
+                Rarity = target;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Returns the minimum level required for a specific rarity tier.
+        /// </summary>
+        public static int GetMinLevelForRarity(Rarity rarity) => rarity switch
+        {
+            Rarity.COMMON => 0,
+            Rarity.UNCOMMON => 5,
+            Rarity.RARE => 10,
+            Rarity.EPIC => 15,
+            Rarity.LEGENDARY => 20,
+            _ => 0
+        };
+
+        /// <summary>
+        /// Returns the next level threshold at which rarity would increase, or null if at max tier.
+        /// </summary>
+        public int? GetNextRarityThresholdLevel()
+        {
+            if (Level < 5) return 5;
+            if (Level < 10) return 10;
+            if (Level < 15) return 15;
+            if (Level < 20) return 20;
+            return null; // already at or above legendary threshold
         }
     }
 
