@@ -32,6 +32,14 @@ namespace RPGManager
             Console.WriteLine("====================================================================");
             Console.ResetColor();
 
+            var v = System.Reflection.Assembly
+                .GetExecutingAssembly()
+                .GetCustomAttribute<System.Reflection.AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion ?? "dev";
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine($"Version: {v}");
+            Console.ResetColor();
+
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("                     A Tombomeke Studios Production");
             Console.ResetColor();

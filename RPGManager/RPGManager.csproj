@@ -5,6 +5,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Version>0.1.0</Version>
+    <InformationalVersion>0.1.0-dev</InformationalVersion>
+    <Authors>Tombomeke Studios</Authors>
+    <RepositoryUrl>https://github.com/tombomeke-ehb/RPGManager</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

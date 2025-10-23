@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    name: Build and upload release assets
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rid: [win-x64, osx-x64, linux-x64]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Publish ${{ matrix.rid }}
+        run: |
+          dotnet publish RPGManager -c Release -r ${{ matrix.rid }} -p:PublishSingleFile=true --self-contained true -o out/${{ matrix.rid }}
+
+      - name: Create archive ${{ matrix.rid }}
+        run: |
+          cd out/${{ matrix.rid }}
+          zip -r ../../RPGManager-${{ matrix.rid }}.zip .
+
+      - name: Upload assets to release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            RPGManager-${{ matrix.rid }}.zip
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-rc') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

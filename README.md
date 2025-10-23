@@ -2,13 +2,13 @@
 
 Status: Work in Progress (actively developed)
 
-RPG Manager is a .NET 8 console RPG framework and playable demo. It opens with a cinematic splash screen and drops you into a simple, text‑driven loop where you create a hero, equip items, and choose to explore or enter combat. The goal is to grow this into a small, story‑lite adventure while keeping the code clean and extensible for future systems (inventory, encounters, skills, locations, etc.).
+RPG Manager is a .NET 8 console RPG framework and playable demo. It opens with a cinematic splash screen and drops you into a simple, text-driven loop where you create a hero, equip items, and choose to explore or enter combat. The goal is to grow this into a small, story-lite adventure while keeping the code clean and extensible for future systems (inventory, encounters, skills, locations, etc.).
 
 Project page (soon): https://tombomeke.com
 
-## What’s This?
+## What's This?
 
-Short version: a foundation for a small, single‑player RPG you can run in the terminal. It’s also a clean learning project for object‑oriented C# patterns, with clear seams to add features safely as the game grows.
+Short version: a foundation for a small, single-player RPG you can run in the terminal. It's also a clean learning project for object-oriented C# patterns, with clear seams to add features safely as the game grows.
 
 ## Current Gameplay Snapshot
 
@@ -19,12 +19,12 @@ Short version: a foundation for a small, single‑player RPG you can run in the 
 
 ## Features (Current)
 
-- Interactive game loop – menu to create/switch heroes, explore, and fight.
-- Character system – Warrior and Mage with shared behavior (heal/damage) and per‑class flavor.
-- Items and equipment – melee weapons, bows, and quivers via a simple equipable interface.
-- Inventory capacity – 4 slots; small items use 1, large use 2; validation prevents overflow.
-- Save management – JSON saves; override directory via `RPGMANAGER_SAVE_DIR`.
-- Extensible design – add heroes, weapons, locations, and menu actions without churn.
+- Interactive game loop - menu to create/switch heroes, explore, and fight.
+- Character system - Warrior and Mage with shared behavior (heal/damage) and per-class flavor.
+- Items and equipment - melee weapons, bows, and quivers via a simple equipable interface.
+- Inventory capacity - 4 slots; small items use 1, large use 2; validation prevents overflow.
+- Save management - JSON saves; override directory via `RPGMANAGER_SAVE_DIR`.
+- Extensible design - add heroes, weapons, locations, and menu actions without churn.
 
 ## Project Structure
 
@@ -35,10 +35,10 @@ RPGManagerLib/          Library: characters, items, UI, and save logic
 ```
 
 Key entry points:
-- `RPGManager/Program.cs` – splash screen, calls `GameMenu.Start()`.
-- `RPGManagerLib/UI/GameMenu.cs` – main loop and menu actions.
-- `RPGManagerLib/UI/CharacterFactory.cs` – interactive character creation and equipment selection.
-- `RPGManagerLib/Saves/SaveManager.cs` – JSON serialization, save/load.
+- `RPGManager/Program.cs` - splash screen, calls `GameMenu.Start()`.
+- `RPGManagerLib/UI/GameMenu.cs` - main loop and menu actions.
+- `RPGManagerLib/UI/CharacterFactory.cs` - interactive character creation and equipment selection.
+- `RPGManagerLib/Saves/SaveManager.cs` - JSON serialization, save/load.
 
 ## Prerequisites
 
@@ -67,13 +67,13 @@ Set a custom save directory (optional):
 
 ## How To Play
 
-- First launch loads or creates your hero. If none exist, you’ll create one.
+- First launch loads or creates your hero. If none exist, you'll create one.
 - Creating a Warrior allows selecting equipment; a Mage starts with class defaults.
 - Inventory capacity is 4 slots total:
   - Small items (e.g., Dagger, Sword, Bow, Quiver) use 1 slot.
   - Large items (e.g., Axe, Spear) use 2 slots.
 - Main menu options include: create new character, switch active character, view current character, explore, fight, or quit.
-- Explore and Fight currently demonstrate flow with simple messages; extend them for encounters and combat.
+- Explore and Fight currently demonstrate flow with simple messages; they will expand over time.
 
 ## Configuration and Saves
 
@@ -83,7 +83,7 @@ Set a custom save directory (optional):
 
 ## Build and Publish
 
-Create self‑contained, single‑file binaries for distribution:
+Create self-contained, single-file binaries for distribution:
 
 - Windows x64:
   ```powershell
@@ -100,42 +100,40 @@ Create self‑contained, single‑file binaries for distribution:
 
 Artifacts will be in `RPGManager/bin/Release/<target>/publish/`.
 
-## Extending The Game
+## Downloads
 
-- Add a new hero class:
-  - Create a class under `RPGManagerLib/Characters/Heroes/` inheriting from `Character`.
-  - Expose a `CharacterType` and any custom behaviors.
-  - Update `CharacterFactory` to construct it from user input.
+Latest builds are always available on the GitHub Releases page. Direct links to the latest release assets:
+- Windows x64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-win-x64.zip
+- macOS x64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-osx-x64.zip
+- Linux x64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-linux-x64.zip
 
-- Add a weapon or item:
-  - Implement `IEquipable` under `RPGManagerLib/Items/` (or extend `Weapon` under `Items/Weapons`).
-  - Decide inventory size via `InventorySpaceAmount`.
-  - Add to the selection in `CharacterFactory.EquipableSelectionMenu()`.
+To publish a new release:
+1) Update the version in `RPGManager/RPGManager.csproj` if needed.
+2) Push a tag like `v0.1.0` to GitHub.
+3) GitHub Actions builds all platforms and attaches zips to the release automatically.
 
-- Add a menu action:
-  - Add a new case in `RPGManagerLib/UI/GameMenu.cs` within the main loop.
-  - Keep output text‑only for simplicity; consider extracting logic into a new class.
+Workflow file: `.github/workflows/release.yml`
 
 ## Roadmap
 
-Near‑term
+Near-term
 - Encounters: basic exploration events with outcomes and rewards.
 - Combat: turn order, abilities, status effects, loot.
 - Progression: XP/leveling, skills, equipment rarities.
-- Saves: multiple save slots and last‑played tracking.
+- Saves: multiple save slots and last-played tracking.
 
 Later
 - World: locations, simple NPC interactions, and quests.
 - UX: settings menu, accessibility tweaks.
 - Content: item tiers, unique abilities, lightweight story beats.
 
-## Contributing
+## Feedback
 
-This project is actively evolving. Suggestions and lightweight PRs are welcome, but the design may change rapidly. If proposing bigger changes, please open an issue or discussion first to align on direction.
+This is a personal project. I am not accepting pull requests. If you find bugs or have suggestions, please open an issue with clear steps and context. Feedback is welcome; contributions will remain at my discretion.
 
 ## Troubleshooting
 
-- Console glyphs: if you see odd characters in the console banner, ensure your terminal encoding supports UTF‑8.
+- Console glyphs: if you see odd characters in the console banner, ensure your terminal encoding supports UTF-8.
 - Save issues: verify the `RPGMANAGER_SAVE_DIR` exists and is writable, or remove it to use the default `Save` folder.
 - Build errors: run `dotnet --info` to ensure .NET 8 SDK is installed and selected.
 
@@ -143,3 +141,6 @@ This project is actively evolving. Suggestions and lightweight PRs are welcome, 
 
 Code is licensed under the MIT License (see `LICENSE`). Game assets (art, audio, narrative content) may be licensed separately when added.
 
+## Press Kit
+
+See PRESS.md for a compact blurb, features, platforms, and links.
