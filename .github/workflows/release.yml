@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*'
+  release:
+    types: [published]
 
 jobs:
   build-and-release:
@@ -37,7 +39,7 @@ jobs:
 
       - name: Upload assets to release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+        if: ${{ github.event_name == 'push' || github.event_name == 'release' }}
         with:
           files: |
             RPGManager-${{ matrix.rid }}.zip
