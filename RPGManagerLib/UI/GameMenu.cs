@@ -1,5 +1,6 @@
 ﻿using RPGManagerLib.Characters.Heroes;
 using RPGManagerLib.Saves;
+using RPGManagerLib.Worlds;
 
 namespace RPGManagerLib.UI
 {
@@ -36,8 +37,12 @@ namespace RPGManagerLib.UI
                 currentCharacter = characters[0]; // or track last played
             }
 
+            // Generate world
+            World Tavaryn = new("Tavaryn");
+
             // Then show the main menu
             ShowMainMenu();
+            
         }
 
         /// <summary>
