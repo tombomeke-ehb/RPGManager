@@ -114,13 +114,6 @@ Notes:
 - “Latest” links only resolve to the most recent stable release. If there are only pre-releases, these URLs will 404. Use the specific tag download instead, e.g.:
   - https://github.com/tombomeke-ehb/RPGManager/releases/download/v0.1.0/RPGManager-win-x64.zip
 
-To publish a new release:
-1) Update the version in `RPGManager/RPGManager.csproj` if needed.
-2) Push a tag like `v0.1.0` to GitHub.
-3) GitHub Actions builds all platforms and attaches zips to the release automatically.
-
-Workflow file: `.github/workflows/release.yml`
-
 ## Roadmap
 
 Near-term
