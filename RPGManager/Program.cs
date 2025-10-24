@@ -32,10 +32,10 @@ namespace RPGManager
             Console.WriteLine("====================================================================");
             Console.ResetColor();
 
-            var v = System.Reflection.Assembly
-                .GetExecutingAssembly()
-                .GetCustomAttribute<System.Reflection.AssemblyInformationalVersionAttribute>()
-                ?.InformationalVersion ?? "dev";
+            var v = System.Reflection.CustomAttributeExtensions
+                .GetCustomAttribute<System.Reflection.AssemblyInformationalVersionAttribute>(
+                    System.Reflection.Assembly.GetExecutingAssembly()
+                )?.InformationalVersion ?? "dev";
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine($"Version: {v}");
             Console.ResetColor();
