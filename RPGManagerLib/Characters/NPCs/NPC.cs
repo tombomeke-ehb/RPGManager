@@ -9,8 +9,8 @@ namespace RPGManagerLib.Characters.NPCs
 
         public NPC(string name, Location location)
         {
-            this.Name = name;
-            this.Location = location;
+            Name = name;
+            Location = location;
         }
     }
 }
