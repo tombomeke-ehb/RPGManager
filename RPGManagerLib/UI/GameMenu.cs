@@ -38,7 +38,10 @@ namespace RPGManagerLib.UI
             }
 
             // Generate world
-            World Tavaryn = new("Tavaryn");
+            
+            World Tavaryn = new("Tavaryn", "A quite small starter world with not that many dangerous monsters");
+            Tavaryn.UnLock();
+            currentCharacter.CurrentWorld = Tavaryn;
 
             // Then show the main menu
             ShowMainMenu();

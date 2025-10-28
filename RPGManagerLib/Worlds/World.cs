@@ -61,5 +61,19 @@ namespace RPGManagerLib.Worlds
         {
             Locations.Remove(location);
         }
+
+        /// <summary>
+        /// Unlocks the current instance, allowing access to its features.
+        /// </summary>
+        /// <remarks>Once unlocked, the instance can be used without restrictions. Ensure that unlocking
+        /// is performed only when necessary to maintain security or integrity.</remarks>
+        public void UnLock() => IsUnlocked = true;
+
+        /// <summary>
+        /// Locks the current instance, denying acces to its features.
+        /// </summary>
+        /// <remarks>Locking of a world only happens when for example losing rights to travel there (low reputation)
+        /// or losing the items nescesary to travel to said world</remarks>
+        public void Lock() => IsUnlocked = false;
     }
 }
