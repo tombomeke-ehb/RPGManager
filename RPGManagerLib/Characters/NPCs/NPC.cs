@@ -12,5 +12,9 @@ namespace RPGManagerLib.Characters.NPCs
             Name = name;
             Location = location;
         }
+
+        public abstract void Interact();
+
+        public abstract void Trade();
     }
 }

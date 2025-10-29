@@ -8,5 +8,15 @@ namespace RPGManagerLib.Characters.NPCs
             : base("Black Smith", location)
         {
         }
+
+        public override void Interact()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Trade()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
