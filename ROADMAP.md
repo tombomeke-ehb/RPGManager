@@ -2,58 +2,61 @@
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2025-11-04 14:56**_
+_Last updated: **2025-11-04 15:00**_
 
-🧩 **11 Namespaces · 27 Classes · 10 Methods · 0 TODOs**
+🧩 **11 Namespaces · 27 Classes · 17 Methods · 0 TODOs**
 
 
 ## 📦 RPGManagerLib.Characters.Heroes
 
-### 🧱 provides.cs
+### 🧱 [provides.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/Heroes/Character.cs)
 **Public Methods:**
 - `Heal()`
 - `Damage()`
+- `ToString()`
 
-### 🧱 Mage.cs
-_No public methods found._
+### 🧱 [Mage.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/Heroes/Mage.cs)
+**Public Methods:**
+- `ToString()`
 
-### 🧱 extends.cs
-_No public methods found._
+### 🧱 [extends.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/Heroes/Warrior.cs)
+**Public Methods:**
+- `ToString()`
 
 
 ## 📦 RPGManagerLib.Characters.NPCs
 
-### 🧱 BlackSmith.cs
+### 🧱 [BlackSmith.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/NPCs/BlackSmith.cs)
 _No public methods found._
 
-### 🧱 NPC.cs
+### 🧱 [NPC.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/NPCs/NPC.cs)
 _No public methods found._
 
 
 ## 📦 RPGManagerLib.Exceptions
 
-### 🧱 CharacterException.cs
+### 🧱 [CharacterException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/CharacterException.cs)
 _No public methods found._
 
-### 🧱 InvalidWeaponException.cs
+### 🧱 [InvalidWeaponException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/InvalidWeaponException.cs)
 _No public methods found._
 
-### 🧱 NegativeDamageException.cs
+### 🧱 [NegativeDamageException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/NegativeDamageException.cs)
 _No public methods found._
 
-### 🧱 NegativeHealException.cs
+### 🧱 [NegativeHealException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/NegativeHealException.cs)
 _No public methods found._
 
-### 🧱 OverhealException.cs
+### 🧱 [OverhealException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/OverhealException.cs)
 _No public methods found._
 
-### 🧱 OverkillException.cs
+### 🧱 [OverkillException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/OverkillException.cs)
 _No public methods found._
 
 
 ## 📦 RPGManagerLib.Items.Weapons
 
-### 🧱 Weapon.cs
+### 🧱 [Weapon.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Weapon.cs)
 **Public Methods:**
 - `GetRarityMultiplier()`
 - `GetEffectiveDamage()`
@@ -63,63 +66,67 @@ _No public methods found._
 
 ## 📦 RPGManagerLib.Items.Weapons.Bows
 
-### 🧱 Bow.cs
+### 🧱 [Bow.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Bows/Bow.cs)
 _No public methods found._
 
-### 🧱 SimpleBow.cs
+### 🧱 [SimpleBow.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Bows/SimpleBow.cs)
 _No public methods found._
 
 
 ## 📦 RPGManagerLib.Items.Weapons.Melee
 
-### 🧱 Axe.cs
+### 🧱 [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Melee/Axe.cs)
 _No public methods found._
 
-### 🧱 Dagger.cs
+### 🧱 [Dagger.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Melee/Dagger.cs)
 _No public methods found._
 
-### 🧱 Spear.cs
+### 🧱 [Spear.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Melee/Spear.cs)
 _No public methods found._
 
-### 🧱 Sword.cs
+### 🧱 [Sword.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Melee/Sword.cs)
 _No public methods found._
 
 
 ## 📦 RPGManagerLib.Items.Weapons.Quivers
 
-### 🧱 SmallQuiver.cs
+### 🧱 [SmallQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Quivers/SmallQuiver.cs)
 _No public methods found._
 
 
 ## 📦 RPGManagerLib.Locations
 
-### 🧱 Location.cs
+### 🧱 [Location.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Locations/Location.cs)
 _No public methods found._
 
 
 ## 📦 RPGManagerLib.Saves
 
-### 🧱 CharacterSaveData.cs
+### 🧱 [CharacterSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Saves/CharacterSaveData.cs)
 **Public Methods:**
 - `ToCharacter()`
 
-### 🧱 SaveManager.cs
-_No public methods found._
+### 🧱 [SaveManager.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Saves/SaveManager.cs)
+**Public Methods:**
+- `LoadCharacters()`
+- `SaveCharacters()`
 
-### 🧱 is.cs
+### 🧱 [is.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Saves/WeaponSaveData.cs)
 **Public Methods:**
 - `ToWeapon()`
 
 
 ## 📦 RPGManagerLib.UI
 
-### 🧱 interacts.cs
-_No public methods found._
+### 🧱 [interacts.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/UI/CharacterFactory.cs)
+**Public Methods:**
+- `CreateCharacter()`
 
-### 🧱 GameMenu.cs
-_No public methods found._
+### 🧱 [GameMenu.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/UI/GameMenu.cs)
+**Public Methods:**
+- `Start()`
 
-### 🧱 MenuSystem.cs
+### 🧱 [MenuSystem.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/UI/MenuSystem.cs)
 **Public Methods:**
 - `AddOption()`
 - `Show()`
@@ -127,6 +134,6 @@ _No public methods found._
 
 ## 📦 RPGManagerLib.Weapons.Quivers
 
-### 🧱 Quiver.cs
+### 🧱 [Quiver.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Quivers/Quiver.cs)
 _No public methods found._
 
