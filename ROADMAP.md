@@ -2,7 +2,9 @@
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2025-11-04 14:41**_
+_Last updated: **2025-11-04 14:56**_
+
+🧩 **11 Namespaces · 27 Classes · 10 Methods · 0 TODOs**
 
 
 ## 📦 RPGManagerLib.Characters.Heroes
@@ -11,7 +13,6 @@ _Last updated: **2025-11-04 14:41**_
 **Public Methods:**
 - `Heal()`
 - `Damage()`
-- `TravelTo()`
 
 ### 🧱 Mage.cs
 _No public methods found._
@@ -48,9 +49,6 @@ _No public methods found._
 
 ### 🧱 OverkillException.cs
 _No public methods found._
-
-
-## 📦 RPGManagerLib.Items
 
 
 ## 📦 RPGManagerLib.Items.Weapons
@@ -96,10 +94,7 @@ _No public methods found._
 ## 📦 RPGManagerLib.Locations
 
 ### 🧱 Location.cs
-**Public Methods:**
-- `addNPC()`
-- `removeNPC()`
-- `getNPCs()`
+_No public methods found._
 
 
 ## 📦 RPGManagerLib.Saves
@@ -135,12 +130,3 @@ _No public methods found._
 ### 🧱 Quiver.cs
 _No public methods found._
 
-
-## 📦 RPGManagerLib.Worlds
-
-### 🧱 World.cs
-**Public Methods:**
-- `AddLocation()`
-- `RemoveLocation()`
-- `UnLock()`
-- `Lock()`
