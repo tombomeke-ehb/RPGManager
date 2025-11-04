@@ -21,7 +21,7 @@ namespace RPGManager.Tools
                 return;
             }
 
-            string repoUrl = "https://github.com/tombomeke-ehb/RPGManager/blob/main/";
+            string repoUrl = "https://github.com/tombomeke-ehb/RPGManager/main/";
             var csFiles = Directory.GetFiles(libPath, "*.cs", SearchOption.AllDirectories);
 
             // --- analyze files safely ---
@@ -76,8 +76,20 @@ namespace RPGManager.Tools
             string[] emojis = { "🧱", "⚔️", "📜", "🧙", "🏹", "🐉", "🏰", "🧭", "🪄", "🧰", "🎯" };
             int emojiIndex = 0;
 
+            // Keep any manual content above the marker
+            string manualSection = "";
+            if (File.Exists(roadmapPath))
+            {
+                var existing = File.ReadAllText(roadmapPath);
+                int markerIndex = existing.IndexOf("<!-- AUTO-GENERATED BELOW");
+                if (markerIndex >= 0)
+                    manualSection = existing[..markerIndex].TrimEnd() + "\n\n";
+            }
+
             using var sw = new StreamWriter(roadmapPath, false);
-            sw.WriteLine("# 🗺️ RPG Manager – Dynamic Roadmap\n");
+            sw.WriteLine(manualSection);
+            sw.WriteLine("<!-- AUTO-GENERATED BELOW – DO NOT EDIT -->");
+            sw.WriteLine("\n# 🧮 Project Overview (auto-generated)\n");
             sw.WriteLine("> Automatically generated from RPGManagerLib source files.\n");
             sw.WriteLine($"_Last updated: **{DateTime.Now:yyyy-MM-dd HH:mm}**_\n");
             sw.WriteLine($"🧩 **{nsCount} Namespaces · {classCount} Classes · {methodCount} Methods · {todoCount} TODOs**\n");

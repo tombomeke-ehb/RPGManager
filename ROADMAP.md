@@ -1,4 +1,73 @@
-# 🗺️ RPG Manager – Dynamic Roadmap
+# 🗺️ RPG Manager – Development Roadmap
+
+Welcome to the official development roadmap for **RPG Manager**,  
+a modular C# RPG engine by *Tombomeke Studios* ⚔️  
+
+This section is **manually written** and reflects your development goals, vision,  
+and progress — while the section below is automatically generated  
+based on your actual C# codebase.
+
+---
+
+## 🎯 Vision
+Build a fully modular, text-based RPG framework with:
+- Expandable **World** and **Location** system 🌍  
+- Deep **Character** and **Inventory** interactions 🧙‍♂️  
+- Persistent **Save System** 💾  
+- Scalable for future CLI and GUI support ⚙️  
+
+---
+
+## 🚀 Milestones
+
+| Milestone | Description | Status | Target |
+|------------|--------------|--------|---------|
+| **v0.1 – Core Engine** | Character classes, weapons, save system | ✅ Done | 2025-10 |
+| **v0.2 – World System** | Worlds, locations, and travel mechanics | ⚙️ In Progress | 2025-11 |
+| **v0.3 – Combat System** | Turn-based battles, HP & weapon effects | 🧱 Planned | 2025-12 |
+| **v0.4 – Economy System** | Currency, shops, crafting | 🧱 Planned | Q1 2026 |
+| **v1.0 – CLI Launch** | Full release with save/load UI | 🪄 Planned | Mid 2026 |
+
+---
+
+## 🧩 Feature Board
+
+### 🧙 Characters
+- ✅ Character creation & naming  
+- ✅ Warrior & Mage base classes  
+- 🧱 Add leveling and XP system  
+- 🧱 Add ability trees per class  
+
+### ⚔️ Weapons
+- ✅ Weapon rarity & upgrades  
+- ✅ Melee & ranged system  
+- 🧱 Add elemental modifiers  
+- 🧱 Add durability-based breaking  
+
+### 🌍 Worlds
+- ✅ World & Location base system  
+- 🧱 Add travel system between locations  
+- 🧱 Add difficulty scaling  
+- 🧱 Add random world events  
+
+### 💾 Saves
+- ✅ JSON save/load  
+- 🧱 Auto-save after each event  
+- 🧱 Add cloud save compatibility  
+
+---
+
+## 📅 Upcoming Priorities
+1. Finalize **World travel system**
+2. Add **location-based events**
+3. Rework **CharacterFactory** to integrate world selection
+4. Create **combat prototype**
+5. Refactor **WeaponType** enum to support more classes
+
+---
+
+<!-- AUTO-GENERATED BELOW – DO NOT EDIT -->
+
 
 > Automatically generated from RPGManagerLib source files.
 
