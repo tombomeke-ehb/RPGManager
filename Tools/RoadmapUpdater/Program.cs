@@ -21,32 +21,51 @@ namespace RPGManager.Tools
                 return;
             }
 
+            // Try to detect repo base for GitHub links
+            string repoUrl = "https://github.com/tombomeke-ehb/RPGManager/blob/main/";
+
             var csFiles = Directory.GetFiles(libPath, "*.cs", SearchOption.AllDirectories);
 
-            // 🧩 Improved processing block
-            var validFiles = csFiles
-                .Select(f =>
+            var fileData = csFiles.Select(f =>
+            {
+                string text = File.ReadAllText(f);
+                string ns = Regex.Match(text, @"namespace\s+([A-Za-z0-9_.]+)").Groups[1].Value.Trim();
+                string cls = Regex.Match(text, @"class\s+([A-Za-z0-9_]+)").Groups[1].Value.Trim();
+                if (string.IsNullOrWhiteSpace(cls) || string.IsNullOrWhiteSpace(ns)) return null;
+
+                var methods = Regex.Matches(text, @"public\s+[A-Za-z0-9_<>,\[\]\s]+\s+([A-Za-z0-9_]+)\s*\(")
+                    .Select(m => m.Groups[1].Value)
+                    .Distinct()
+                    .ToList();
+
+                var todos = Regex.Matches(text, @"//\s*TODO[: ](.*)", RegexOptions.IgnoreCase)
+                    .Select(m => m.Groups[1].Value.Trim())
+                    .ToList();
+
+                string relativePath = Path.GetRelativePath(root, f).Replace("\\", "/");
+                string fileLink = $"{repoUrl}{relativePath}";
+
+                return new
                 {
-                    string text = File.ReadAllText(f);
-                    string ns = Regex.Match(text, @"namespace\s+([A-Za-z0-9_.]+)").Groups[1].Value;
-                    string cls = Regex.Match(text, @"class\s+([A-Za-z0-9_]+)").Groups[1].Value;
-                    if (string.IsNullOrWhiteSpace(cls)) return null; // skip files without classes
+                    File = Path.GetFileName(f),
+                    RelativePath = relativePath,
+                    Namespace = ns,
+                    Class = cls,
+                    Methods = methods,
+                    Todos = todos,
+                    Link = fileLink
+                };
+            })
+            .Where(e => e != null)
+            .GroupBy(e => e.Namespace)
+            .OrderBy(g => g.Key)
+            .ToList();
 
-                    var methods = Regex.Matches(text, @"public\s+[A-Za-z0-9_<>,\[\]]+\s+([A-Za-z0-9_]+)\s*\(")
-                        .Select(m => m.Groups[1].Value).Distinct().ToList();
-                    var todos = Regex.Matches(text, @"//\s*TODO[: ](.*)", RegexOptions.IgnoreCase)
-                        .Select(m => m.Groups[1].Value.Trim()).ToList();
-                    return new { File = Path.GetFileName(f), Namespace = ns, Class = cls, Methods = methods, Todos = todos };
-                })
-                .Where(e => e != null && !string.IsNullOrWhiteSpace(e.Namespace))
-                .GroupBy(e => e.Namespace)
-                .OrderBy(g => g.Key);
-
-            // 📊 Summary counters
-            int nsCount = validFiles.Count();
-            int classCount = validFiles.Sum(g => g.Count());
-            int methodCount = validFiles.Sum(g => g.SelectMany(c => c.Methods).Count());
-            int todoCount = validFiles.Sum(g => g.SelectMany(c => c.Todos).Count());
+            // summary counters
+            int nsCount = fileData.Count;
+            int classCount = fileData.Sum(g => g.Count());
+            int methodCount = fileData.Sum(g => g.SelectMany(c => c.Methods).Count());
+            int todoCount = fileData.Sum(g => g.SelectMany(c => c.Todos).Count());
 
             using var sw = new StreamWriter(roadmapPath, false);
             sw.WriteLine("# 🗺️ RPG Manager – Dynamic Roadmap\n");
@@ -54,15 +73,15 @@ namespace RPGManager.Tools
             sw.WriteLine($"_Last updated: **{DateTime.Now:yyyy-MM-dd HH:mm}**_\n");
             sw.WriteLine($"🧩 **{nsCount} Namespaces · {classCount} Classes · {methodCount} Methods · {todoCount} TODOs**\n");
 
-            foreach (var nsGroup in validFiles)
+            foreach (var nsGroup in fileData)
             {
                 if (!nsGroup.Any()) continue;
-
                 sw.WriteLine($"\n## 📦 {nsGroup.Key}\n");
 
                 foreach (var file in nsGroup)
                 {
-                    sw.WriteLine($"### 🧱 {file.Class}.cs");
+                    sw.WriteLine($"### 🧱 [{file.Class}.cs]({file.Link})");
+
                     if (file.Methods.Any())
                     {
                         sw.WriteLine("**Public Methods:**");
