@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGManager", "RPGManager\RP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGManagerLib", "RPGManagerLib\RPGManagerLib.csproj", "{077C2FA9-F75F-4549-87D8-99D0EF89AEAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoadmapUpdater", "Tools\RoadmapUpdater\RoadmapUpdater.csproj", "{A58FB68D-0C6E-6142-9659-DFF177EC7C76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{077C2FA9-F75F-4549-87D8-99D0EF89AEAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{077C2FA9-F75F-4549-87D8-99D0EF89AEAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{077C2FA9-F75F-4549-87D8-99D0EF89AEAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A58FB68D-0C6E-6142-9659-DFF177EC7C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A58FB68D-0C6E-6142-9659-DFF177EC7C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A58FB68D-0C6E-6142-9659-DFF177EC7C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A58FB68D-0C6E-6142-9659-DFF177EC7C76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
