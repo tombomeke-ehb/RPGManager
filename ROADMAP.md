@@ -144,4 +144,3 @@ _No public methods found._
 - `RemoveLocation()`
 - `UnLock()`
 - `Lock()`
-
