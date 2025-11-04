@@ -21,24 +21,31 @@ namespace RPGManager.Tools
                 return;
             }
 
-            // Try to detect repo base for GitHub links
             string repoUrl = "https://github.com/tombomeke-ehb/RPGManager/blob/main/";
-
             var csFiles = Directory.GetFiles(libPath, "*.cs", SearchOption.AllDirectories);
 
-            var fileData = csFiles.Select(f =>
+            // --- analyze files safely ---
+            var files = csFiles.Select(f =>
             {
                 string text = File.ReadAllText(f);
+
+                // match only true class definitions (ignore doc comments and words like "className")
+                var classMatch = Regex.Match(text, @"(?<!\/\/.*)(?<![A-Za-z0-9_])class\s+([A-Za-z0-9_]+)");
+                if (!classMatch.Success) return null;
+
                 string ns = Regex.Match(text, @"namespace\s+([A-Za-z0-9_.]+)").Groups[1].Value.Trim();
-                string cls = Regex.Match(text, @"class\s+([A-Za-z0-9_]+)").Groups[1].Value.Trim();
-                if (string.IsNullOrWhiteSpace(cls) || string.IsNullOrWhiteSpace(ns)) return null;
+                string cls = classMatch.Groups[1].Value.Trim();
+                if (string.IsNullOrWhiteSpace(ns) || string.IsNullOrWhiteSpace(cls)) return null;
 
                 var methods = Regex.Matches(text, @"public\s+[A-Za-z0-9_<>,\[\]\s]+\s+([A-Za-z0-9_]+)\s*\(")
+                    .Cast<Match>()
                     .Select(m => m.Groups[1].Value)
+                    .Where(m => m != cls) // skip constructor
                     .Distinct()
                     .ToList();
 
                 var todos = Regex.Matches(text, @"//\s*TODO[: ](.*)", RegexOptions.IgnoreCase)
+                    .Cast<Match>()
                     .Select(m => m.Groups[1].Value.Trim())
                     .ToList();
 
@@ -47,8 +54,7 @@ namespace RPGManager.Tools
 
                 return new
                 {
-                    File = Path.GetFileName(f),
-                    RelativePath = relativePath,
+                    FileName = Path.GetFileName(f),
                     Namespace = ns,
                     Class = cls,
                     Methods = methods,
@@ -56,16 +62,19 @@ namespace RPGManager.Tools
                     Link = fileLink
                 };
             })
-            .Where(e => e != null)
-            .GroupBy(e => e.Namespace)
+            .Where(x => x != null)
+            .GroupBy(x => x.Namespace)
             .OrderBy(g => g.Key)
             .ToList();
 
-            // summary counters
-            int nsCount = fileData.Count;
-            int classCount = fileData.Sum(g => g.Count());
-            int methodCount = fileData.Sum(g => g.SelectMany(c => c.Methods).Count());
-            int todoCount = fileData.Sum(g => g.SelectMany(c => c.Todos).Count());
+            int nsCount = files.Count;
+            int classCount = files.Sum(g => g.Count());
+            int methodCount = files.Sum(g => g.SelectMany(c => c.Methods).Count());
+            int todoCount = files.Sum(g => g.SelectMany(c => c.Todos).Count());
+
+            // --- Emoji rotation ---
+            string[] emojis = { "🧱", "⚔️", "📜", "🧙", "🏹", "🐉", "🏰", "🧭", "🪄", "🧰", "🎯" };
+            int emojiIndex = 0;
 
             using var sw = new StreamWriter(roadmapPath, false);
             sw.WriteLine("# 🗺️ RPG Manager – Dynamic Roadmap\n");
@@ -73,15 +82,15 @@ namespace RPGManager.Tools
             sw.WriteLine($"_Last updated: **{DateTime.Now:yyyy-MM-dd HH:mm}**_\n");
             sw.WriteLine($"🧩 **{nsCount} Namespaces · {classCount} Classes · {methodCount} Methods · {todoCount} TODOs**\n");
 
-            foreach (var nsGroup in fileData)
+            foreach (var nsGroup in files)
             {
                 if (!nsGroup.Any()) continue;
-                sw.WriteLine($"\n## 📦 {nsGroup.Key}\n");
+                string nsEmoji = emojis[emojiIndex++ % emojis.Length];
+                sw.WriteLine($"\n## {nsEmoji} {nsGroup.Key}\n");
 
                 foreach (var file in nsGroup)
                 {
-                    sw.WriteLine($"### 🧱 [{file.Class}.cs]({file.Link})");
-
+                    sw.WriteLine($"### [{file.Class}.cs]({file.Link})");
                     if (file.Methods.Any())
                     {
                         sw.WriteLine("**Public Methods:**");
