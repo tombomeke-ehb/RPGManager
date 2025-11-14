@@ -14,5 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RPGManagerLib\RPGManagerLib.csproj" />
   </ItemGroup>
-
+	<Target Name="UpdateRoadmap" BeforeTargets="Build;Publish" Outputs="$(MSBuildThisFileFullPath).ForceRun">
+		<Exec Command="dotnet run --project ../Tools/RoadmapUpdater" />
+	</Target>
 </Project>

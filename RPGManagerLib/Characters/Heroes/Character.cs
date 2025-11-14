@@ -1,4 +1,5 @@
 ﻿using RPGManagerLib.Exceptions;
+using RPGManagerLib.Worlds;
 
 namespace RPGManagerLib.Characters.Heroes
 {
@@ -35,6 +36,12 @@ namespace RPGManagerLib.Characters.Heroes
         public int PowerLevel { get; set; }
 
         /// <summary>
+        /// Gets or sets the current instance of the <see cref="World"/> class.
+        /// </summary>
+        public World CurrentWorld { get; set; }
+
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with default values.
         /// </summary>
         /// 
@@ -46,6 +53,7 @@ namespace RPGManagerLib.Characters.Heroes
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
+            CurrentWorld = new World("");
         }
 
         /// <summary>
@@ -58,6 +66,7 @@ namespace RPGManagerLib.Characters.Heroes
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
+            CurrentWorld = new World("");
         }
 
         /// <summary>
@@ -73,6 +82,7 @@ namespace RPGManagerLib.Characters.Heroes
             Health = health;
             CreationDate = creationDate;
             PowerLevel = powerLevel;
+            CurrentWorld = new World("");
         }
 
         /// <summary>
@@ -139,6 +149,18 @@ namespace RPGManagerLib.Characters.Heroes
             catch (CharacterException ex)
             {
                 Console.WriteLine($"Damage failed: {ex.Message}");
+            }
+        }
+
+        public void TravelTo(World world)
+        {
+            if (world.IsUnlocked)
+            {
+                CurrentWorld = world;
+            }
+            else
+            {
+                Console.WriteLine($"world {world} not unlocked!");
             }
         }
 
