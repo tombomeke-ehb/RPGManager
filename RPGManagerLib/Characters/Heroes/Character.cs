@@ -36,12 +36,6 @@ namespace RPGManagerLib.Characters.Heroes
         public int PowerLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets the current instance of the <see cref="World"/> class.
-        /// </summary>
-        public World CurrentWorld { get; set; }
-
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with default values.
         /// </summary>
         /// 
@@ -49,24 +43,22 @@ namespace RPGManagerLib.Characters.Heroes
         public abstract string CharacterType { get; }
         public Character()
         {
-            Name = "Unknown";
+            Name = "John";
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
-            CurrentWorld = new World("");
         }
 
         /// <summary>
         /// Initializes a new instaces of the <see cref="Character"/> class with custom values.
         /// </summary>
         /// <param name="name">The character's name.</param>
-        public Character(string name)
+        public Character(string name, int gold)
         {
             Name = name;
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
-            CurrentWorld = new World("");
         }
 
         /// <summary>
@@ -76,13 +68,12 @@ namespace RPGManagerLib.Characters.Heroes
         /// <param name="health">The initial health value (0–100).</param>
         /// <param name="creationDate">The creation date of the character.</param>
         /// <param name="powerLevel">The starting power level.</param>
-        public Character(string name, double health, DateTime creationDate, int powerLevel)
+        public Character(string name, double health, DateTime creationDate, int powerLevel, int gold)
         {
             Name = name;
             Health = health;
             CreationDate = creationDate;
             PowerLevel = powerLevel;
-            CurrentWorld = new World("");
         }
 
         /// <summary>
@@ -172,7 +163,8 @@ namespace RPGManagerLib.Characters.Heroes
         /// </returns>
         public override string ToString()
         {
-            return $"\nYour Character:\nName: {Name}, Health: {Health}, Date created: {CreationDate}, Level: {PowerLevel}";
+            return $"\nYour Character:\nName: {Name}, Health: {Health}, Date created: {CreationDate}, Level: {PowerLevel}, Amount of gold: {Gold}";
         }
     }
 }
+//TODO: Research need for all constructors or only those to create a character

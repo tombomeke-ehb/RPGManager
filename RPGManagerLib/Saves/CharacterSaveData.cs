@@ -42,7 +42,9 @@ public class CharacterSaveData
     /// <summary>
     /// Mana boost value for mages.
     /// </summary>
-    public double ManaBoost { get; set; } // alleen voor Mage
+    public double Mana { get; set; } // alleen voor Mage
+
+    public int Gold { get; set; }
 
     public CharacterSaveData() { }
 
@@ -56,6 +58,7 @@ public class CharacterSaveData
         CreationDate = c.CreationDate;
         PowerLevel = c.PowerLevel;
         CharacterType = c.CharacterType;
+        Gold = c.Gold;
 
         if (c is Warrior w)
             Weapons = w.Weapons
@@ -63,7 +66,12 @@ public class CharacterSaveData
                 .Select(x => new WeaponSaveData(x))
                 .ToList();
         else if (c is Mage m)
-            ManaBoost = m.ManaBoost;
+            Mana = m.Mana;
+        else if (c is Archer a)
+            Weapons = a.Weapons
+                .OfType<Weapon>()
+                .Select(x => new WeaponSaveData(x))
+                .ToList();
     }
 
     /// <summary>
@@ -78,11 +86,21 @@ public class CharacterSaveData
                 Health,
                 CreationDate,
                 PowerLevel,
-                Weapons.Select(w => (IEquipable)w.ToWeapon()).ToList()
+                Weapons.Select(w => (IEquipable)w.ToWeapon()).ToList(),
+                Gold
             ),
-            "Mage" => new Mage(Name, Health, CreationDate, PowerLevel, ManaBoost),
+            "Archer" => new Archer(
+                Name,
+                Health,
+                CreationDate,
+                PowerLevel,
+                Weapons.Select(w => (IEquipable)w.ToWeapon()).ToList(),
+                Gold
+            ),
+            "Mage" => new Mage(Name, Health, CreationDate, PowerLevel, Mana),
             _ => throw new Exception($"Unknown character type: {CharacterType}")
         };
     }
 }
 }
+// TODO: Implement Mage Saving and Character Creation

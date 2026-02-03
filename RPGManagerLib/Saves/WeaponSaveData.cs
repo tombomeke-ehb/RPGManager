@@ -148,3 +148,5 @@ namespace RPGManagerLib.Saves
         }
     }
 }
+
+// TODO: Add Mage weapons like staffs, etc.

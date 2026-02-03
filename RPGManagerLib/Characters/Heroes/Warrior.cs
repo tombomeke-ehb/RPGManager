@@ -24,6 +24,7 @@ namespace RPGManagerLib.Characters.Heroes
         /// default state, including an empty list of weapons.</remarks>
         /// 
         public override string CharacterType => "Warrior";
+
         public Warrior() : base()
         {
             Weapons = new List<IEquipable>();
@@ -34,11 +35,12 @@ namespace RPGManagerLib.Characters.Heroes
         /// </summary>
         /// <param name="name"></param>
         /// <param name="weapons"></param>
-        public Warrior(string name, List<IEquipable> weapons)
-            : base(name)
+        public Warrior(string name, List<IEquipable> weapons, int gold)
+            : base(name, gold)
         {
             Weapons = weapons ?? new List<IEquipable>();
         }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warrior"/> class with custom values.
@@ -48,8 +50,8 @@ namespace RPGManagerLib.Characters.Heroes
         /// <param name="creationDate"></param>
         /// <param name="powerLevel"></param>
         /// <param name="weapons"></param>
-        public Warrior(string name, double health, DateTime creationDate, int powerLevel, List<IEquipable> weapons)
-            : base(name, health, creationDate, powerLevel)
+        public Warrior(string name, double health, DateTime creationDate, int powerLevel, List<IEquipable> weapons, int gold)
+            : base(name, health, creationDate, powerLevel, gold)
         {
             Weapons = weapons ?? new List<IEquipable>();
         }
