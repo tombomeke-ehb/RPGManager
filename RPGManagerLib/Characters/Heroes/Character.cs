@@ -36,6 +36,11 @@ namespace RPGManagerLib.Characters.Heroes
         public int PowerLevel { get; set; }
 
         /// <summary>
+        /// Gets or sets the character's amount of gold
+        /// </summary>
+        public int Gold {  get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with default values.
         /// </summary>
         /// 
@@ -47,6 +52,7 @@ namespace RPGManagerLib.Characters.Heroes
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
+            Gold = 0;
         }
 
         /// <summary>
@@ -59,6 +65,7 @@ namespace RPGManagerLib.Characters.Heroes
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
+            Gold = gold;
         }
 
         /// <summary>
@@ -74,6 +81,7 @@ namespace RPGManagerLib.Characters.Heroes
             Health = health;
             CreationDate = creationDate;
             PowerLevel = powerLevel;
+            Gold = gold;
         }
 
         /// <summary>
