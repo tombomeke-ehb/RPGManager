@@ -28,7 +28,7 @@ namespace RPGManager
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("====================================================================");
-            Console.WriteLine("                        R P G   M A N A G E R");
+            Console.WriteLine("                        R P G   M A N A G E R"                       );
             Console.WriteLine("====================================================================");
             Console.ResetColor();
 
@@ -41,7 +41,7 @@ namespace RPGManager
             Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("                     A Tombomeke Studios Production");
+            Console.WriteLine("                     A Tombomeke Studios Production"                 );
             Console.ResetColor();
             Console.WriteLine();
 
