@@ -18,17 +18,8 @@ namespace RPGManagerLib.Items.Weapons.Melee
                   name: "Simple Dagger",
                   weaponType: WeaponType.DAGGER,
                   element: Element.NONE,
-                  cooldownTime: 1,
                   inventorySpaceAmount: InventorySpaceAmount.SMALL
             )
         { }
-
-        /// <summary>
-        /// Initializes a new <see cref="Dagger"/> with explicit properties.
-        /// </summary>
-        public Dagger(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, double cooldownTime, InventorySpaceAmount inventorySpaceAmount)
-            : base(damageAmount, durability, rarity, level, name, WeaponType.DAGGER, element, cooldownTime, inventorySpaceAmount)
-        {
-        }
     }
 }

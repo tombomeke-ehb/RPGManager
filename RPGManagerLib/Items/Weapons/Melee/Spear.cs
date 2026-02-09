@@ -19,15 +19,6 @@ namespace RPGManagerLib.Items.Weapons.Melee
                   name: "Basic Spear",
                   weaponType: WeaponType.SPEAR,
                   element: Element.NONE,
-                  cooldownTime: 2,
                   inventorySpaceAmount: InventorySpaceAmount.LARGE) { }
-
-        /// <summary>
-        /// Initializes a new <see cref="Spear"/> with explicit properties.
-        /// </summary>
-        public Spear(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, double cooldownTime, InventorySpaceAmount inventorySpaceAmount)
-            : base(damageAmount, durability, rarity, level, name, WeaponType.SPEAR, element, cooldownTime, inventorySpaceAmount)
-        {
-        }
     }
 }

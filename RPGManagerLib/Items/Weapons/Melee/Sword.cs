@@ -19,15 +19,7 @@ namespace RPGManagerLib.Items.Weapons.Melee
                   name: "Basic Sword", 
                   weaponType: WeaponType.SWORD, 
                   element: Element.NONE, 
-                  cooldownTime: 1.5, 
                   inventorySpaceAmount: InventorySpaceAmount.SMALL)
-        { }
-
-        /// <summary>
-        /// Initializes a new <see cref="Sword"/> with explicit properties.
-        /// </summary>
-        public Sword(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, double coolDownTime, InventorySpaceAmount inventorySpaceAmount)
-            : base(damageAmount, durability, rarity, level, name, WeaponType.SWORD, element, coolDownTime, inventorySpaceAmount)
         { }
     }
 }

@@ -20,18 +20,8 @@ namespace RPGManagerLib.Items.Weapons.Melee
                   name: "Basic Axe",
                   weaponType: WeaponType.AXE,
                   element: Element.NONE,
-                  cooldownTime: 2.5,
                   inventorySpaceAmount: InventorySpaceAmount.LARGE)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new <see cref="Axe"/> with explicit properties.
-        /// </summary>
-        public Axe(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, double coolDownTime, InventorySpaceAmount inventorySpaceAmount)
-            : base(damageAmount, durability, rarity, level, name, WeaponType.AXE, element, coolDownTime, inventorySpaceAmount)
-        {
-
         }
     }
 }
