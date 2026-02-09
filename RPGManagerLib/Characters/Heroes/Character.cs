@@ -18,7 +18,7 @@ namespace RPGManagerLib.Characters.Heroes
         /// <remarks>This field stores the current health of the entity as a double-precision
         /// floating-point value. The value is intended to be used internally to track the entity's health
         /// status.</remarks>
-        public double Health { get; protected set; }
+        public double Health { get; set; }
 
         /// <summary>
         /// Gets or sets the character's name.
@@ -46,42 +46,28 @@ namespace RPGManagerLib.Characters.Heroes
         /// 
 
         public abstract string CharacterType { get; }
+        public World CurrentWorld { get; internal set; }
+
         public Character()
         {
             Name = "John";
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
-            Gold = 0;
+            Gold = 50;
         }
 
         /// <summary>
         /// Initializes a new instaces of the <see cref="Character"/> class with custom values.
         /// </summary>
         /// <param name="name">The character's name.</param>
-        public Character(string name, int gold)
+        public Character(string name)
         {
             Name = name;
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
-            Gold = gold;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Character"/> class with custom values.
-        /// </summary>
-        /// <param name="name">The character's name.</param>
-        /// <param name="health">The initial health value (0–100).</param>
-        /// <param name="creationDate">The creation date of the character.</param>
-        /// <param name="powerLevel">The starting power level.</param>
-        public Character(string name, double health, DateTime creationDate, int powerLevel, int gold)
-        {
-            Name = name;
-            Health = health;
-            CreationDate = creationDate;
-            PowerLevel = powerLevel;
-            Gold = gold;
+            Gold = 50;
         }
 
         /// <summary>
@@ -162,6 +148,8 @@ namespace RPGManagerLib.Characters.Heroes
                 Console.WriteLine($"world {world} not unlocked!");
             }
         }
+
+        // TODO: Add functionality to travel to different worlds, which may require additional properties and methods related to world management.
 
         /// <summary>
         /// Returns a formatted string describing the character's current state.

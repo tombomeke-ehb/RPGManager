@@ -15,46 +15,21 @@ namespace RPGManagerLib.Characters.Heroes
         /// <summary>
         /// Gets or sets the collection of weapon names.
         /// </summary>
-        public List<IEquipable> Weapons { get; set; }
+        public List<IEquipable> Weapons { get; set; } = new List<IEquipable>();
+        public override string CharacterType => "Warrior";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Warrior"/> class.
         /// </summary>
-        /// <remarks>This constructor initializes the <see cref="Warrior"/> instance and sets up the
-        /// default state, including an empty list of weapons.</remarks>
-        /// 
-        public override string CharacterType => "Warrior";
-
-        public Warrior() : base()
-        {
-            Weapons = new List<IEquipable>();
-        }
+        /// <remarks>This constructor creates a Warrior with an empty list of weapons. Use this
+        /// constructor when you want to create a Warrior without specifying initial equipment or name, the <see cref="Character"/> class will provide default values and the Warrior will have the name "John".</remarks>
+        public Warrior() : base() { }
 
         /// <summary>
-        /// Initializes a new instaces of the <see cref="Warrior"/> class with a name value and list of weapons
+        /// Initializes a new instaces of the <see cref="Warrior"/> class with a name value and default values for other properties.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="weapons"></param>
-        public Warrior(string name, List<IEquipable> weapons, int gold)
-            : base(name, gold)
-        {
-            Weapons = weapons ?? new List<IEquipable>();
-        }
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Warrior"/> class with custom values.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="health"></param>
-        /// <param name="creationDate"></param>
-        /// <param name="powerLevel"></param>
-        /// <param name="weapons"></param>
-        public Warrior(string name, double health, DateTime creationDate, int powerLevel, List<IEquipable> weapons, int gold)
-            : base(name, health, creationDate, powerLevel, gold)
-        {
-            Weapons = weapons ?? new List<IEquipable>();
-        }
+        public Warrior(string name) : base(name) { }
 
         /// <summary>
         /// Returns a formatted string describing the character's current state.

@@ -9,26 +9,13 @@ namespace RPGManagerLib.Characters.Heroes
 {
     public class Archer : Character
     {
-        public List<IEquipable> Weapons {  get; set; }
+        public List<IEquipable> Weapons { get; set; } = new List<IEquipable>();
 
         public override string CharacterType => "Archer";
 
-        public Archer() : base()
-        {
-            Weapons = new List<IEquipable>();
-        }
+        public Archer() : base() { }
 
-        public Archer(string name, List<IEquipable> weapons, int gold)
-            : base(name, gold)
-        {
-            Weapons = weapons ?? new List<IEquipable>();
-        }
-
-        public Archer(string name, double health, DateTime creationDate, int powerLevel, List<IEquipable> weapons, int gold)
-            : base(name, health, creationDate, powerLevel, gold)
-        {
-            Weapons = weapons ?? new List<IEquipable>();
-        }
+        public Archer(string name): base(name) { }
 
         public override string ToString()
         {

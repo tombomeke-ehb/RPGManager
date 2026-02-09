@@ -22,18 +22,9 @@
         /// <summary>
         /// Initializes a new <see cref="Mage"/> with a custom name and default stats.
         /// </summary>
-        public Mage(string name) : base(name, 100, DateTime.Now, 1)
+        public Mage(string name) : base(name)
         {
             Mana = 50.0;
-        }
-
-
-        /// <summary>
-        /// Initializes a new <see cref="Mage"/> with explicit properties.
-        /// </summary>
-        public Mage(string name, double health, DateTime creationDate, int powerLevel, double mana) : base(name, health, creationDate, powerLevel)
-        {
-            Mana = mana;
         }
 
         /// <summary>
