@@ -74,33 +74,43 @@ public class CharacterSaveData
                 .ToList();
     }
 
-    /// <summary>
-    /// Reconstructs a live <see cref="Character"/> from this save data.
-    /// </summary>
-    public Character ToCharacter()
-    {
-        return CharacterType switch
+        /// <summary>
+        /// Reconstructs a live <see cref="Character"/> from this save data.
+        /// </summary>
+        public Character ToCharacter()
         {
-            "Warrior" => new Warrior(
-                Name,
-                Health,
-                CreationDate,
-                PowerLevel,
-                Weapons.Select(w => (IEquipable)w.ToWeapon()).ToList(),
-                Gold
-            ),
-            "Archer" => new Archer(
-                Name,
-                Health,
-                CreationDate,
-                PowerLevel,
-                Weapons.Select(w => (IEquipable)w.ToWeapon()).ToList(),
-                Gold
-            ),
-            "Mage" => new Mage(Name, Health, CreationDate, PowerLevel, Mana),
-            _ => throw new Exception($"Unknown character type: {CharacterType}")
-        };
+            Character c = CharacterType switch
+            {
+                "Warrior" => new Warrior(Name),
+                "Archer" => new Archer(Name),
+                "Mage" => new Mage(Name),
+                _ => throw new Exception($"Unknown character type: {CharacterType}")
+            };
+
+            c.Health = this.Health;
+            c.CreationDate = this.CreationDate;
+            c.PowerLevel = this.PowerLevel;
+            c.Gold = this.Gold;
+
+            if (c is Warrior w)
+            {
+                w.Weapons.Clear();
+                w.Weapons.AddRange(this.Weapons.Select(wd => (IEquipable)wd.ToWeapon()));
+            }
+            else if (c is Archer a)
+            {
+                a.Weapons.Clear();
+                a.Weapons.AddRange(this.Weapons.Select(wd => (IEquipable)wd.ToWeapon()));
+            }
+            else if (c is Mage m)
+            {
+                m.Mana = this.Mana;
+            }
+
+            // TODO: Make transferring weapon data universal for all character types, not just warriors and archers.
+
+            return c;
+        }
     }
-}
 }
 // TODO: Implement Mage Saving and Character Creation

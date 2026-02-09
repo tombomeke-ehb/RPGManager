@@ -29,20 +29,42 @@ namespace RPGManagerLib.UI
         {
             Console.WriteLine("What is your name?");
             string name = Console.ReadLine();
-            if (name == null) {
-                name = "John";
-            }
+            if (string.IsNullOrEmpty(name)) name = "John";
 
             Console.WriteLine("Choose your class: 1) Warrior  2) Mage");
             string input = Console.ReadLine()?.ToLower();
 
-            return input switch
+            Character character;
+
+            switch (input)
             {
-                "1" or "warrior" or "Warrior" => new Warrior(name, CreateDefaultWeaponsWarrior(), 50), //TODO: Ask AI if this could be a problem (Magic Numbers)
-                "3" or "archer" or "Archer" => new Archer(name, CreateDefaultWeaponsArcher(), 50),
-                "2" or "mage" or "Mage" => new Mage(name),
-                _ => new Warrior(name, CreateDefaultWeaponsWarrior(), 50) // default fallback
-            };
+                case "1":
+                case "warrior":
+                    var w = new Warrior(name);
+                    w.Weapons.AddRange(CreateDefaultWeaponsWarrior());
+                    character = w;
+                    break;
+
+                case "3":
+                case "archer":
+                    var a = new Archer(name);
+                    a.Weapons.AddRange(CreateDefaultWeaponsArcher());
+                    character = a;
+                    break;
+
+                case "2":
+                case "mage":
+                    character = new Mage(name);
+                    break;
+
+                default: // Fallback
+                    var def = new Warrior(name);
+                    def.Weapons.AddRange(CreateDefaultWeaponsWarrior());
+                    character = def;
+                    break;
+            }
+
+            return character;
         }
         /// <summary>
         /// Function that creates a new List of equipables and then adds a sword to it (Your starter Inventory)

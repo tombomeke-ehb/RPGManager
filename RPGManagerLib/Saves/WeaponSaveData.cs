@@ -48,11 +48,6 @@ namespace RPGManagerLib.Saves
         public Element Element { get; set; }
 
         /// <summary>
-        /// Cooldown time between actions (seconds).
-        /// </summary>
-        public double CoolDownTime { get; set; }
-
-        /// <summary>
         /// Inventory footprint size.
         /// </summary>
         public InventorySpaceAmount InventorySpaceAmount { get; set; }
@@ -75,7 +70,6 @@ namespace RPGManagerLib.Saves
             Rarity = weapon.Rarity;
             Level = weapon.Level;
             Element = weapon.Element;
-            CoolDownTime = weapon.CooldownTime;
             InventorySpaceAmount = weapon.InventorySpaceAmount;
         }
 
@@ -91,60 +85,24 @@ namespace RPGManagerLib.Saves
         /// <exception cref="Exception">Thrown if the <see cref="WeaponType"/> property contains an unknown or unsupported value.</exception>
         public Weapon ToWeapon()
         {
-            return WeaponType switch
+            Weapon w = WeaponType switch
             {
-                WeaponType.SWORD => new Sword(
-                    DamageAmount,
-                    Durability,
-                    Rarity,
-                    Level,
-                    Name,
-                    Element,
-                    CoolDownTime,
-                    InventorySpaceAmount
-                ),
-                WeaponType.AXE => new Axe(
-                    DamageAmount,
-                    Durability,
-                    Rarity,
-                    Level,
-                    Name,
-                    Element,
-                    CoolDownTime,
-                    InventorySpaceAmount
-                ),
-                WeaponType.SPEAR => new Spear(
-                    DamageAmount,
-                    Durability,
-                    Rarity,
-                    Level,
-                    Name,
-                    Element,
-                    CoolDownTime,
-                    InventorySpaceAmount
-                ),
-                WeaponType.DAGGER => new Dagger(
-                    DamageAmount,
-                    Durability,
-                    Rarity,
-                    Level,
-                    Name,
-                    Element,
-                    CoolDownTime,
-                    InventorySpaceAmount
-                ),
-                WeaponType.SIMPLEBOW => new SimpleBow(
-                    DamageAmount,
-                    Durability,
-                    Rarity,
-                    Level,
-                    Name,
-                    Element,
-                    CoolDownTime,
-                    InventorySpaceAmount
-                ),
+                WeaponType.SWORD => new Sword(),
+                WeaponType.AXE => new Axe(),
+                WeaponType.SPEAR => new Spear(),
+                WeaponType.DAGGER => new Dagger(),
+                WeaponType.SIMPLEBOW => new SimpleBow(),
                 _ => throw new Exception($"Unknown weapon type: {WeaponType}")
             };
+
+            w.Durability = this.Durability;
+            w.DamageAmount = this.DamageAmount;
+            w.Level = this.Level;
+            w.Rarity = this.Rarity;
+            w.Element = this.Element;
+            w.Name = this.Name;
+
+            return w;
         }
     }
 }
