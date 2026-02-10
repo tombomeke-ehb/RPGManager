@@ -16,7 +16,7 @@ namespace RPGManagerLib.Locations
         public Location(string name, List<NPC> NPCs)
         {
             Name = name;
-            this.NPCs = NPCs;
+            this.NPCs = NPCs ?? new List<NPC>();
         }
 
         /// <summary>
