@@ -185,9 +185,9 @@ _No public methods found._
 
 ### [Location.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Locations/Location.cs)
 **Public Methods:**
-- `addNPC()`
-- `removeNPC()`
-- `getNPCs()`
+- `AddNpc()`
+- `RemoveNpc()`
+- `GetNpcs()`
 
 
 ## 🪄 RPGManagerLib.Saves
