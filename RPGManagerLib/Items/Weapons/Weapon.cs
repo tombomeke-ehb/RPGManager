@@ -48,7 +48,7 @@ namespace RPGManagerLib.Items.Weapons
         public Element Element { get; set; } = Element.NONE;
 
         /// <summary>
-        /// Cooldown time in seconds between actions.
+        /// Inventory footprint of the weapon, e.g. how many slots it occupies.
         /// </summary>
         public InventorySpaceAmount InventorySpaceAmount { get; set; }
 
