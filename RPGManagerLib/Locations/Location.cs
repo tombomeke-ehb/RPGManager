@@ -23,7 +23,7 @@ namespace RPGManagerLib.Locations
         /// Adds a non-player character (NPC) to the current list of NPCs.
         /// </summary>
         /// <param name="npc">The NPC to add to the list. Cannot be null.</param>
-        public void addNPC(NPC npc)
+        public void AddNPC(NPC npc)
         {
             NPCs.Add(npc);
         }
@@ -32,7 +32,7 @@ namespace RPGManagerLib.Locations
         /// Removes the specified NPC from the collection of NPCs.
         /// </summary>
         /// <param name="npc">The NPC to be removed from the collection. Must not be null.</param>
-        public void removeNPC(NPC npc)
+        public void RemoveNPC(NPC npc)
         {
             NPCs.Remove(npc);
         }
@@ -42,7 +42,7 @@ namespace RPGManagerLib.Locations
         /// </summary>
         /// <remarks>This method iterates through the collection of NPCs and writes each NPC's name to the
         /// console output.</remarks>
-        public void getNPCs()
+        public void GetNPCs()
         {
             foreach (NPC npc in NPCs)
             {

@@ -73,7 +73,7 @@ Build a fully modular, text-based RPG framework with:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-02-10 00:29**_
+_Last updated: **2026-02-10 00:30**_
 
 🧩 **12 Namespaces · 29 Classes · 32 Methods · 9 TODOs**
 
@@ -185,9 +185,9 @@ _No public methods found._
 
 ### [Location.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Locations/Location.cs)
 **Public Methods:**
-- `addNPC()`
-- `removeNPC()`
-- `getNPCs()`
+- `AddNPC()`
+- `RemoveNPC()`
+- `GetNPCs()`
 
 
 ## 🪄 RPGManagerLib.Saves
