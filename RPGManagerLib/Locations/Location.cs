@@ -24,7 +24,7 @@ namespace RPGManagerLib.Locations
         /// <remarks>If the list of NPCs is not initialized, this method will create a new list before
         /// adding the NPC.</remarks>
         /// <param name="npc">The NPC to add to the list. Cannot be null.</param>
-        public void addNPC(NPC npc)
+        public void AddNpc(NPC npc)
         {
             if (NPCs == null)
             {
@@ -38,7 +38,7 @@ namespace RPGManagerLib.Locations
         /// </summary>
         /// <remarks>If the collection of NPCs is null, this method performs no action.</remarks>
         /// <param name="npc">The NPC to be removed from the collection. Must not be null.</param>
-        public void removeNPC(NPC npc)
+        public void RemoveNpc(NPC npc)
         {
             if (NPCs != null)
             {
@@ -51,7 +51,7 @@ namespace RPGManagerLib.Locations
         /// </summary>
         /// <remarks>This method iterates through the collection of NPCs and writes each NPC's name to the
         /// console output. If the NPC collection is null, the method performs no action.</remarks>
-        public void getNPCs()
+        public void GetNpcs()
         {
             if (NPCs != null)
             {
