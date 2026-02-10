@@ -54,9 +54,9 @@ namespace RPGManagerLib.Saves
             return EquipableType switch
             {
                 EquipableType.WEAPON => WeaponData?.ToWeapon() 
-                    ?? throw new Exception("WeaponData is null for WEAPON type"),
+                    ?? throw new Exception($"Save data corruption: WeaponData is null for item marked as WEAPON type"),
                 EquipableType.QUIVER => QuiverData?.ToQuiver() 
-                    ?? throw new Exception("QuiverData is null for QUIVER type"),
+                    ?? throw new Exception($"Save data corruption: QuiverData is null for item marked as QUIVER type"),
                 _ => throw new Exception($"Unknown equipable type: {EquipableType}")
             };
         }

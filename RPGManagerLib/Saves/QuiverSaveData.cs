@@ -52,7 +52,7 @@ namespace RPGManagerLib.Saves
             Quiver quiver = Name switch
             {
                 "Small Quiver" => new SmallQuiver(),
-                _ => throw new Exception($"Unknown quiver type: {Name}")
+                _ => throw new Exception($"Unknown quiver type: '{Name}'. Currently supported types: Small Quiver")
             };
 
             // Update properties in case they were modified
