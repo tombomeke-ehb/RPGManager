@@ -35,9 +35,9 @@ public class CharacterSaveData
     public int PowerLevel { get; set; }
 
     /// <summary>
-    /// Serialized weapons for warriors.
+    /// Serialized equipable items for warriors and archers.
     /// </summary>
-    public List<WeaponSaveData> Weapons { get; set; } = new();
+    public List<EquipableSaveData> Equipables { get; set; } = new();
 
     /// <summary>
     /// Mana boost value for mages.
@@ -61,16 +61,14 @@ public class CharacterSaveData
         Gold = c.Gold;
 
         if (c is Warrior w)
-            Weapons = w.Weapons
-                .OfType<Weapon>()
-                .Select(x => new WeaponSaveData(x))
+            Equipables = w.Weapons
+                .Select(x => new EquipableSaveData(x))
                 .ToList();
         else if (c is Mage m)
             Mana = m.Mana;
         else if (c is Archer a)
-            Weapons = a.Weapons
-                .OfType<Weapon>()
-                .Select(x => new WeaponSaveData(x))
+            Equipables = a.Weapons
+                .Select(x => new EquipableSaveData(x))
                 .ToList();
     }
 
@@ -95,12 +93,12 @@ public class CharacterSaveData
             if (c is Warrior w)
             {
                 w.Weapons.Clear();
-                w.Weapons.AddRange(this.Weapons.Select(wd => (IEquipable)wd.ToWeapon()));
+                w.Weapons.AddRange(this.Equipables.Select(ed => ed.ToEquipable()));
             }
             else if (c is Archer a)
             {
                 a.Weapons.Clear();
-                a.Weapons.AddRange(this.Weapons.Select(wd => (IEquipable)wd.ToWeapon()));
+                a.Weapons.AddRange(this.Equipables.Select(ed => ed.ToEquipable()));
             }
             else if (c is Mage m)
             {

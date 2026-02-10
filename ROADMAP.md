@@ -73,14 +73,25 @@ Build a fully modular, text-based RPG framework with:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-02-10 00:55**_
+_Last updated: **2026-02-10 00:25**_
 
-🧩 **12 Namespaces · 29 Classes · 32 Methods · 9 TODOs**
+🧩 **12 Namespaces · 31 Classes · 34 Methods · 9 TODOs**
 
 
 ## 🧱 RPGManagerLib.Characters.Heroes
 
 ### [Archer.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Archer.cs)
+**Public Methods:**
+- `ToString()`
+
+### [Mage.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Mage.cs)
+**Public Methods:**
+- `ToString()`
+
+**TODOs:**
+- [ ] Implement spells and mana system (ESP)
+
+### [Warrior.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Warrior.cs)
 **Public Methods:**
 - `ToString()`
 
@@ -94,17 +105,6 @@ _Last updated: **2026-02-10 00:55**_
 **TODOs:**
 - [ ] Add functionality to travel to different worlds, which may require additional properties and methods related to world management.
 - [ ] Research need for all constructors or only those to create a character
-
-### [Mage.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Mage.cs)
-**Public Methods:**
-- `ToString()`
-
-**TODOs:**
-- [ ] Implement spells and mana system (ESP)
-
-### [Warrior.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Warrior.cs)
-**Public Methods:**
-- `ToString()`
 
 
 ## ⚔️ RPGManagerLib.Characters.NPCs
@@ -122,22 +122,22 @@ _Last updated: **2026-02-10 00:55**_
 
 ## 📜 RPGManagerLib.Exceptions
 
-### [CharacterException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/CharacterException.cs)
-_No public methods found._
-
-### [InvalidWeaponException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/InvalidWeaponException.cs)
-_No public methods found._
-
 ### [NegativeDamageException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/NegativeDamageException.cs)
+_No public methods found._
+
+### [CharacterException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/CharacterException.cs)
 _No public methods found._
 
 ### [NegativeHealException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/NegativeHealException.cs)
 _No public methods found._
 
-### [OverhealException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/OverhealException.cs)
+### [OverkillException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/OverkillException.cs)
 _No public methods found._
 
-### [OverkillException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/OverkillException.cs)
+### [InvalidWeaponException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/InvalidWeaponException.cs)
+_No public methods found._
+
+### [OverhealException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/OverhealException.cs)
 _No public methods found._
 
 
@@ -162,16 +162,16 @@ _No public methods found._
 
 ## 🐉 RPGManagerLib.Items.Weapons.Melee
 
-### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axe.cs)
+### [Spear.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Spear.cs)
+_No public methods found._
+
+### [Sword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Sword.cs)
 _No public methods found._
 
 ### [Dagger.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Dagger.cs)
 _No public methods found._
 
-### [Spear.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Spear.cs)
-_No public methods found._
-
-### [Sword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Sword.cs)
+### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axe.cs)
 _No public methods found._
 
 
@@ -192,14 +192,6 @@ _No public methods found._
 
 ## 🪄 RPGManagerLib.Saves
 
-### [CharacterSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/CharacterSaveData.cs)
-**Public Methods:**
-- `ToCharacter()`
-
-**TODOs:**
-- [ ] Make transferring weapon data universal for all character types, not just warriors and archers.
-- [ ] Implement Mage Saving and Character Creation
-
 ### [SaveManager.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/SaveManager.cs)
 **Public Methods:**
 - `LoadCharacters()`
@@ -212,8 +204,29 @@ _No public methods found._
 **TODOs:**
 - [ ] Add Mage weapons like staffs, etc.
 
+### [CharacterSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/CharacterSaveData.cs)
+**Public Methods:**
+- `ToCharacter()`
+
+**TODOs:**
+- [ ] Make transferring weapon data universal for all character types, not just warriors and archers.
+- [ ] Implement Mage Saving and Character Creation
+
+### [QuiverSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/QuiverSaveData.cs)
+**Public Methods:**
+- `ToQuiver()`
+
+### [EquipableSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/EquipableSaveData.cs)
+**Public Methods:**
+- `ToEquipable()`
+
 
 ## 🧰 RPGManagerLib.UI
+
+### [MenuSystem.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/MenuSystem.cs)
+**Public Methods:**
+- `AddOption()`
+- `Show()`
 
 ### [CharacterFactory.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/CharacterFactory.cs)
 **Public Methods:**
@@ -229,11 +242,6 @@ _No public methods found._
 ### [GameMenu.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/GameMenu.cs)
 **Public Methods:**
 - `Start()`
-
-### [MenuSystem.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/MenuSystem.cs)
-**Public Methods:**
-- `AddOption()`
-- `Show()`
 
 
 ## 🎯 RPGManagerLib.Weapons.Quivers
