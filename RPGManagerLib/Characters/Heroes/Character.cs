@@ -18,7 +18,7 @@ namespace RPGManagerLib.Characters.Heroes
         /// <remarks>This field stores the current health of the entity as a double-precision
         /// floating-point value. The value is intended to be used internally to track the entity's health
         /// status.</remarks>
-        public double Health { get; set; }
+        public double Health { get; internal set; }
 
         /// <summary>
         /// Gets or sets the character's name.
