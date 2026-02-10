@@ -11,12 +11,12 @@ namespace RPGManagerLib.Characters.NPCs
 
         public override void Interact()
         {
-            throw new NotImplementedException();
+            System.Console.WriteLine("The blacksmith looks up from the forge but has nothing to say right now.");
         }
 
         public override void Trade()
         {
-            throw new NotImplementedException();
+            System.Console.WriteLine("The blacksmith's shop is not ready for trading yet.");
         }
     }
 }

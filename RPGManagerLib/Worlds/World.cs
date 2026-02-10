@@ -67,13 +67,13 @@ namespace RPGManagerLib.Worlds
         /// </summary>
         /// <remarks>Once unlocked, the instance can be used without restrictions. Ensure that unlocking
         /// is performed only when necessary to maintain security or integrity.</remarks>
-        public void UnLock() => IsUnlocked = true;
+        public void Unlock() => IsUnlocked = true;
 
         /// <summary>
-        /// Locks the current instance, denying acces to its features.
+        /// Locks the current instance, denying access to its features.
         /// </summary>
         /// <remarks>Locking of a world only happens when for example losing rights to travel there (low reputation)
-        /// or losing the items nescesary to travel to said world</remarks>
+        /// or losing the items necessary to travel to said world</remarks>
         public void Lock() => IsUnlocked = false;
     }
 }
