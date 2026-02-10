@@ -46,7 +46,7 @@ namespace RPGManagerLib.Characters.Heroes
         /// 
 
         public abstract string CharacterType { get; }
-        public World CurrentWorld { get; internal set; }
+        public World? CurrentWorld { get; internal set; }
 
         public Character()
         {
