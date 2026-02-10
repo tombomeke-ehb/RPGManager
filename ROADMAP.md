@@ -73,9 +73,9 @@ Build a fully modular, text-based RPG framework with:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-02-10 00:18**_
+_Last updated: **2026-02-10 00:25**_
 
-🧩 **12 Namespaces · 29 Classes · 32 Methods · 9 TODOs**
+🧩 **12 Namespaces · 31 Classes · 34 Methods · 9 TODOs**
 
 
 ## 🧱 RPGManagerLib.Characters.Heroes
@@ -211,6 +211,14 @@ _No public methods found._
 **TODOs:**
 - [ ] Make transferring weapon data universal for all character types, not just warriors and archers.
 - [ ] Implement Mage Saving and Character Creation
+
+### [QuiverSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/QuiverSaveData.cs)
+**Public Methods:**
+- `ToQuiver()`
+
+### [EquipableSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/EquipableSaveData.cs)
+**Public Methods:**
+- `ToEquipable()`
 
 
 ## 🧰 RPGManagerLib.UI
