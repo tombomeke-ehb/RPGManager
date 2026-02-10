@@ -46,7 +46,7 @@ namespace RPGManagerLib.UI
 
             // Generate world and travel there
             World Tavaryn = new("Tavaryn", "A quite small starter world with not that many dangerous monsters");
-            Tavaryn.UnLock();
+            Tavaryn.Unlock();
             currentCharacter.TravelTo(Tavaryn);
 
             // Then show the main menu
