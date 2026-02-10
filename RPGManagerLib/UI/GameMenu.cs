@@ -37,11 +37,17 @@ namespace RPGManagerLib.UI
                 currentCharacter = characters[0]; // or track last played
             }
 
-            // Generate world
-            
+            // Ensure a character is loaded before proceeding
+            if (currentCharacter is null)
+            {
+                Console.WriteLine("Error: No current character is loaded. Cannot start the game.");
+                return;
+            }
+
+            // Generate world and travel there
             World Tavaryn = new("Tavaryn", "A quite small starter world with not that many dangerous monsters");
             Tavaryn.UnLock();
-            currentCharacter.CurrentWorld = Tavaryn;
+            currentCharacter.TravelTo(Tavaryn);
 
             // Then show the main menu
             ShowMainMenu();
