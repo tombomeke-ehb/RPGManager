@@ -67,7 +67,7 @@ namespace RPGManagerLib.Worlds
         /// </summary>
         /// <remarks>Once unlocked, the instance can be used without restrictions. Ensure that unlocking
         /// is performed only when necessary to maintain security or integrity.</remarks>
-        public void UnLock() => IsUnlocked = true;
+        public void Unlock() => IsUnlocked = true;
 
         /// <summary>
         /// Locks the current instance, denying access to its features.
