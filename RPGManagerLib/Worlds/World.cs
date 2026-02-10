@@ -73,7 +73,7 @@ namespace RPGManagerLib.Worlds
         /// Locks the current instance, denying access to its features.
         /// </summary>
         /// <remarks>Locking of a world only happens when for example losing rights to travel there (low reputation)
-        /// or losing the items nescesary to travel to said world</remarks>
+        /// or losing the items necessary to travel to said world</remarks>
         public void Lock() => IsUnlocked = false;
     }
 }
