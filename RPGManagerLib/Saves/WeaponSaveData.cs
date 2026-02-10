@@ -9,7 +9,7 @@ namespace RPGManagerLib.Saves
     /// </summary>
     /// <remarks>This class is used to serialize and deserialize weapon data for persistence purposes. It encapsulates
     /// all the properties necessary to recreate a weapon, including its type, name,  damage, durability, rarity, level,
-    /// elemental attributes, cooldown time, and inventory space requirements.</remarks>
+    /// elemental attributes, and inventory space requirements.</remarks>
     public class WeaponSaveData
     {
         /// <summary>
@@ -101,6 +101,7 @@ namespace RPGManagerLib.Saves
             w.Rarity = this.Rarity;
             w.Element = this.Element;
             w.Name = this.Name;
+            w.InventorySpaceAmount = this.InventorySpaceAmount;
 
             return w;
         }
