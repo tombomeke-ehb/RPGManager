@@ -4,13 +4,17 @@ namespace RPGManagerLib.Characters.NPCs
 {
     public abstract class NPC
     {
-        public string name { get; set; }
-        public Location location;
+        public string Name { get; set; }
+        public Location Location { get; set; }
 
         public NPC(string name, Location location)
         {
-            this.name = name;
-            this.location = location;
+            Name = name;
+            Location = location;
         }
+
+        public abstract void Interact();
+
+        public abstract void Trade();
     }
 }

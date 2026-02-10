@@ -5,6 +5,7 @@ using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.Exceptions;
 using RPGManagerLib.Characters.Heroes;
+using RPGManagerLib.Weapons.Quivers;
 
 namespace RPGManagerLib.UI
 {
@@ -28,16 +29,63 @@ namespace RPGManagerLib.UI
         {
             Console.WriteLine("What is your name?");
             string name = Console.ReadLine();
+            if (string.IsNullOrEmpty(name)) name = "John";
 
             Console.WriteLine("Choose your class: 1) Warrior  2) Mage");
             string input = Console.ReadLine()?.ToLower();
 
-            return input switch
+            Character character;
+
+            switch (input)
             {
-                "1" or "warrior" => new Warrior(name, EquipableSelectionMenu()),
-                "2" or "mage" => new Mage(name),
-                _ => new Warrior(name, new List<IEquipable>()) // fallback
-            };
+                case "1":
+                case "warrior":
+                    var w = new Warrior(name);
+                    w.Weapons.AddRange(CreateDefaultWeaponsWarrior());
+                    character = w;
+                    break;
+
+                case "3":
+                case "archer":
+                    var a = new Archer(name);
+                    a.Weapons.AddRange(CreateDefaultWeaponsArcher());
+                    character = a;
+                    break;
+
+                case "2":
+                case "mage":
+                    character = new Mage(name);
+                    break;
+
+                default: // Fallback
+                    var def = new Warrior(name);
+                    def.Weapons.AddRange(CreateDefaultWeaponsWarrior());
+                    character = def;
+                    break;
+            }
+
+            return character;
+        }
+        /// <summary>
+        /// Function that creates a new List of equipables and then adds a sword to it (Your starter Inventory)
+        /// </summary>
+        /// <returns>Default weapon list for a Warrio Character, "Sword"</returns>
+        public static List<IEquipable> CreateDefaultWeaponsWarrior() //TODO: Research for a more efficient way
+        {
+            List<IEquipable> equipables = new();
+            equipables.Add(new Sword());
+
+            return equipables;
+        }
+
+        public static List<IEquipable> CreateDefaultWeaponsArcher()
+        {
+            List<IEquipable> equipables = new();
+            equipables.Add(new Dagger());
+            equipables.Add(new SimpleBow());
+            equipables.Add(new SmallQuiver());
+
+            return equipables;
         }
 
         /// <summary>
@@ -48,7 +96,8 @@ namespace RPGManagerLib.UI
         /// space  of 4 slots is reached. Each item occupies either 1 or 2 slots depending on its size. The user can 
         /// exit the menu by entering 'q'.</remarks>
         /// <returns>A list of equipable items selected by the user. The list will contain zero or more items, depending  on the
-        /// user's input.</returns>
+        /// user's input.</returns> 
+        /*
         private static List<IEquipable> EquipableSelectionMenu()
         {
             List<IEquipable> equipables = new();
@@ -94,5 +143,9 @@ namespace RPGManagerLib.UI
 
             return equipables;
         }
+        */
     }
 }
+
+// TODO: Implement Mage Creation
+// TODO: Implement inventory System

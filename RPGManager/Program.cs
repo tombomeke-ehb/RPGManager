@@ -68,7 +68,7 @@ namespace RPGManager
             Console.WriteLine("                     www.tombomeke.com");
             Console.ResetColor();
             Console.WriteLine();
-            Console.Write("Press any key to enter the realm...");
+            Console.Write("Press any key to enter the realm of Tavaryn...");
             Console.ReadKey(true);
             Console.Clear();
 

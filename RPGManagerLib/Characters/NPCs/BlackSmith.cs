@@ -8,5 +8,15 @@ namespace RPGManagerLib.Characters.NPCs
             : base("Black Smith", location)
         {
         }
+
+        public override void Interact()
+        {
+            System.Console.WriteLine("The blacksmith looks up from the forge but has nothing to say right now.");
+        }
+
+        public override void Trade()
+        {
+            System.Console.WriteLine("The blacksmith's shop is not ready for trading yet.");
+        }
     }
 }

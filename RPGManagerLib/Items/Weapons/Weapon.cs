@@ -48,12 +48,7 @@ namespace RPGManagerLib.Items.Weapons
         public Element Element { get; set; } = Element.NONE;
 
         /// <summary>
-        /// Cooldown time in seconds between actions.
-        /// </summary>
-        public double CooldownTime { get; set; }
-
-        /// <summary>
-        /// How many inventory slots this weapon occupies.
+        /// Inventory footprint of the weapon, e.g. how many slots it occupies.
         /// </summary>
         public InventorySpaceAmount InventorySpaceAmount { get; set; }
 
@@ -72,9 +67,8 @@ namespace RPGManagerLib.Items.Weapons
         /// <param name="name">Display name.</param>
         /// <param name="weaponType">Concrete weapon kind.</param>
         /// <param name="element">Elemental attribute.</param>
-        /// <param name="cooldownTime">Cooldown time (seconds).</param>
         /// <param name="inventorySpaceAmount">Inventory footprint.</param>
-        public Weapon(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element,double cooldownTime, InventorySpaceAmount inventorySpaceAmount)
+        public Weapon(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element, InventorySpaceAmount inventorySpaceAmount)
         {
             DamageAmount = damageAmount;
             Durability = durability;
@@ -83,7 +77,6 @@ namespace RPGManagerLib.Items.Weapons
             Name = name;
             Type = weaponType;
             Element = element;
-            CooldownTime = cooldownTime;
             InventorySpaceAmount = inventorySpaceAmount;
         }
 

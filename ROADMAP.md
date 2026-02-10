@@ -66,66 +66,84 @@ Build a fully modular, text-based RPG framework with:
 
 ---
 
+
 <!-- AUTO-GENERATED BELOW – DO NOT EDIT -->
 
+# 🧮 Project Overview (auto-generated)
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2025-11-04 15:05**_
+_Last updated: **2026-02-10 00:25**_
 
-🧩 **11 Namespaces · 27 Classes · 17 Methods · 0 TODOs**
+🧩 **12 Namespaces · 31 Classes · 34 Methods · 9 TODOs**
 
 
 ## 🧱 RPGManagerLib.Characters.Heroes
 
-### [Character.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/Heroes/Character.cs)
+### [Archer.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Archer.cs)
+**Public Methods:**
+- `ToString()`
+
+### [Mage.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Mage.cs)
+**Public Methods:**
+- `ToString()`
+
+**TODOs:**
+- [ ] Implement spells and mana system (ESP)
+
+### [Warrior.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Warrior.cs)
+**Public Methods:**
+- `ToString()`
+
+### [Character.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Character.cs)
 **Public Methods:**
 - `Heal()`
 - `Damage()`
+- `TravelTo()`
 - `ToString()`
 
-### [Mage.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/Heroes/Mage.cs)
-**Public Methods:**
-- `ToString()`
-
-### [Warrior.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/Heroes/Warrior.cs)
-**Public Methods:**
-- `ToString()`
+**TODOs:**
+- [ ] Add functionality to travel to different worlds, which may require additional properties and methods related to world management.
+- [ ] Research need for all constructors or only those to create a character
 
 
 ## ⚔️ RPGManagerLib.Characters.NPCs
 
-### [BlackSmith.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/NPCs/BlackSmith.cs)
-_No public methods found._
+### [BlackSmith.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/NPCs/BlackSmith.cs)
+**Public Methods:**
+- `Interact()`
+- `Trade()`
 
-### [NPC.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Characters/NPCs/NPC.cs)
-_No public methods found._
+### [NPC.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/NPCs/NPC.cs)
+**Public Methods:**
+- `Interact()`
+- `Trade()`
 
 
 ## 📜 RPGManagerLib.Exceptions
 
-### [CharacterException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/CharacterException.cs)
+### [NegativeDamageException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/NegativeDamageException.cs)
 _No public methods found._
 
-### [InvalidWeaponException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/InvalidWeaponException.cs)
+### [CharacterException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/CharacterException.cs)
 _No public methods found._
 
-### [NegativeDamageException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/NegativeDamageException.cs)
+### [NegativeHealException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/NegativeHealException.cs)
 _No public methods found._
 
-### [NegativeHealException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/NegativeHealException.cs)
+### [OverkillException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/OverkillException.cs)
 _No public methods found._
 
-### [OverhealException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/OverhealException.cs)
+### [InvalidWeaponException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/InvalidWeaponException.cs)
 _No public methods found._
 
-### [OverkillException.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Exceptions/OverkillException.cs)
+### [OverhealException.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Exceptions/OverhealException.cs)
 _No public methods found._
 
 
 ## 🧙 RPGManagerLib.Items.Weapons
 
-### [Weapon.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Weapon.cs)
+### [Weapon.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Weapon.cs)
 **Public Methods:**
 - `GetRarityMultiplier()`
 - `GetEffectiveDamage()`
@@ -135,74 +153,109 @@ _No public methods found._
 
 ## 🏹 RPGManagerLib.Items.Weapons.Bows
 
-### [Bow.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Bows/Bow.cs)
+### [Bow.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Bows/Bow.cs)
 _No public methods found._
 
-### [SimpleBow.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Bows/SimpleBow.cs)
+### [SimpleBow.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Bows/SimpleBow.cs)
 _No public methods found._
 
 
 ## 🐉 RPGManagerLib.Items.Weapons.Melee
 
-### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Melee/Axe.cs)
+### [Spear.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Spear.cs)
 _No public methods found._
 
-### [Dagger.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Melee/Dagger.cs)
+### [Sword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Sword.cs)
 _No public methods found._
 
-### [Spear.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Melee/Spear.cs)
+### [Dagger.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Dagger.cs)
 _No public methods found._
 
-### [Sword.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Melee/Sword.cs)
+### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axe.cs)
 _No public methods found._
 
 
 ## 🏰 RPGManagerLib.Items.Weapons.Quivers
 
-### [SmallQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Quivers/SmallQuiver.cs)
+### [SmallQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/SmallQuiver.cs)
 _No public methods found._
 
 
 ## 🧭 RPGManagerLib.Locations
 
-### [Location.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Locations/Location.cs)
-_No public methods found._
+### [Location.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Locations/Location.cs)
+**Public Methods:**
+- `AddNpc()`
+- `RemoveNpc()`
+- `GetNpcs()`
 
 
 ## 🪄 RPGManagerLib.Saves
 
-### [CharacterSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Saves/CharacterSaveData.cs)
-**Public Methods:**
-- `ToCharacter()`
-
-### [SaveManager.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Saves/SaveManager.cs)
+### [SaveManager.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/SaveManager.cs)
 **Public Methods:**
 - `LoadCharacters()`
 - `SaveCharacters()`
 
-### [WeaponSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Saves/WeaponSaveData.cs)
+### [WeaponSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/WeaponSaveData.cs)
 **Public Methods:**
 - `ToWeapon()`
+
+**TODOs:**
+- [ ] Add Mage weapons like staffs, etc.
+
+### [CharacterSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/CharacterSaveData.cs)
+**Public Methods:**
+- `ToCharacter()`
+
+**TODOs:**
+- [ ] Make transferring weapon data universal for all character types, not just warriors and archers.
+- [ ] Implement Mage Saving and Character Creation
+
+### [QuiverSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/QuiverSaveData.cs)
+**Public Methods:**
+- `ToQuiver()`
+
+### [EquipableSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/EquipableSaveData.cs)
+**Public Methods:**
+- `ToEquipable()`
 
 
 ## 🧰 RPGManagerLib.UI
 
-### [CharacterFactory.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/UI/CharacterFactory.cs)
-**Public Methods:**
-- `CreateCharacter()`
-
-### [GameMenu.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/UI/GameMenu.cs)
-**Public Methods:**
-- `Start()`
-
-### [MenuSystem.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/UI/MenuSystem.cs)
+### [MenuSystem.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/MenuSystem.cs)
 **Public Methods:**
 - `AddOption()`
 - `Show()`
 
+### [CharacterFactory.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/CharacterFactory.cs)
+**Public Methods:**
+- `CreateCharacter()`
+- `CreateDefaultWeaponsWarrior()`
+- `CreateDefaultWeaponsArcher()`
+
+**TODOs:**
+- [ ] Research for a more efficient way
+- [ ] Implement Mage Creation
+- [ ] Implement inventory System
+
+### [GameMenu.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/GameMenu.cs)
+**Public Methods:**
+- `Start()`
+
 
 ## 🎯 RPGManagerLib.Weapons.Quivers
 
-### [Quiver.cs](https://github.com/tombomeke-ehb/RPGManager/blob/main/RPGManagerLib/Items/Weapons/Quivers/Quiver.cs)
+### [Quiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/Quiver.cs)
 _No public methods found._
+
+
+## 🧱 RPGManagerLib.Worlds
+
+### [World.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Worlds/World.cs)
+**Public Methods:**
+- `AddLocation()`
+- `RemoveLocation()`
+- `UnLock()`
+- `Lock()`
 

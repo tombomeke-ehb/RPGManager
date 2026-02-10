@@ -1,4 +1,5 @@
 ﻿using RPGManagerLib.Exceptions;
+using RPGManagerLib.Worlds;
 
 namespace RPGManagerLib.Characters.Heroes
 {
@@ -17,7 +18,7 @@ namespace RPGManagerLib.Characters.Heroes
         /// <remarks>This field stores the current health of the entity as a double-precision
         /// floating-point value. The value is intended to be used internally to track the entity's health
         /// status.</remarks>
-        public double Health { get; protected set; }
+        public double Health { get; internal set; }
 
         /// <summary>
         /// Gets or sets the character's name.
@@ -35,17 +36,25 @@ namespace RPGManagerLib.Characters.Heroes
         public int PowerLevel { get; set; }
 
         /// <summary>
+        /// Gets or sets the character's amount of gold
+        /// </summary>
+        public int Gold {  get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with default values.
         /// </summary>
         /// 
 
         public abstract string CharacterType { get; }
+        public World? CurrentWorld { get; internal set; }
+
         public Character()
         {
-            Name = "Unknown";
+            Name = "John";
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
+            Gold = 50;
         }
 
         /// <summary>
@@ -58,21 +67,7 @@ namespace RPGManagerLib.Characters.Heroes
             Health = 100.0;
             CreationDate = DateTime.Now;
             PowerLevel = 1;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Character"/> class with custom values.
-        /// </summary>
-        /// <param name="name">The character's name.</param>
-        /// <param name="health">The initial health value (0–100).</param>
-        /// <param name="creationDate">The creation date of the character.</param>
-        /// <param name="powerLevel">The starting power level.</param>
-        public Character(string name, double health, DateTime creationDate, int powerLevel)
-        {
-            Name = name;
-            Health = health;
-            CreationDate = creationDate;
-            PowerLevel = powerLevel;
+            Gold = 50;
         }
 
         /// <summary>
@@ -142,6 +137,20 @@ namespace RPGManagerLib.Characters.Heroes
             }
         }
 
+        public void TravelTo(World world)
+        {
+            if (world.IsUnlocked)
+            {
+                CurrentWorld = world;
+            }
+            else
+            {
+                Console.WriteLine($"world {world} not unlocked!");
+            }
+        }
+
+        // TODO: Add functionality to travel to different worlds, which may require additional properties and methods related to world management.
+
         /// <summary>
         /// Returns a formatted string describing the character's current state.
         /// </summary>
@@ -150,7 +159,8 @@ namespace RPGManagerLib.Characters.Heroes
         /// </returns>
         public override string ToString()
         {
-            return $"\nYour Character:\nName: {Name}, Health: {Health}, Date created: {CreationDate}, Level: {PowerLevel}";
+            return $"\nYour Character:\nName: {Name}, Health: {Health}, Date created: {CreationDate}, Level: {PowerLevel}, Amount of gold: {Gold}";
         }
     }
 }
+//TODO: Research need for all constructors or only those to create a character
