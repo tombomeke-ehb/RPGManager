@@ -5,7 +5,7 @@ namespace RPGManagerLib.Characters.NPCs
     public abstract class NPC
     {
         public string Name { get; set; }
-        public Location Location;
+        public Location Location { get; set; }
 
         public NPC(string name, Location location)
         {
