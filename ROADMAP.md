@@ -73,7 +73,7 @@ Build a fully modular, text-based RPG framework with:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-02-10 02:09**_
+_Last updated: **2026-02-11 11:33**_
 
 🧩 **12 Namespaces · 31 Classes · 34 Methods · 6 TODOs**
 
