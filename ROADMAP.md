@@ -73,9 +73,9 @@ Build a fully modular, text-based RPG framework with:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-02-11 11:33**_
+_Last updated: **2026-02-16 16:28**_
 
-🧩 **12 Namespaces · 31 Classes · 34 Methods · 6 TODOs**
+🧩 **13 Namespaces · 32 Classes · 35 Methods · 5 TODOs**
 
 
 ## 🧱 RPGManagerLib.Characters.Heroes
@@ -141,7 +141,13 @@ _No public methods found._
 _No public methods found._
 
 
-## 🧙 RPGManagerLib.Items.Weapons
+## 🧙 RPGManagerLib.Items.Staffs
+
+### [Staff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/Staff.cs)
+_No public methods found._
+
+
+## 🏹 RPGManagerLib.Items.Weapons
 
 ### [Weapon.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Weapon.cs)
 **Public Methods:**
@@ -151,7 +157,7 @@ _No public methods found._
 - `UpgradeWeapon()`
 
 
-## 🏹 RPGManagerLib.Items.Weapons.Bows
+## 🐉 RPGManagerLib.Items.Weapons.Bows
 
 ### [Bow.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Bows/Bow.cs)
 _No public methods found._
@@ -160,7 +166,7 @@ _No public methods found._
 _No public methods found._
 
 
-## 🐉 RPGManagerLib.Items.Weapons.Melee
+## 🏰 RPGManagerLib.Items.Weapons.Melee
 
 ### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axe.cs)
 _No public methods found._
@@ -175,13 +181,13 @@ _No public methods found._
 _No public methods found._
 
 
-## 🏰 RPGManagerLib.Items.Weapons.Quivers
+## 🧭 RPGManagerLib.Items.Weapons.Quivers
 
 ### [SmallQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/SmallQuiver.cs)
 _No public methods found._
 
 
-## 🧭 RPGManagerLib.Locations
+## 🪄 RPGManagerLib.Locations
 
 ### [Location.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Locations/Location.cs)
 **Public Methods:**
@@ -190,7 +196,7 @@ _No public methods found._
 - `GetNPCs()`
 
 
-## 🪄 RPGManagerLib.Saves
+## 🧰 RPGManagerLib.Saves
 
 ### [CharacterSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/CharacterSaveData.cs)
 **Public Methods:**
@@ -214,18 +220,18 @@ _No public methods found._
 - `ToEquipable()`
 
 
-## 🧰 RPGManagerLib.UI
+## 🎯 RPGManagerLib.UI
 
 ### [CharacterFactory.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/CharacterFactory.cs)
 **Public Methods:**
 - `CreateCharacter()`
 - `CreateDefaultWeaponsWarrior()`
 - `CreateDefaultWeaponsArcher()`
+- `CreateDefaultWeaponsMage()`
 
 **TODOs:**
 - [ ] Research for a more efficient way
-- [ ] Implement Mage Creation
-- [ ] Implement inventory System
+- [ ] Change this to an inventory management system, where you can add and remove items from your inventory, and the inventory will have a maximum capacity.
 
 ### [GameMenu.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/GameMenu.cs)
 **Public Methods:**
@@ -237,13 +243,13 @@ _No public methods found._
 - `Show()`
 
 
-## 🎯 RPGManagerLib.Weapons.Quivers
+## 🧱 RPGManagerLib.Weapons.Quivers
 
 ### [Quiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/Quiver.cs)
 _No public methods found._
 
 
-## 🧱 RPGManagerLib.Worlds
+## ⚔️ RPGManagerLib.Worlds
 
 ### [World.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Worlds/World.cs)
 **Public Methods:**
