@@ -33,7 +33,7 @@ namespace RPGManagerLib.UI
             string name = Console.ReadLine();
             if (string.IsNullOrEmpty(name)) name = "John";
 
-            Console.WriteLine("Choose your class: 1) Warrior  \n2) Archer \n3) Mage");
+            Console.WriteLine("Choose your class: \n1) Warrior  \n2) Archer \n3) Mage");
             string input = Console.ReadLine()?.ToLower();
 
             Character character;
