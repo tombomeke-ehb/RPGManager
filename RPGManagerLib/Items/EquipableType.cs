@@ -13,7 +13,12 @@ namespace RPGManagerLib.Items
         /// <summary>
         /// A quiver used to carry arrows for bows.
         /// </summary>
-        QUIVER
-        // Later: ARMOR, RING, etc.
+        QUIVER,
+
+        /// <summary>
+        /// A staff used by mages to channel magical energy. Typically has lower physical damage but may have elemental or magical effects.
+        /// </summary>
+        STAFF
+        //TODO Later add: ARMOR, RING, etc.
     }
 }
