@@ -5,9 +5,8 @@
     /// </summary>
     public abstract class Bow : Weapon
     {
-        protected Bow(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element, InventorySpaceAmount inventorySpaceAmount)
-            : base(damageAmount, durability, rarity, level, name, weaponType, element, inventorySpaceAmount)
-        {
-        }
+        public Bow()
+            : base
+                  (damageAmount: )
     }
 }
