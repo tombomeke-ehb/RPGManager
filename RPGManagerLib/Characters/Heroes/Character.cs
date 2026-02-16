@@ -39,15 +39,18 @@ namespace RPGManagerLib.Characters.Heroes
         /// Gets or sets the character's amount of gold
         /// </summary>
         public int Gold {  get; set; }
+        /// <summary>
+        /// Gets or sets the character's mana amount.
+        /// </summary>
+        public double Mana {  get; set; }
+
+        public abstract string CharacterType { get; }
+        public World? CurrentWorld { get; internal set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class with default values.
         /// </summary>
         /// 
-
-        public abstract string CharacterType { get; }
-        public World? CurrentWorld { get; internal set; }
-
         public Character()
         {
             Name = "John";
@@ -55,6 +58,8 @@ namespace RPGManagerLib.Characters.Heroes
             CreationDate = DateTime.Now;
             PowerLevel = 1;
             Gold = 50;
+            Mana = 100;
+
         }
 
         /// <summary>
@@ -68,6 +73,7 @@ namespace RPGManagerLib.Characters.Heroes
             CreationDate = DateTime.Now;
             PowerLevel = 1;
             Gold = 50;
+            Mana = 100;
         }
 
         /// <summary>

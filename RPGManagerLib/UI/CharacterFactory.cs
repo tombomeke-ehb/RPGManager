@@ -6,6 +6,8 @@ using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.Exceptions;
 using RPGManagerLib.Characters.Heroes;
 using RPGManagerLib.Weapons.Quivers;
+using RPGManagerLib.Items.Staffs;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RPGManagerLib.UI
 {
@@ -31,7 +33,7 @@ namespace RPGManagerLib.UI
             string name = Console.ReadLine();
             if (string.IsNullOrEmpty(name)) name = "John";
 
-            Console.WriteLine("Choose your class: 1) Warrior  2) Mage");
+            Console.WriteLine("Choose your class: \n1) Warrior  \n2) Archer \n3) Mage");
             string input = Console.ReadLine()?.ToLower();
 
             Character character;
@@ -45,16 +47,18 @@ namespace RPGManagerLib.UI
                     character = w;
                     break;
 
-                case "3":
+                case "2":
                 case "archer":
                     var a = new Archer(name);
                     a.Weapons.AddRange(CreateDefaultWeaponsArcher());
                     character = a;
                     break;
 
-                case "2":
+                case "3":
                 case "mage":
-                    character = new Mage(name);
+                    var m = new Mage(name);
+                    m.Weapons.AddRange(CreateDefaultWeaponsMage());
+                    character = m;
                     break;
 
                 default: // Fallback
@@ -87,6 +91,17 @@ namespace RPGManagerLib.UI
 
             return equipables;
         }
+
+        public static List<IEquipable> CreateDefaultWeaponsMage()
+        {
+            List<IEquipable> equipables = new();
+            equipables.Add(new Dagger());
+            equipables.Add(new Staff());
+            return equipables;
+        }
+
+
+        //TODO:Change this to an inventory management system, where you can add and remove items from your inventory, and the inventory will have a maximum capacity.
 
         /// <summary>
         /// Displays a menu for selecting equipable items and returns a list of the selected items.
@@ -146,6 +161,3 @@ namespace RPGManagerLib.UI
         */
     }
 }
-
-// TODO: Implement Mage Creation
-// TODO: Implement inventory System
