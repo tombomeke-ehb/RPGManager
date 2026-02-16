@@ -1,4 +1,6 @@
-﻿namespace RPGManagerLib.Characters.Heroes
+﻿using RPGManagerLib.Items;
+
+namespace RPGManagerLib.Characters.Heroes
 {
     /// <summary>
     /// A magic-focused character with an inherent mana boost.
@@ -9,6 +11,7 @@
         /// Additional mana capacity or effectiveness granted to the mage.
         /// </summary>
         public double Mana { get; set; }
+        public List<IEquipable> Weapons { get; set; } = new List<IEquipable>();
         public override string CharacterType => "Mage";
 
         /// <summary>
@@ -16,7 +19,7 @@
         /// </summary>
         public Mage() : base()
         {
-            Mana = 50.0;
+            Mana = 100.0;
         }
 
         /// <summary>
@@ -24,7 +27,7 @@
         /// </summary>
         public Mage(string name) : base(name)
         {
-            Mana = 50.0;
+            Mana = 100.0;
         }
 
         /// <summary>
