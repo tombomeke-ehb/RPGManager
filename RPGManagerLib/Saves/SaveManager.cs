@@ -24,20 +24,45 @@ namespace RPGManagerLib.Saves
         /// data is invalid, an empty list is returned.</returns>
         public static List<Character> LoadCharacters()
         {
-            if (!File.Exists(SaveFile))
-                return new List<Character>();
-
-            string json = File.ReadAllText(SaveFile);
-            var options = new JsonSerializerOptions
+            try
             {
-                Converters = { new JsonStringEnumConverter() },
-                PropertyNameCaseInsensitive = true
-            };
+                if (!File.Exists(SaveFile))
+                    return new List<Character>();
 
-            var saveDataList = JsonSerializer.Deserialize<List<CharacterSaveData>>(json, options)
-                ?? new List<CharacterSaveData>();
+                string json = File.ReadAllText(SaveFile);
 
-            return saveDataList.Select(sd => sd.ToCharacter()).ToList();
+                if (string.IsNullOrWhiteSpace(json))
+                    return new List<Character>();
+
+                var options = new JsonSerializerOptions
+                {
+                    Converters = { new JsonStringEnumConverter() },
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var saveDataList = JsonSerializer.Deserialize<List<CharacterSaveData>>(json, options)
+                    ?? new List<CharacterSaveData>();
+
+                return saveDataList.Select(sd => sd.ToCharacter()).ToList();
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine("Save file contains invalid JSON. Starting with empty character list.");
+                //Console.WriteLine($"Details: {ex.Message}"); Debugging
+                return new List<Character>();
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine("Error reading save file.");
+                //Console.WriteLine($"Details: {ex.Message}"); Debugging
+                return new List<Character>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unexpected error while loading save file.");
+                //Console.WriteLine($"Details: {ex.Message}"); Debugging
+                return new List<Character>();
+            }
         }
 
 
