@@ -73,6 +73,7 @@ namespace RPGManagerLib.Characters.Heroes
             CreationDate = DateTime.Now;
             PowerLevel = 1;
             Gold = 50;
+            Mana = 100;
         }
 
         /// <summary>
