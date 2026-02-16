@@ -7,6 +7,7 @@ using RPGManagerLib.Exceptions;
 using RPGManagerLib.Characters.Heroes;
 using RPGManagerLib.Weapons.Quivers;
 using RPGManagerLib.Items.Staffs;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RPGManagerLib.UI
 {
@@ -32,7 +33,7 @@ namespace RPGManagerLib.UI
             string name = Console.ReadLine();
             if (string.IsNullOrEmpty(name)) name = "John";
 
-            Console.WriteLine("Choose your class: 1) Warrior  \n2) Mage \n3) Archer");
+            Console.WriteLine("Choose your class: 1) Warrior  \n2) Archer \n3) Mage");
             string input = Console.ReadLine()?.ToLower();
 
             Character character;
@@ -46,14 +47,14 @@ namespace RPGManagerLib.UI
                     character = w;
                     break;
 
-                case "3":
+                case "2":
                 case "archer":
                     var a = new Archer(name);
                     a.Weapons.AddRange(CreateDefaultWeaponsArcher());
                     character = a;
                     break;
 
-                case "2":
+                case "3":
                 case "mage":
                     var m = new Mage(name);
                     m.Weapons.AddRange(CreateDefaultWeaponsMage());
