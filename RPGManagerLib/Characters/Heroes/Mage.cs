@@ -8,9 +8,8 @@ namespace RPGManagerLib.Characters.Heroes
     public class Mage : Character
     {
         /// <summary>
-        /// Additional mana capacity or effectiveness granted to the mage.
+        /// Mana Capacity
         /// </summary>
-        public double Mana { get; set; }
         public List<IEquipable> Weapons { get; set; } = new List<IEquipable>();
         public override string CharacterType => "Mage";
 
@@ -19,7 +18,7 @@ namespace RPGManagerLib.Characters.Heroes
         /// </summary>
         public Mage() : base()
         {
-            Mana = 100.0;
+            Mana = 150.0; // Mage has 50 man a points extra then other characters by default
         }
 
         /// <summary>
@@ -27,7 +26,7 @@ namespace RPGManagerLib.Characters.Heroes
         /// </summary>
         public Mage(string name) : base(name)
         {
-            Mana = 100.0;
+            Mana = 150.0; // Mage has 50 mana points extra then other characters by default
         }
 
         /// <summary>
