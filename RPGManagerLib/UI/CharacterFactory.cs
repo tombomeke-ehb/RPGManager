@@ -1,12 +1,13 @@
-﻿using RPGManagerLib.Items;
+﻿using RPGManagerLib.Characters.Heroes;
+using RPGManagerLib.Exceptions;
+using RPGManagerLib.Items;
+using RPGManagerLib.Items.Staffs;
 using RPGManagerLib.Items.Weapons;
 using RPGManagerLib.Items.Weapons.Bows;
 using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Weapons.Quivers;
-using RPGManagerLib.Exceptions;
-using RPGManagerLib.Characters.Heroes;
+using RPGManagerLib.Spells;
 using RPGManagerLib.Weapons.Quivers;
-using RPGManagerLib.Items.Staffs;
 using System.Security.Cryptography.X509Certificates;
 
 namespace RPGManagerLib.UI
@@ -58,6 +59,8 @@ namespace RPGManagerLib.UI
                 case "mage":
                     var m = new Mage(name);
                     m.Weapons.AddRange(CreateDefaultWeaponsMage());
+                    m.Spells.Add(new Fireball());
+                    m.Spells.Add(new IceSpike());
                     character = m;
                     break;
 
