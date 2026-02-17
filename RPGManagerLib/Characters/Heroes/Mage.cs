@@ -1,4 +1,5 @@
 ﻿using RPGManagerLib.Items;
+using RPGManagerLib.Spells;
 
 namespace RPGManagerLib.Characters.Heroes
 {
@@ -8,9 +9,16 @@ namespace RPGManagerLib.Characters.Heroes
     public class Mage : Character
     {
         /// <summary>
-        /// Mana Capacity
+        /// List of spells known by the mage. Mages can cast these spells using their mana.
+        /// </summary>
+        public List<Spell> Spells { get; set; } = new();
+        /// <summary>
+        /// List of weapons equipped by the mage. Mages typically favor staves and magical implements, but this list can include any equipable item categorized as a weapon.
         /// </summary>
         public List<IEquipable> Weapons { get; set; } = new List<IEquipable>();
+        /// <summary>
+        /// Gets the character type for this hero.
+        /// </summary>
         public override string CharacterType => "Mage";
 
         /// <summary>
@@ -18,12 +26,13 @@ namespace RPGManagerLib.Characters.Heroes
         /// </summary>
         public Mage() : base()
         {
-            Mana = 150.0; // Mage has 50 man a points extra then other characters by default
+            Mana = 150.0; // Mage has 50 mana points extra then other characters by default
         }
 
         /// <summary>
         /// Initializes a new <see cref="Mage"/> with a custom name and default stats.
         /// </summary>
+        /// <param name="name">The name of the mage.</param>
         public Mage(string name) : base(name)
         {
             Mana = 150.0; // Mage has 50 mana points extra then other characters by default
@@ -41,5 +50,18 @@ namespace RPGManagerLib.Characters.Heroes
         }
 
         //TODO: Implement spells and mana system (ESP)
+
+
+        public void CastSpell(int index, Character target)
+        {
+            if (index < 0 || index >= Spells.Count)
+            {
+                Console.WriteLine("Invalid spell.");
+                return;
+            }
+
+            Spells[index].Cast(this, target);
+        }
+
     }
 }
