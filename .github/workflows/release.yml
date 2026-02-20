@@ -39,15 +39,16 @@ jobs:
               --self-contained true \
               -o "out/$rid"
 
+            # Create zip in the releases directory
             cd "out/$rid"
-            zip -r "../../../RPGManager-$rid.zip" .
-            cd -
+            zip -r "../../RPGManager-${{ github.ref_name }}-$rid.zip" .
+            cd ../..
           done
 
       - name: Upload assets to existing release
         uses: softprops/action-gh-release@v2
         with:
-          files: RPGManager-*.zip
+          files: out/RPGManager-*.zip
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
