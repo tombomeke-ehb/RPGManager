@@ -6,44 +6,49 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-release:
+  build-and-upload:
     name: Build and upload release assets
     runs-on: ubuntu-latest
+
     permissions:
       contents: write
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore
+      - name: Restore dependencies
         run: dotnet restore
 
       - name: Publish for all platforms
         run: |
           set -e
           declare -a RIDS=(win-x64 win-arm64 osx-x64 osx-arm64 linux-x64 linux-arm64)
+
           for rid in "${RIDS[@]}"; do
             echo "Publishing $rid"
-            dotnet publish RPGManager -c Release -r "$rid" -p:PublishSingleFile=true --self-contained true -o "out/$rid"
-            (cd "out/$rid" && zip -r "../../RPGManager-$rid.zip" .)
+            dotnet publish RPGManager \
+              -c Release \
+              -r "$rid" \
+              -p:PublishSingleFile=true \
+              --self-contained true \
+              -o "out/$rid"
+
+            # Create zip in the releases directory
+            cd "out/$rid"
+            zip -r "../../RPGManager-${{ github.ref_name }}-$rid.zip" .
+            cd ../..
           done
 
-      - name: Upload assets to release
+      - name: Upload assets to existing release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            RPGManager-win-x64.zip
-            RPGManager-win-arm64.zip
-            RPGManager-osx-x64.zip
-            RPGManager-osx-arm64.zip
-            RPGManager-linux-x64.zip
-            RPGManager-linux-arm64.zip
-          tag_name: ${{ github.event.release.tag_name }}
-          prerelease: ${{ github.event.release.prerelease }}
+          files: out/RPGManager-*.zip
+          fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
