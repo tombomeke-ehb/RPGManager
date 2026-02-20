@@ -5,10 +5,19 @@ using System.Text.RegularExpressions;
 
 namespace RPGManager.Tools
 {
+    /// <summary>
+    /// A utility program that automatically generates the "Project Overview" section of the ROADMAP.md file.
+    /// It scans the RPGManagerLib project for C# files, extracts classes, methods, inheritance, XML summaries, 
+    /// and TODO comments, and formats them into a professional Markdown document.
+    /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// The main entry point for the RoadmapUpdater tool.
+        /// </summary>
         static void Main()
         {
+            // Resolve the root directory of the repository (assuming the tool runs from bin/Debug/net8.0)
             string root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../.."));
             string libPath = Path.Combine(root, "RPGManagerLib");
             string roadmapPath = Path.Combine(root, "ROADMAP.md");
@@ -29,11 +38,12 @@ namespace RPGManager.Tools
             {
                 string text = File.ReadAllText(f);
 
-                // match only true class definitions (ignore doc comments and words like "className")
+                // Match only true class definitions (ignore doc comments and words like "className")
                 var classMatch = Regex.Match(text, @"(?<!\/\/.*)(?<![A-Za-z0-9_])(?:public\s+|internal\s+|abstract\s+|sealed\s+|partial\s+)*class\s+([A-Za-z0-9_]+)");
                 if (!classMatch.Success) return null;
 
-                string nsMatch = Regex.Match(text, @"namespace\s+([A-ZaZd0-9_.]+)").Groups[1].Value.Trim();
+                // Extract namespace
+                string nsMatch = Regex.Match(text, @"namespace\s+([A-Za-z0-9_.]+)").Groups[1].Value.Trim();
                 string ns = string.IsNullOrWhiteSpace(nsMatch) ? "Global" : nsMatch;
                 string cls = classMatch.Groups[1].Value.Trim();
 
@@ -54,6 +64,7 @@ namespace RPGManager.Tools
                     inheritance = inheritanceMatch.Groups[1].Value.Trim();
                 }
 
+                // Extract public methods, skipping constructors and common overrides
                 var methods = Regex.Matches(text, @"public\s+(?:virtual\s+|override\s+|abstract\s+|static\s+|async\s+)*[A-Za-z0-9_<>,\[\]\s]+\s+([A-Za-z0-9_]+)\s*\(")
                     .Cast<Match>()
                     .Select(m => m.Groups[1].Value)
@@ -61,6 +72,7 @@ namespace RPGManager.Tools
                     .Distinct()
                     .ToList();
 
+                // Extract TODO comments
                 var todos = Regex.Matches(text, @"//\s*TODO[: ](.*)", RegexOptions.IgnoreCase)
                     .Cast<Match>()
                     .Select(m => m.Groups[1].Value.Trim())
@@ -86,16 +98,17 @@ namespace RPGManager.Tools
             .OrderBy(g => g.Key)
             .ToList();
 
+            // Calculate statistics for the header
             int nsCount = files.Count;
             int classCount = files.Sum(g => g.Count());
             int methodCount = files.Sum(g => g.SelectMany(c => c.Methods).Count());
             int todoCount = files.Sum(g => g.SelectMany(c => c.Todos).Count());
 
-            // --- Emoji rotation ---
+            // --- Emoji rotation for namespaces ---
             string[] emojis = { "🧱", "⚔️", "📜", "🧙", "🏹", "🐉", "🏰", "🧭", "🪄", "🧰", "🎯" };
             int emojiIndex = 0;
 
-            // Keep any manual content above the marker
+            // Keep any manual content above the auto-generated marker
             string manualSection = "";
             if (File.Exists(roadmapPath))
             {
@@ -105,6 +118,7 @@ namespace RPGManager.Tools
                     manualSection = existing[..markerIndex].TrimEnd() + "\n\n";
             }
 
+            // Write the updated content back to ROADMAP.md
             using var sw = new StreamWriter(roadmapPath, false);
             sw.WriteLine(manualSection);
             sw.WriteLine("<!-- AUTO-GENERATED BELOW – DO NOT EDIT -->");
