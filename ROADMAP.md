@@ -1,68 +1,70 @@
-# 🗺️ RPG Manager – Development Roadmap
+# RPG Manager – Development Roadmap
 
-Welcome to the official development roadmap for **RPG Manager**,  
-a modular C# RPG engine by *Tombomeke Studios* ⚔️  
+![Status: Active](https://img.shields.io/badge/Status-Active-success)
+![Version: v0.1.2](https://img.shields.io/badge/Version-v0.1.2-blue)
+![Platform: .NET 8](https://img.shields.io/badge/Platform-.NET%208-512BD4)
 
-This section is **manually written** and reflects your development goals, vision,  
-and progress — while the section below is automatically generated  
-based on your actual C# codebase.
+Welcome to the official development roadmap for **RPG Manager**, a modular C# RPG engine by Tombomeke Studios. 
+
+This document outlines our vision, upcoming milestones, and current feature progress. The bottom section of this document is automatically generated directly from our C# codebase to ensure documentation stays perfectly in sync with development.
 
 ---
 
 ## 🎯 Vision
-Build a fully modular, text-based RPG framework with:
-- Expandable **World** and **Location** system 🌍  
-- Deep **Character** and **Inventory** interactions 🧙‍♂️  
-- Persistent **Save System** 💾  
-- Scalable for future CLI and GUI support ⚙️  
+To build a fully modular, text-based RPG framework that provides:
+- An expandable **World and Location** system.
+- Deep **Character, Class, and Inventory** mechanics.
+- A persistent, reliable **Save System**.
+- A scalable architecture ready for future CLI and GUI implementations.
 
 ---
 
 ## 🚀 Milestones
 
-| Milestone | Description | Status | Target |
-|------------|--------------|--------|---------|
-| **v0.1 – Core Engine** | Character classes, weapons, save system | ✅ Done | 2025-10 |
-| **v0.2 – World System** | Worlds, locations, and travel mechanics | ⚙️ In Progress | 2025-11 |
-| **v0.3 – Combat System** | Turn-based battles, HP & weapon effects | 🧱 Planned | 2025-12 |
-| **v0.4 – Economy System** | Currency, shops, crafting | 🧱 Planned | Q1 2026 |
-| **v1.0 – CLI Launch** | Full release with save/load UI | 🪄 Planned | Mid 2026 |
+| Version | Milestone | Status | Target Date |
+|:---|:---|:---|:---|
+| **v0.1** | **Core Engine** (Classes, Weapons, Saves) | Completed | Oct 2025 |
+| **v0.2** | **World System** (Locations, Travel) | In Progress | Nov 2025 |
+| **v0.3** | **Combat System** (Turn-based, HP, Effects) | Planned | Dec 2025 |
+| **v0.4** | **Economy System** (Currency, Shops, Crafting) | Planned | Q1 2026 |
+| **v1.0** | **CLI Launch** (Full release with UI) | Planned | Mid 2026 |
 
 ---
 
-## 🧩 Feature Board
+## 📋 Feature Board & Current Focus
 
-### 🧙 Characters
-- ✅ Character creation & naming  
-- ✅ Warrior & Mage base classes  
-- 🧱 Add leveling and XP system  
-- 🧱 Add ability trees per class  
+### 🔮 Currently Working On (Next Release)
+- [ ] **Spells & Magic System:** Implementing mana costs, spell casting, and elemental damage.
+- [ ] **Combat System Prototype:** Core turn-based battle loop.
+- [ ] **Enemies & NPCs:** Basic AI and interaction.
 
-### ⚔️ Weapons
-- ✅ Weapon rarity & upgrades  
-- ✅ Melee & ranged system  
-- 🧱 Add elemental modifiers  
-- 🧱 Add durability-based breaking  
+### 🧙 Characters & Classes
+- [x] Character creation & naming
+- [x] Warrior, Mage, and Archer base classes
+- [ ] Leveling and XP system
+- [ ] Ability trees per class
 
-### 🌍 Worlds
-- ✅ World & Location base system  
-- 🧱 Add travel system between locations  
-- 🧱 Add difficulty scaling  
-- 🧱 Add random world events  
+### ⚔️ Weapons & Equipment
+- [x] Weapon rarity & upgrade scaling
+- [x] Melee & ranged weapon separation
+- [ ] Elemental modifiers and resistances
+- [ ] Durability-based breaking mechanics
 
-### 💾 Saves
-- ✅ JSON save/load  
-- 🧱 Auto-save after each event  
-- 🧱 Add cloud save compatibility  
+### 🌍 World & Exploration
+- [x] World & Location base architecture
+- [ ] Travel system between locations
+- [ ] Exploring mechanics and random world events
+- [ ] Difficulty scaling based on region
 
----
+### 💰 Economy & Interaction
+- [x] Basic NPC interaction
+- [ ] Trading system
+- [ ] Global economy and currency
 
-## 📅 Upcoming Priorities
-1. Finalize **World travel system**
-2. Add **location-based events**
-3. Rework **CharacterFactory** to integrate world selection
-4. Create **combat prototype**
-5. Refactor **WeaponType** enum to support more classes
+### 💾 Save System
+- [x] JSON polymorphic save/load system
+- [ ] Auto-save after major events
+- [ ] Cloud save compatibility
 
 ---
 
