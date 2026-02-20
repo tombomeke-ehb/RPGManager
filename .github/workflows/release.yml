@@ -39,11 +39,14 @@ jobs:
               --self-contained true \
               -o "out/$rid"
 
-            # Create zip in the releases directory
+            # Create zip inside the out/ directory so the release action can find it
             cd "out/$rid"
-            zip -r "../../RPGManager-${{ github.ref_name }}-$rid.zip" .
+            zip -r "../RPGManager-${{ github.ref_name }}-$rid.zip" .
             cd ../..
           done
+
+      - name: "Debug: show generated zips"
+        run: ls -la out || true
 
       - name: Upload assets to existing release
         uses: softprops/action-gh-release@v2
