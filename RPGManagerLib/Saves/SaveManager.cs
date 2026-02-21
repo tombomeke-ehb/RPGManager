@@ -4,6 +4,14 @@ using RPGManagerLib.Characters.Heroes;
 
 namespace RPGManagerLib.Saves
 {
+    /// <summary>
+    /// Provides static methods for saving and loading character data in JSON format.
+    /// </summary>
+    /// <remarks>The SaveManager class manages the persistence of character data by reading from and writing
+    /// to a JSON file in a designated save directory. It ensures that the save directory exists before saving and
+    /// handles errors gracefully during file operations. The class supports serialization of enums as strings and
+    /// formats JSON output for readability. All operations are performed on a predefined file location, and existing
+    /// files are overwritten when saving.</remarks>
     public static class SaveManager
     {
         private static readonly string SaveFolder =
