@@ -77,7 +77,7 @@ namespace RPGManagerLib.UI
         /// Function that creates a new List of equipables and then adds a sword to it (Your starter Inventory)
         /// </summary>
         /// <returns>Default weapon list for a Warrio Character, "Sword"</returns>
-        public static List<IEquipable> CreateDefaultWeaponsWarrior() //TODO: Research for a more efficient way
+        public static List<IEquipable> CreateDefaultWeaponsWarrior() //TODO: Research for a more efficient way of creating default Weapons
         {
             List<IEquipable> equipables = new();
             equipables.Add(new Sword());
@@ -85,6 +85,10 @@ namespace RPGManagerLib.UI
             return equipables;
         }
 
+        /// <summary>
+        /// Creates a list of default weapons suitable for an archer character.
+        /// </summary>
+        /// <returns>A list of <see cref="IEquipable"/> objects containing a dagger, a simple bow, and a small quiver.</returns>
         public static List<IEquipable> CreateDefaultWeaponsArcher()
         {
             List<IEquipable> equipables = new();
@@ -95,6 +99,10 @@ namespace RPGManagerLib.UI
             return equipables;
         }
 
+        /// <summary>
+        /// Creates a list of default weapons suitable for a mage character.
+        /// </summary>
+        /// <returns>A list of <see cref="IEquipable"/> objects containing a dagger and a staff.</returns>
         public static List<IEquipable> CreateDefaultWeaponsMage()
         {
             List<IEquipable> equipables = new();
