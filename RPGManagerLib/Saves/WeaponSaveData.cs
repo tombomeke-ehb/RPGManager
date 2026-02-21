@@ -6,8 +6,12 @@ using RPGManagerLib.Items;
 namespace RPGManagerLib.Saves
 {
     /// <summary>
-    /// Represents the data required to save and restore the state of a weapon.
+    /// Represents the data required to serialize and reconstruct a weapon, including its type, damage, durability,
+    /// level, and elemental affinity.
     /// </summary>
+    /// <remarks>This class inherits from <see cref="EquipableSaveData"/> and is used to store weapon-specific
+    /// information for saving and loading purposes. It provides methods to convert the saved data back into a <see
+    /// cref="Weapon"/> instance, enabling persistence and restoration of weapon state within the game.</remarks>
     public class WeaponSaveData : EquipableSaveData
     {
         /// <summary>
@@ -38,8 +42,11 @@ namespace RPGManagerLib.Saves
         public WeaponSaveData() { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WeaponSaveData"/> class using the specified weapon.
+        /// Initializes a new instance of the WeaponSaveData class using the specified weapon object.
         /// </summary>
+        /// <remarks>This constructor copies relevant properties from the provided weapon to create a save
+        /// data representation. Use this when persisting weapon information for serialization or storage.</remarks>
+        /// <param name="weapon">The weapon object whose properties are used to populate the WeaponSaveData instance. Cannot be null.</param>
         public WeaponSaveData(Weapon weapon)
         {
             // Base class properties
@@ -56,8 +63,14 @@ namespace RPGManagerLib.Saves
         }
 
         /// <summary>
-        /// Converts the current object into a specific <see cref="Weapon"/> instance.
+        /// Creates an instance of the appropriate weapon type based on the current object's WeaponType and initializes
+        /// it with the object's properties.
         /// </summary>
+        /// <remarks>This method supports various weapon types, including sword, axe, spear, dagger, and
+        /// simple bow. Ensure that the WeaponType is set to a valid value before calling this method.</remarks>
+        /// <returns>An instance of the IEquipable interface representing the created weapon, populated with the current object's
+        /// data.</returns>
+        /// <exception cref="Exception">Thrown if the WeaponType is unknown, indicating that the specified weapon type cannot be instantiated.</exception>
         public override IEquipable ToEquipable()
         {
             // 1. Create the specific weapon instance with default values
