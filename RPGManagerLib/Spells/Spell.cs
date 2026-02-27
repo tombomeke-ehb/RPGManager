@@ -1,5 +1,8 @@
-﻿using RPGManagerLib.Characters.Heroes;
+﻿using System;
+using System.Linq;
+using RPGManagerLib.Characters.Heroes;
 using RPGManagerLib.Items;
+using RPGManagerLib.Items.Staffs;
 
 namespace RPGManagerLib.Spells
 {
@@ -42,7 +45,8 @@ namespace RPGManagerLib.Spells
                 .OfType<Staff>()
                 .FirstOrDefault();
 
-            if (staff != null && staff.Element == this.MagicType)
+            // Map Element -> MagicType by name where possible, fail-safe if not mappable
+            if (staff != null && Enum.TryParse<MagicType>(staff.Element.ToString(), out var mappedMagic) && mappedMagic == this.MagicType)
             {
                 damage *= 1.25;
             }
