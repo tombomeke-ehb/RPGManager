@@ -32,22 +32,15 @@ namespace RPGManagerLib.Characters.Heroes
         public Warrior(string name) : base(name) { }
 
         /// <summary>
-        /// Returns a formatted string describing the character's current state.
+        /// Returns the warrior's equipped weapons as a comma-separated list with rarity.
         /// </summary>
-        /// <returns>
-        /// A string containing the character's name, health, creation date, power level and list of weapons.
-        /// </returns>
-        public override string ToString()
+        protected override string GetEquipmentLine()
         {
-            // Gebruik de ToString van Character als basis, als je dat wilt behouden
-            string baseInfo = base.ToString();
-
-            // Toon de lijst met wapens leesbaar
-            string weaponList = Weapons != null && Weapons.Any()
-                ? string.Join(", ", Weapons.Select(w => w.Name))
+            // If the warrior has weapons, join them into one readable line like:
+            // "Basic Sword (COMMON), Simple Dagger (COMMON)".
+            return Weapons != null && Weapons.Any()
+                ? string.Join(", ", Weapons.Select(w => $"{w.Name} ({w.Rarity})"))
                 : "none";
-
-            return $"{baseInfo}\nWeapons: {weaponList}";
         }
 
     }

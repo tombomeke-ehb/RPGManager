@@ -44,6 +44,16 @@ namespace RPGManagerLib.Characters.Heroes
         /// </summary>
         public double Mana {  get; set; }
 
+        /// <summary>
+        /// Gets the maximum health used for display and healing bounds.
+        /// </summary>
+        public virtual double MaxHealth => 100.0;
+
+        /// <summary>
+        /// Gets the maximum mana used for display.
+        /// </summary>
+        public virtual double MaxMana => 100.0;
+
         public abstract string CharacterType { get; }
         public World? CurrentWorld { get; internal set; }
 
@@ -91,7 +101,7 @@ namespace RPGManagerLib.Characters.Heroes
                 {
                     throw new NegativeHealException();
                 }
-                if (points + Health > 100)
+                if (points + Health > MaxHealth)
                 {
                     throw new OverhealException();
                 }
@@ -158,14 +168,23 @@ namespace RPGManagerLib.Characters.Heroes
         // TODO: Add functionality to travel to different worlds, which may require additional properties and methods related to world management.
 
         /// <summary>
-        /// Returns a formatted string describing the character's current state.
+        /// Returns class-specific equipment as a formatted line, e.g. "Sword (Common), Dagger (Common)".
+        /// Subclasses override this to list their weapons.
         /// </summary>
-        /// <returns>
-        /// A string containing the character's name, health, creation date, and power level.
-        /// </returns>
+        protected virtual string GetEquipmentLine() => "none";
+
+        /// <summary>
+        /// Returns a formatted two-column stat block for this character.
+        /// </summary>
         public override string ToString()
         {
-            return $"\nYour Character:\nName: {Name}, Health: {Health}, Date created: {CreationDate}, Level: {PowerLevel}, Amount of gold: {Gold}";
+            string header = $"--- {Name} the {CharacterType} ---";
+            // The first two rows are laid out in two columns to resemble a character sheet.
+            string row1 = $"  {"Level",-9}: {PowerLevel,-10}{"Health",-7}: {Health:0} / {MaxHealth:0}";
+            string row2 = $"  {"Power",-9}: {PowerLevel,-10}{"Mana",-7}: {Mana:0} / {MaxMana:0}";
+            string row3 = $"  {"Gold",-9}: {Gold}";
+            string row4 = $"  Equipment: {GetEquipmentLine()}";
+            return $"\n{header}\n{row1}\n{row2}\n{row3}\n{row4}";
         }
     }
 }

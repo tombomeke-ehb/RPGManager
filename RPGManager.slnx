@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="ROADMAP.md" />
+  </Folder>
   <Project Path="RPGManager/RPGManager.csproj" />
   <Project Path="RPGManagerLib/RPGManagerLib.csproj" />
   <Project Path="Tools/RoadmapUpdater/RoadmapUpdater.csproj" />

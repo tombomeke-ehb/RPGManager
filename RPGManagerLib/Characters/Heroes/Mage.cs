@@ -20,6 +20,7 @@ namespace RPGManagerLib.Characters.Heroes
         /// Gets the character type for this hero.
         /// </summary>
         public override string CharacterType => "Mage";
+        public override double MaxMana => 150.0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Mage"/> class with default values.
@@ -39,14 +40,14 @@ namespace RPGManagerLib.Characters.Heroes
         }
 
         /// <summary>
-        /// Returns a formatted string describing the character's current state.
+        /// Returns the mage's equipped weapons as a comma-separated list with rarity.
         /// </summary>
-        /// <returns>
-        /// A string containing the character's name, health, creation date, power level, and mana-boost.
-        /// </returns>
-        public override string ToString()
+        protected override string GetEquipmentLine()
         {
-            return $"\nYour Character:\nName: {Name}, Health: {Health}, Date created: {CreationDate}, Level: {PowerLevel}, Mana {Mana}";
+            // Convert the mage's equipped items into one line for the UI instead of printing a raw list object.
+            return Weapons != null && Weapons.Any()
+                ? string.Join(", ", Weapons.Select(w => $"{w.Name} ({w.Rarity})"))
+                : "none";
         }
 
         //TODO: Implement spells and mana system (ESP)

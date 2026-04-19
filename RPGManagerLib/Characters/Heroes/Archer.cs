@@ -1,31 +1,26 @@
-﻿using RPGManagerLib.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RPGManagerLib.Items;
 
 namespace RPGManagerLib.Characters.Heroes
 {
     public class Archer : Character
     {
-        public List<IEquipable> Weapons { get; set; } = new List<IEquipable>();
+        public List<IEquipable> Weapons { get; set; } = new();
 
         public override string CharacterType => "Archer";
 
         public Archer() : base() { }
 
-        public Archer(string name): base(name) { }
+        public Archer(string name) : base(name) { }
 
-        public override string ToString()
+        /// <summary>
+        /// Returns the archer's equipped weapons as a comma-separated list with rarity.
+        /// </summary>
+        protected override string GetEquipmentLine()
         {
-            string baseInfo = base.ToString();
-
-            string weaponList = Weapons != null && Weapons.Any()
-                ? string.Join(", ", Weapons.Select(w => w.Name))
+            // Convert the weapon list into one display string for the character sheet.
+            return Weapons != null && Weapons.Any()
+                ? string.Join(", ", Weapons.Select(w => $"{w.Name} ({w.Rarity})"))
                 : "none";
-
-            return $"{baseInfo}\nWeapons: {weaponList}";
         }
     }
 }

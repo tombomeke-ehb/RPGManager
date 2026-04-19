@@ -71,13 +71,13 @@ namespace RPGManagerLib.UI
                 characters.Add(newChar);
                 currentCharacter = newChar;
                 SaveManager.SaveCharacters(characters);
-            });
+            }, "begin a new hero's journey");
 
             mainMenu.AddOption("2", "Switch Character", () =>
             {
                 SwitchCharacter();
                 SaveManager.SaveCharacters(characters);
-            });
+            }, "swap to another hero in your roster");
 
             mainMenu.AddOption("3", "View Current Character", () =>
             {
@@ -85,15 +85,15 @@ namespace RPGManagerLib.UI
                     Console.WriteLine(currentCharacter);
                 else
                     Console.WriteLine("No character selected.");
-            });
+            }, "inspect stats and equipment");
 
-            mainMenu.AddOption("4", "Explore", () => Explore());
-            mainMenu.AddOption("5", "Fight", () => Fight());
+            mainMenu.AddOption("4", "Explore", () => Explore(), "travel the world of Tavaryn");
+            mainMenu.AddOption("5", "Fight", () => Fight(), "enter combat");
             mainMenu.AddOption("6", "Quit", () =>
             {
                 SaveManager.SaveCharacters(characters);
                 Environment.Exit(0);
-            });
+            }, "save and exit");
 
             while (true)
             {
@@ -101,6 +101,7 @@ namespace RPGManagerLib.UI
                 Console.WriteLine("\nPress ENTER to continue...");
                 Console.ReadLine();
             }
+
         }
 
         /// <summary>
@@ -118,11 +119,15 @@ namespace RPGManagerLib.UI
                 return;
             }
 
-            Console.WriteLine("\nAvailable Characters:");
+            Console.WriteLine("\n--- Choose Your Hero ---\n");
             for (int i = 0; i < characters.Count; i++)
-                Console.WriteLine($"{i + 1}. {characters[i].Name} ({characters[i].CharacterType})");
+            {
+                string label = $"{characters[i].Name} the {characters[i].CharacterType}";
+                string hint = currentCharacter == characters[i] ? "currently active" : "ready for adventure";
+                Console.WriteLine($"  [{i + 1}] {label.PadRight(24)} — {hint}");
+            }
 
-            Console.Write("Enter number to select: ");
+            Console.Write("\n> ");
             if (int.TryParse(Console.ReadLine(), out int choice) &&
                 choice > 0 && choice <= characters.Count)
             {

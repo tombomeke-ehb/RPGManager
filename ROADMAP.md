@@ -139,19 +139,21 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-03-22 15:38**_
+_Last updated: **2026-04-19 04:24**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 14
 - **Classes:** 34
 - **Unique Methods:** 33
-- **Pending TODOs:** 5
+- **Pending TODOs:** 3
 
 
 ## 🧱 RPGManagerLib.Characters.Heroes
 
 ### [Archer.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Archer.cs)
 *Inherits from: `Character`*  
+> Returns the archer's equipped weapons as a comma-separated list with rarity.
+
 _No unique public methods found._
 
 ### [Character.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Character.cs)
@@ -378,10 +380,6 @@ _No unique public methods found._
 - `CreateDefaultWeaponsArcher()`
 - `CreateDefaultWeaponsMage()`
 
-**TODOs:**
-- [ ] Research for a more efficient way of creating default Weapons
-- [ ] Change this to an inventory management system, where you can add and remove items from your inventory, and the inventory will have a maximum capacity.
-
 ### [GameMenu.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/GameMenu.cs)
 > High-level console game loop and character management menu.
 
@@ -389,7 +387,7 @@ _No unique public methods found._
 - `Start()`
 
 ### [MenuSystem.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/MenuSystem.cs)
-> Minimal console menu helper that maps string keys to actions.
+> Minimal console menu helper that maps string keys to labeled actions with optional hints.
 
 **Public Methods:**
 - `AddOption()`
@@ -415,3 +413,4 @@ _No unique public methods found._
 - `RemoveLocation()`
 - `Unlock()`
 - `Lock()`
+
