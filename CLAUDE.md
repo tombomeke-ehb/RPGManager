@@ -87,6 +87,95 @@ The underlying antagonist is the **Hollow Court** — a secret society of nobles
 
 ---
 
+## World Lore: Tavaryn
+
+Full lore documents live in `docs/lore/`. This section is the implementation-oriented summary — focusing on world flags, NPC IDs, and design details needed when building the systems. For the narrative version, read the docs.
+
+### The Ashlands — First Region
+
+The starter region. Level 1–10. Built on the ruins of the Emberveil Kingdom (fire mage nation that destroyed itself in a war two centuries ago). Players begin here. Completing the arc unlocks the second character slot and travel to the Mistwood.
+
+**4 locations:**
+
+| Name | Level | Role |
+|---|---|---|
+| Cinder's Rest | 1–3 | Starter hub — blacksmith, inn, bounty board |
+| The Scorched Path | 2–5 | Travel corridor — bandit camps, random encounters |
+| Emberveil Ruins | 5–8 | Mid-region dungeon — class-gated sealed chamber |
+| The Ashen Throne | 8–10 | End-of-region — Hollow Court stronghold, volatile plateau |
+
+**World flags for the Ashlands:**
+- `AshlandsScavengerBounty` — first bounty quest done
+- `ScorchedPathPatrolCleared` — first bandit patrol defeated
+- `DrenMorrowFound` — injured traveler encountered
+- `DrenMorrowAllied` / `DrenMorrowBetrayed` — branching NPC outcome (mutually exclusive)
+- `EmberSealBroken` — sealed chamber accessed (any class)
+- `AshlandsCourtFound` — player found evidence of the Hollow Court
+- `AshlandsCourtExposed` — player learned the Court's name
+- `EmberArtifactSecured` — artifact retrieved before the Court
+- `ThreshDefeated` / `ThreshNegotiated` / `ThreshAlly` — bandit leader outcome (mutually exclusive)
+- `AshlandsComplete` — major objectives done, unlocks next region
+
+---
+
+### NPCs
+
+Five named NPCs. Full profiles in `docs/lore/npcs.md`.
+
+| NPC ID | Name | Role | Location |
+|---|---|---|---|
+| `korin_ashwell` | Korin Ashwell | Blacksmith, shop, minor quest giver | Cinder's Rest |
+| `sera_voss` | Sera Voss | Innkeeper, information hub, first quest giver | Cinder's Rest |
+| `dren_morrow` | Dren Morrow | Injured traveler, failed Court operative, branching choice | Scorched Path |
+| `lira_the_ashen` | Lira the Ashen | Hermit mage, ruins gate, lore source | Emberveil Ruins edge |
+| `commander_thresh` | Commander Thresh | Bandit leader, multiple resolution paths | Scorched Path / Ashen Throne |
+
+**Class-specific access notes:**
+- Lira only speaks to Mage on first encounter; other classes need ≥ 30 reputation (Known tier) or `DrenMorrowAllied`
+- Korin is suspicious of Archers until Known reputation
+- Thresh is more open to negotiation with Warriors (soldier-to-soldier respect)
+- Dren reveals more to Mages (assumes educated = trustworthy)
+
+---
+
+### Enemies
+
+Six enemy types for the Ashlands. Full details in `docs/lore/ashlands.md`.
+
+| Name | Element | Behavior | Level | Notes |
+|---|---|---|---|---|
+| Ash Scavenger | None | Aggressive | 1–2 | Pack animals, teaches basic combat |
+| Scorched Path Bandit | None | Aggressive | 2–4 | Basic melee/ranged, drops weapons + gold |
+| Bandit Enforcer | None | Defensive (heals at <50% HP) | 4–6 | Always with regular bandits |
+| Ember Sprite | Fire | Random | 3–5 | 30% Burn on hit, weak to Ice |
+| Ash Wraith | Fire | Defensive (phases at <30% HP) | 5–8 | Resistant to physical; Mages deal 2× damage |
+| Hollow Court Sentinel | None | Defensive (calls reinforcements at <40% HP) | 7–10 | Always drops Court Sigil on first kill |
+
+---
+
+### First Quest Chain
+
+Four quests that teach each major system. Full details in `docs/lore/ashlands.md`.
+
+| Quest | Giver | Type | Teaches | Flag set |
+|---|---|---|---|---|
+| "Teeth at the Gate" | Sera Voss | Kill 5 Ash Scavengers | Combat basics | `AshlandsScavengerBounty` |
+| "The Scorched Road" | Sera Voss | Travel + defeat bandit patrol | Travel + random encounters | `ScorchedPathPatrolCleared` |
+| "The Stranger's Burden" | Auto-trigger | Find Dren Morrow + choice | World flags + shared consequences | `DrenMorrowAllied` or `DrenMorrowBetrayed` |
+| "Echoes in the Ruins" | Lira the Ashen | Class-gated dungeon | Class-specific mechanics + Court intro | `EmberSealBroken`, `AshlandsCourtFound` |
+
+---
+
+### The Hollow Court — Ashlands Summary
+
+Full profile in `docs/lore/hollow-court.md`.
+
+In the Ashlands, the Court operates through two proxies — Commander Thresh (doesn't know who funds him) and Dren Morrow (a courier who was abandoned). They want the Emberveil Focus artifact from the ruins. Their Sentinels patrol the Ashen Throne and the deep ruins. The arc ends with the player learning the Court's name but not much more — establishing the pattern that repeats in every region.
+
+The Court's long-game goal: repurpose the ancient Compact's magical seals to concentrate power rather than preserve stability. This unfolds across all regions. The player won't understand the full picture until the late game.
+
+---
+
 ## System Plans
 
 These are the systems that need to be built, listed in dependency order.
