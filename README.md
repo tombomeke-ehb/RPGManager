@@ -1,146 +1,141 @@
 # RPG Manager
 
-Status: Work in Progress (actively developed)
+**A text-based RPG engine built in C# — where your heroes share a world.**
 
-RPG Manager is a .NET 8 console RPG framework and playable demo. It opens with a cinematic splash screen and drops you into a simple, text-driven loop where you create a hero, equip items, and choose to explore or enter combat. The goal is to grow this into a small, story-lite adventure while keeping the code clean and extensible for future systems (inventory, encounters, skills, locations, etc.).
+RPG Manager is a console RPG built on .NET 8. You play as the **Keeper of Destiny**, an entity that bonds with mortal heroes and guides them through the realm of Tavaryn. You don't control one character — you manage a roster. Each hero you create has their own class, level, and story. But they all exist in the same living world: what one hero does changes how NPCs treat the others, what paths open up, and how the world evolves.
 
-Project page (soon): https://tombomeke.com
+---
 
-## What's This?
+## What Makes It Different
 
-Short version: a foundation for a small, single-player RPG you can run in the terminal. It's also a clean learning project for object-oriented C# patterns, with clear seams to add features safely as the game grows.
+Most RPGs follow one character. RPG Manager tracks a **shared world state** across all of them:
 
-## Current Gameplay Snapshot
+- Your Warrior defeats the bandits terrorizing the Ashlands → merchants in the region now offer your Mage a discount
+- Your Mage breaks a magical seal → a locked door opens that your Archer can now pass through
+- Your Archer completes a smuggling quest for a shady NPC → that NPC becomes suspicious of your Warrior too
 
-- Start the game and create your first hero.
-- Pick a class (Warrior or Mage). Warriors can select equipment; Mages start with class defaults.
-- Navigate a main menu to view your hero, switch heroes, explore, fight, or quit.
-- Exploration and combat currently demonstrate flow via messages; they are designed to be expanded.
+New character classes unlock as you progress. Each class is useful in different situations — no single hero can handle everything. Building the right roster matters.
 
-## Features (Current)
+---
 
-- Interactive game loop - menu to create/switch heroes, explore, and fight.
-- Character system - Warrior and Mage with shared behavior (heal/damage) and per-class flavor.
-- Items and equipment - melee weapons, bows, and quivers via a simple equipable interface.
-- Inventory capacity - 4 slots; small items use 1, large use 2; validation prevents overflow.
-- Save management - JSON saves; override directory via `RPGMANAGER_SAVE_DIR`.
-- Extensible design - add heroes, weapons, locations, and menu actions without churn.
+## Current State
+
+This project is actively in development. The core engine is complete and the game is playable in its current form.
+
+**What works today:**
+- Create and name a hero — choose Warrior, Mage, or Archer
+- Per-class equipment selection and inventory management (4 slots, size-based)
+- View your hero's stats, switch between heroes, and manage your roster
+- JSON-based save system — save data persists across sessions
+- Extensible architecture with clean seams for adding combat, quests, travel, and more
+
+**What's coming:**
+- Turn-based combat with enemies, loot, and elemental damage
+- XP and leveling with per-class progression and character roster unlocks
+- A full world with regions, travel, and random encounters
+- NPC dialogue trees that react to your reputation and which class is talking
+- A quest system with class-exclusive missions and shared world consequences
+- Shops, gold, and an economy tied to your standing in each region
+
+See [ROADMAP.md](ROADMAP.md) for the full feature board and milestone targets.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [.NET SDK 8.0](https://dotnet.microsoft.com/download) or later
+
+### Run the game
+
+```bash
+git clone https://github.com/tombomeke-ehb/RPGManager.git
+cd RPGManager
+dotnet run --project RPGManager
+```
+
+### Optional: custom save directory
+
+By default, saves are stored in a `Save/` folder in the working directory. To override:
+
+```powershell
+# PowerShell
+$env:RPGMANAGER_SAVE_DIR = "C:\path\to\saves"
+dotnet run --project RPGManager
+```
+
+```bash
+# Bash
+export RPGMANAGER_SAVE_DIR=/path/to/saves
+dotnet run --project RPGManager
+```
+
+---
+
+## How to Play
+
+1. On first launch, create your first hero — pick a name and a class.
+2. Warriors let you choose your starting equipment. Mages and Archers start with class defaults.
+3. Inventory has 4 slots — small items (Dagger, Sword, Bow, Quiver) use 1 slot; large items (Axe, Spear) use 2.
+4. From the main menu: view your hero, switch characters, explore, fight, or quit.
+5. Exploration and combat currently demonstrate the intended flow — they expand with each release.
+
+---
+
+## Building & Publishing
+
+Single-file, self-contained binaries for distribution:
+
+```bash
+# Windows
+dotnet publish RPGManager -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true
+
+# macOS
+dotnet publish RPGManager -c Release -r osx-arm64 -p:PublishSingleFile=true --self-contained true
+
+# Linux
+dotnet publish RPGManager -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained true
+```
+
+Supported targets: `win-x64`, `win-arm64`, `osx-x64`, `osx-arm64`, `linux-x64`, `linux-arm64`
+
+Output: `RPGManager/bin/Release/<target>/publish/`
+
+Pre-built binaries for all platforms are available on the [Releases](https://github.com/tombomeke-ehb/RPGManager/releases) page.
+
+---
 
 ## Project Structure
 
 ```
-RPGManager.sln          Solution
-RPGManager/             Console front end and entry point
-RPGManagerLib/          Library: characters, items, UI, and save logic
+RPGManager/             Console entry point (splash screen, calls GameMenu.Start)
+RPGManagerLib/          Core library — all game logic, no external dependencies
+Tools/RoadmapUpdater/   Dev tool — scans the library and auto-updates ROADMAP.md
 ```
 
 Key entry points:
-- `RPGManager/Program.cs` - splash screen, calls `GameMenu.Start()`.
-- `RPGManagerLib/UI/GameMenu.cs` - main loop and menu actions.
-- `RPGManagerLib/UI/CharacterFactory.cs` - interactive character creation and equipment selection.
-- `RPGManagerLib/Saves/SaveManager.cs` - JSON serialization, save/load.
+- `RPGManager/Program.cs` — splash screen and launch
+- `RPGManagerLib/UI/GameMenu.cs` — main game loop
+- `RPGManagerLib/UI/CharacterFactory.cs` — character creation
+- `RPGManagerLib/Saves/SaveManager.cs` — save and load
 
-## Prerequisites
-
-- .NET SDK 8.0 or later
-
-## Run The Game
-
-Build and run from the repo root:
-
-```bash
-dotnet build
-dotnet run --project RPGManager
-```
-
-Set a custom save directory (optional):
-- PowerShell (Windows):
-  ```powershell
-  $env:RPGMANAGER_SAVE_DIR = "C:\\path\\to\\saves"
-  dotnet run --project RPGManager
-  ```
-- Bash (Linux/macOS):
-  ```bash
-  export RPGMANAGER_SAVE_DIR=/path/to/saves
-  dotnet run --project RPGManager
-  ```
-
-## How To Play
-
-- First launch loads or creates your hero. If none exist, you'll create one.
-- Creating a Warrior allows selecting equipment; a Mage starts with class defaults.
-- Inventory capacity is 4 slots total:
-  - Small items (e.g., Dagger, Sword, Bow, Quiver) use 1 slot.
-  - Large items (e.g., Axe, Spear) use 2 slots.
-- Main menu options include: create new character, switch active character, view current character, explore, fight, or quit.
-- Explore and Fight currently demonstrate flow with simple messages; they will expand over time.
-
-## Configuration and Saves
-
-- Save directory: defaults to `Save` in the working directory, or override with `RPGMANAGER_SAVE_DIR`.
-- Save file: `characters.json` inside the save directory.
-- Moving saves: copy or point `RPGMANAGER_SAVE_DIR` to an existing folder to continue a campaign.
-
-## Build and Publish
-
-Create self-contained, single-file binaries for distribution:
-
-- Windows x64:
-  ```powershell
-  dotnet publish RPGManager -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true
-  ```
-- macOS x64:
-  ```bash
-  dotnet publish RPGManager -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained true
-  ```
-- Linux x64:
-  ```bash
-  dotnet publish RPGManager -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained true
-  ```
-
-Artifacts will be in `RPGManager/bin/Release/<target>/publish/`.
-
-## Downloads
-
-Latest builds are available on the GitHub Releases page. Direct links to the latest stable release assets:
-- Windows x64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-win-x64.zip
-- Windows ARM64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-win-arm64.zip
-- macOS Intel (x64): https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-osx-x64.zip
-- macOS Apple Silicon (ARM64): https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-osx-arm64.zip
-- Linux x64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-linux-x64.zip
-- Linux ARM64: https://github.com/tombomeke-ehb/RPGManager/releases/latest/download/RPGManager-linux-arm64.zip
-
-Notes:
-- “Latest” links only resolve to the most recent stable release. If there are only pre-releases, these URLs will 404. Use the specific tag download instead, e.g.:
-  - https://github.com/tombomeke-ehb/RPGManager/releases/download/v0.1.0/RPGManager-win-x64.zip
-
-## Roadmap
-
-Near-term
-- Encounters: basic exploration events with outcomes and rewards.
-- Combat: turn order, abilities, status effects, loot.
-- Progression: XP/leveling, skills, equipment rarities.
-- Saves: multiple save slots and last-played tracking.
-
-Later
-- World: locations, simple NPC interactions, and quests.
-- UX: settings menu, accessibility tweaks.
-- Content: item tiers, unique abilities, lightweight story beats.
-
-## Feedback
-
-This is a personal project. I am not accepting pull requests. If you find bugs or have suggestions, please open an issue with clear steps and context. Feedback is welcome; contributions will remain at my discretion.
+---
 
 ## Troubleshooting
 
-- Console glyphs: if you see odd characters in the console banner, ensure your terminal encoding supports UTF-8.
-- Save issues: verify the `RPGMANAGER_SAVE_DIR` exists and is writable, or remove it to use the default `Save` folder.
-- Build errors: run `dotnet --info` to ensure .NET 8 SDK is installed and selected.
+**Odd characters in the console banner:** ensure your terminal uses UTF-8 encoding.
+
+**Save file issues:** verify `RPGMANAGER_SAVE_DIR` points to a writable folder, or remove the variable to use the default `Save/` directory.
+
+**Build errors:** run `dotnet --info` to confirm .NET 8 SDK is installed.
+
+---
 
 ## License
 
-Code is licensed under the MIT License (see `LICENSE`). Game assets (art, audio, narrative content) may be licensed separately when added.
+Code is licensed under the [MIT License](LICENSE). Game assets (art, audio, narrative content) will be licensed separately when added.
 
-## Press Kit
+---
 
-See PRESS.md for a compact blurb, features, platforms, and links.
+*Developed by Tombomeke Studios — [tombomeke.com](https://tombomeke.com)*

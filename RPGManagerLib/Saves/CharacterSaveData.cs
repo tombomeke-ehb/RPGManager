@@ -51,8 +51,15 @@ namespace RPGManagerLib.Saves
         public CharacterSaveData() { }
 
         /// <summary>
-        /// Creates save data from a live <see cref="Character"/> instance.
+        /// Initializes a new instance of the CharacterSaveData class using the specified Character object, capturing
+        /// its properties for saving.
         /// </summary>
+        /// <remarks>This constructor handles different character types (Warrior, Mage, Archer) and
+        /// populates the Equipables or Mana properties accordingly. Ensure that the Character object provided is valid
+        /// and contains the necessary data.</remarks>
+        /// <param name="c">The Character object containing the data to be saved, including its name, health, creation date, power
+        /// level, character type, and gold amount.</param>
+        /// <exception cref="Exception">Thrown if an unknown item type is encountered during the conversion of equipable items.</exception>
         public CharacterSaveData(Character c)
         {
             Name = c.Name;
@@ -88,8 +95,16 @@ namespace RPGManagerLib.Saves
         }
 
         /// <summary>
-        /// Reconstructs a live <see cref="Character"/> from this save data.
+        /// Creates a new character instance based on the current save data, initializing its properties according to
+        /// the specified character type.
         /// </summary>
+        /// <remarks>The method sets the character's health, creation date, power level, and gold. For
+        /// Warrior and Archer types, it populates the weapons collection from the equipables in the save data. For Mage
+        /// characters, it sets the mana value. This method is typically used to reconstruct a character from saved
+        /// data.</remarks>
+        /// <returns>A new instance of the Character class, which may be a Warrior, Archer, or Mage, populated with the current
+        /// save data's attributes.</returns>
+        /// <exception cref="Exception">Thrown if the character type specified in the save data is not recognized.</exception>
         public Character ToCharacter()
         {
             Character c = CharacterType switch

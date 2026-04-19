@@ -52,15 +52,15 @@ namespace RPGManagerLib.Characters.Heroes
         //TODO: Implement spells and mana system (ESP)
 
 
-        public void CastSpell(int index, Character target)
+        public void CastSpell(int i, Character target)
         {
-            if (index < 0 || index >= Spells.Count)
+            if (i < 0 || i >= Spells.Count)
             {
                 Console.WriteLine("Invalid spell.");
                 return;
             }
 
-            Spells[index].Cast(this, target);
+            Spells[i].Cast(this, target);
         }
 
     }

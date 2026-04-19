@@ -4,67 +4,131 @@
 ![Version: v0.1.2](https://img.shields.io/badge/Version-v0.1.2-blue)
 ![Platform: .NET 8](https://img.shields.io/badge/Platform-.NET%208-512BD4)
 
-Welcome to the official development roadmap for **RPG Manager**, a modular C# RPG engine by Tombomeke Studios. 
-
-This document outlines our vision, upcoming milestones, and current feature progress. The bottom section of this document is automatically generated directly from our C# codebase to ensure documentation stays perfectly in sync with development.
+Welcome to the official development roadmap for **RPG Manager**, a text-based RPG engine built in C# by Tombomeke Studios.
 
 ---
 
-## 🎯 Vision
-To build a fully modular, text-based RPG framework that provides:
-- An expandable **World and Location** system.
-- Deep **Character, Class, and Inventory** mechanics.
-- A persistent, reliable **Save System**.
-- A scalable architecture ready for future CLI and GUI implementations.
+## Vision
+
+RPG Manager is built around one core idea: you manage a **roster of heroes**, not a single character. Each hero has their own class, level, and inventory — but they all share the same living world. What one hero does changes how NPCs talk to the others, unlocks paths, and shifts reputations across every region of Tavaryn.
+
+The long-term goal is a fully playable, story-driven console RPG where:
+- Multiple hero classes each have unique strengths that open different paths
+- The world remembers what you've done — across all your characters
+- Combat, quests, and exploration grow in depth with each release
+- The architecture stays clean enough to extend indefinitely
 
 ---
 
-## 🚀 Milestones
+## Milestones
 
-| Version | Milestone | Status | Target Date |
+| Version | Milestone | Status | Target |
 |:---|:---|:---|:---|
-| **v0.1** | **Core Engine** (Classes, Weapons, Saves) | Completed | Oct 2025 |
-| **v0.2** | **World System** (Locations, Travel) | In Progress | Nov 2025 |
-| **v0.3** | **Combat System** (Turn-based, HP, Effects) | Planned | Dec 2025 |
-| **v0.4** | **Economy System** (Currency, Shops, Crafting) | Planned | Q1 2026 |
-| **v1.0** | **CLI Launch** (Full release with UI) | Planned | Mid 2026 |
+| **v0.1** | Core Engine — classes, weapons, save system | Done | Oct 2025 |
+| **v0.2** | World & Travel — locations, regions, travel loop | In Progress | May 2026 |
+| **v0.3** | Combat System — turn-based fights, enemies, loot | Planned | Jul 2026 |
+| **v0.4** | Spells & Leveling — mana system, XP, character roster | Planned | Sep 2026 |
+| **v0.5** | Shared World State — reputation, world flags, NPC memory | Planned | Nov 2026 |
+| **v0.6** | NPCs & Dialogue — dialogue trees, class reactions, quests | Planned | Q1 2027 |
+| **v0.7** | Quests & Economy — quest system, shops, gold loop | Planned | Q2 2027 |
+| **v1.0** | Full CLI Release — complete first story arc, polished UI | Planned | Q4 2027 |
 
 ---
 
-## 📋 Feature Board & Current Focus
+## Feature Board
 
-### 🔮 Currently Working On (Next Release)
-- [ ] **Spells & Magic System:** Implementing mana costs, spell casting, and elemental damage.
-- [ ] **Combat System Prototype:** Core turn-based battle loop.
-- [ ] **Enemies & NPCs:** Basic AI and interaction.
+### Currently Working On
 
-### 🧙 Characters & Classes
-- [x] Character creation & naming
+- [ ] **Spell System:** Mana costs, spell casting in combat, elemental damage
+- [ ] **World & Location Travel:** Travel between locations, encounter rolls on the road
+- [ ] **NPC Foundation:** Interaction structure ready for dialogue trees
+
+### Characters & Classes
+
+- [x] Character creation and naming
 - [x] Warrior, Mage, and Archer base classes
+- [x] Per-class default equipment
 - [ ] Leveling and XP system
+- [ ] Per-class stat bonuses on level-up
+- [ ] Character roster with unlock conditions (e.g., reach level 10 → unlock slot 2)
 - [ ] Ability trees per class
 
-### ⚔️ Weapons & Equipment
-- [x] Weapon rarity & upgrade scaling
-- [x] Melee & ranged weapon separation
-- [ ] Elemental modifiers and resistances
-- [ ] Durability-based breaking mechanics
+### Combat
 
-### 🌍 World & Exploration
-- [x] World & Location base architecture
+- [ ] Enemy class with health, damage, element, and loot table
+- [ ] Turn-based combat loop (player turn / enemy turn)
+- [ ] Player actions in combat: attack, cast spell, use item, flee
+- [ ] Elemental resistances and weakness multipliers
+- [ ] Status effects: burn, freeze, poison, stun
+- [ ] Win/lose outcomes with XP and loot rewards
+
+### Weapons & Equipment
+
+- [x] Weapon rarity and upgrade scaling
+- [x] Melee and ranged weapon separation
+- [x] Inventory slot capacity enforcement
+- [ ] Proper `Inventory` class replacing ad-hoc item handling
+- [ ] Elemental damage modifiers in combat
+- [ ] Durability degradation during combat
+
+### Spells & Magic
+
+- [x] Base `Spell` class with `Cast()`
+- [x] `Fireball` prototype
+- [ ] Mana cost and cooldown per spell
+- [ ] Mage spell book (list of learned spells)
+- [ ] Mana regeneration per combat turn
+- [ ] Full implementations: Fireball, IceShard, LightningBolt, HealingLight
+- [ ] Status effects tied to spell elements
+
+### World & Exploration
+
+- [x] World and Location base architecture
 - [ ] Travel system between locations
-- [ ] Exploring mechanics and random world events
-- [ ] Difficulty scaling based on region
+- [ ] Random encounter rolls during travel
+- [ ] Level-gated region entry
+- [ ] Starter region: the Ashlands (3–4 connected locations)
+- [ ] Random world events during exploration
 
-### 💰 Economy & Interaction
-- [x] Basic NPC interaction
-- [ ] Trading system
-- [ ] Global economy and currency
+### Shared World State
 
-### 💾 Save System
-- [x] JSON polymorphic save/load system
+- [ ] Global flag system (world events, quest completions)
+- [ ] Per-region reputation system with tiers
+- [ ] Per-NPC relationship tracking
+- [ ] World event log (human-readable history)
+- [ ] All character actions feed into shared world state
+
+### NPCs & Dialogue
+
+- [ ] Dialogue tree system (nodes with conditions and actions)
+- [ ] NPC reactions based on reputation tier
+- [ ] Class-specific dialogue options
+- [ ] Dialogue actions: give quest, set world flag, modify reputation
+- [ ] Quest giver NPCs
+
+### Quests
+
+- [ ] Quest class with objectives and rewards
+- [ ] Objective types: Kill, Collect, Reach, Talk, Deliver
+- [ ] Quest progress tracked in world state (shared across all characters)
+- [ ] Class-exclusive quests
+- [ ] Quest log in the game menu
+- [ ] Starter quests in the Ashlands
+
+### Economy
+
+- [ ] Gold drops from enemies
+- [ ] Shop class with buy/sell
+- [ ] Reputation-based price discounts
+- [ ] BlackSmith fully wired to trade system
+
+### Save System
+
+- [x] JSON polymorphic save/load
+- [x] Overridable save directory via `RPGMANAGER_SAVE_DIR`
+- [ ] Save `WorldState` alongside character data
+- [ ] Save quest progress
 - [ ] Auto-save after major events
-- [ ] Cloud save compatibility
 
 ---
 
@@ -75,7 +139,7 @@ To build a fully modular, text-based RPG framework that provides:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-02-20 13:01**_
+_Last updated: **2026-03-22 15:38**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 14
@@ -176,6 +240,8 @@ _No unique public methods found._
 
 ### [Staff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/Staff.cs)
 *Inherits from: `Weapon`*  
+> Represents a staff weapon that can be used in combat, providing basic damage and durability attributes.
+
 _No unique public methods found._
 
 
@@ -196,7 +262,7 @@ _No unique public methods found._
 
 ### [Bow.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Bows/Bow.cs)
 *Inherits from: `Weapon`*  
-> Base type for bow-style ranged weapons.
+> Represents an abstract base class for all bow weapons, providing common properties and behaviors for derived bow types.
 
 _No unique public methods found._
 
@@ -211,7 +277,7 @@ _No unique public methods found._
 
 ### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axe.cs)
 *Inherits from: `Weapon`*  
-> A heavy melee weapon with strong base damage and slower cooldown.
+> Represents a melee weapon of type axe with predefined damage, durability, rarity, and inventory space attributes.
 
 _No unique public methods found._
 
@@ -238,7 +304,7 @@ _No unique public methods found._
 
 ### [SmallQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/SmallQuiver.cs)
 *Inherits from: `Quiver`*  
-> A small quiver with limited capacity and minimal inventory footprint.
+> Represents a small quiver designed to hold arrows, suitable for basic inventory needs.
 
 _No unique public methods found._
 
@@ -270,13 +336,13 @@ _No unique public methods found._
 
 ### [QuiverSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/QuiverSaveData.cs)
 *Inherits from: `EquipableSaveData`*  
-> Represents the data required to save and restore a quiver.
+> Represents the save data for a quiver, including its capacity and other equipable properties.
 
 **Public Methods:**
 - `ToEquipable()`
 
 ### [SaveManager.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/SaveManager.cs)
-> Loads a list of characters from a saved file.
+> Provides static methods for saving and loading character data in JSON format.
 
 **Public Methods:**
 - `LoadCharacters()`
@@ -284,7 +350,7 @@ _No unique public methods found._
 
 ### [WeaponSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/WeaponSaveData.cs)
 *Inherits from: `EquipableSaveData`*  
-> Represents the data required to save and restore the state of a weapon.
+> Represents the data required to serialize and reconstruct a weapon, including its type, damage, durability, level, and elemental affinity.
 
 **Public Methods:**
 - `ToEquipable()`
@@ -313,7 +379,7 @@ _No unique public methods found._
 - `CreateDefaultWeaponsMage()`
 
 **TODOs:**
-- [ ] Research for a more efficient way
+- [ ] Research for a more efficient way of creating default Weapons
 - [ ] Change this to an inventory management system, where you can add and remove items from your inventory, and the inventory will have a maximum capacity.
 
 ### [GameMenu.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/GameMenu.cs)
@@ -334,7 +400,7 @@ _No unique public methods found._
 
 ### [Quiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/Quiver.cs)
 *Inherits from: `IEquipable`*  
-> Base type for quivers that store ammunition for bows.
+> Represents an abstract base class for quivers, which are used to store and manage arrows in an inventory system.
 
 _No unique public methods found._
 
@@ -349,4 +415,3 @@ _No unique public methods found._
 - `RemoveLocation()`
 - `Unlock()`
 - `Lock()`
-

@@ -5,14 +5,22 @@ using RPGManagerLib.Items;
 namespace RPGManagerLib.Saves
 {
     /// <summary>
-    /// Represents the data required to save and restore a quiver.
+    /// Represents the save data for a quiver, including its capacity and other equipable properties.
     /// </summary>
+    /// <remarks>This class inherits from EquipableSaveData and is used to store the state of a quiver in the
+    /// game. It provides functionality to convert the saved data back into an equipable quiver instance.</remarks>
     public class QuiverSaveData : EquipableSaveData
     {
         public int Capacity { get; set; }
 
         public QuiverSaveData() { }
-
+        /// <summary>
+        /// Initializes a new instance of the QuiverSaveData class using the specified Quiver object.
+        /// </summary>
+        /// <remarks>This constructor copies the base properties such as Name, Rarity, and
+        /// InventorySpaceAmount from the provided Quiver object, as well as the specific property Capacity.</remarks>
+        /// <param name="quiver">The Quiver object containing the properties to initialize the QuiverSaveData instance. This parameter cannot
+        /// be null.</param>
         public QuiverSaveData(Quiver quiver)
         {
             // Base properties
@@ -23,7 +31,12 @@ namespace RPGManagerLib.Saves
             // Specific properties
             Capacity = quiver.Capacity;
         }
-
+        /// <summary>
+        /// Creates an equipable quiver instance based on the current object's properties.
+        /// </summary>
+        /// <remarks>Currently, this method only supports the SmallQuiver type. Additional quiver types
+        /// may be supported in the future, which will require updates to this method's logic.</remarks>
+        /// <returns>An instance of IEquipable representing the quiver with initialized properties.</returns>
         public override IEquipable ToEquipable()
         {
             // Create instance (currently only supporting SmallQuiver)
