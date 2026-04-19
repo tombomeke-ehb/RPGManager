@@ -1,8 +1,4 @@
-﻿using RPGManagerLib.Characters.NPCs;
-using RPGManagerLib.Items.Weapons;
-using RPGManagerLib.Items.Weapons.Bows;
-using RPGManagerLib.Items.Weapons.Melee;
-using RPGManagerLib.Locations;
+using RPGManagerLib.Saves;
 using RPGManagerLib.UI;
 
 namespace RPGManager
@@ -11,12 +7,13 @@ namespace RPGManager
     /// Console entry point for the RPG Manager demo application.
     /// </summary>
     /// <remarks>
-    /// Displays a styled intro screen and runs sample code to exercise
-    /// the underlying library. Hook up to <c>GameMenu.Start()</c> to
-    /// launch the interactive flow when ready.
+    /// Displays a styled intro screen and launches the main game menu.
     /// </remarks>
     internal class Program
     {
+        private const int IntroWidth = 68;
+        private const int MinimumContentWidth = 24;
+
         /// <summary>
         /// Application entry point.
         /// </summary>
@@ -25,55 +22,276 @@ namespace RPGManager
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("====================================================================");
-            Console.WriteLine("                        R P G   M A N A G E R"                       );
-            Console.WriteLine("====================================================================");
-            Console.ResetColor();
+            var characters = SaveManager.LoadCharacters();
 
-            var v = System.Reflection.CustomAttributeExtensions
+            if (characters.Count > 0)
+            {
+                ShowWelcomeBackScreen(characters);
+            }
+            else
+            {
+                ShowIntroScreen();
+            }
+
+            GameMenu.Start();
+        }
+
+        private static void ShowIntroScreen()
+        {
+            Console.Clear();
+            DrainPendingKeys();
+
+            string version = System.Reflection.CustomAttributeExtensions
                 .GetCustomAttribute<System.Reflection.AssemblyInformationalVersionAttribute>(
                     System.Reflection.Assembly.GetExecutingAssembly()
                 )?.InformationalVersion ?? "dev";
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine($"Version: {v}");
-            Console.ResetColor();
 
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("                     A Tombomeke Studios Production"                 );
-            Console.ResetColor();
+            WriteCentered(new string('=', IntroWidth), ConsoleColor.DarkYellow);
+            TypeCentered("R P G   M A N A G E R", ConsoleColor.Yellow, 18);
+            WriteCentered(new string('=', IntroWidth), ConsoleColor.DarkYellow);
             Console.WriteLine();
 
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("The world stands at the edge of chaos.");
-            Console.WriteLine("Legends whisper of heroes long forgotten,");
-            Console.WriteLine("and dark powers rising beyond the misty mountains.");
+            TypeCentered($"Version {version}", ConsoleColor.DarkGray, 8);
+            TypeCentered("A Tombomeke Studios Production", ConsoleColor.DarkCyan, 10);
+            WriteCentered("Press ESC to skip", ConsoleColor.DarkGray);
             Console.WriteLine();
-            Console.WriteLine("From the ashes of old kingdoms, new champions emerge.");
-            Console.WriteLine("Their fate lies in your hands — as the Keeper of Destiny,");
-            Console.WriteLine("you shall forge their path through war, magic, and time itself.");
+
+            string[] storyLines =
+            {
+                "The world stands at the edge of chaos.",
+                "Legends whisper of heroes long forgotten,",
+                "and dark powers rising beyond the misty mountains.",
+                "",
+                "From the ashes of old kingdoms, new champions emerge.",
+                "Their fate lies in your hands as the Keeper of Destiny,",
+                "and you shall forge their path through war, magic, and time itself.",
+                "",
+                "Raise your banners, summon your courage...",
+                "and let the tale begin."
+            };
+
+            foreach (string line in storyLines)
+            {
+                if (IsSkipRequested())
+                {
+                    RenderFullIntroBody(storyLines);
+                    WaitForEnterRealm();
+                    return;
+                }
+
+                if (line.Length == 0)
+                {
+                    Console.WriteLine();
+                    DelayWithSkip(120);
+                    continue;
+                }
+
+                ConsoleColor color = line.StartsWith("Raise") || line.StartsWith("and let")
+                    ? ConsoleColor.Cyan
+                    : ConsoleColor.Gray;
+
+                TypeCentered(line, color, 14);
+                DelayWithSkip(70);
+            }
+
+            RenderIntroFooter();
+            WaitForEnterRealm();
+        }
+
+        private static void ShowWelcomeBackScreen(IReadOnlyList<RPGManagerLib.Characters.Heroes.Character> characters)
+        {
+            Console.Clear();
+            DrainPendingKeys();
+            string leadHero = characters[0].Name;
+            string rosterLabel = characters.Count == 1 ? "1 hero stands ready." : $"{characters.Count} heroes stand ready.";
+
+            WriteCentered(new string('=', IntroWidth), ConsoleColor.DarkYellow);
+            WriteCentered("WELCOME BACK TO TAVARYN", ConsoleColor.Yellow);
+            WriteCentered(new string('=', IntroWidth), ConsoleColor.DarkYellow);
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Raise your banners, summon your courage...");
-            Console.WriteLine("and let the tale begin.");
-            Console.ResetColor();
+            WriteCentered($"{leadHero} still answers your call.", ConsoleColor.Gray);
+            WriteCentered(rosterLabel, ConsoleColor.Gray);
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("====================================================================");
-            Console.ResetColor();
+            WriteCentered("Press ENTER to continue your journey...", ConsoleColor.White);
+            WaitForEnter();
+            Console.Clear();
+        }
+
+        private static void RenderFullIntroBody(IEnumerable<string> storyLines)
+        {
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("                Developed by Tombomeke Studios © 2025");
-            Console.WriteLine("                     www.tombomeke.com");
-            Console.ResetColor();
+
+            foreach (string line in storyLines)
+            {
+                if (line.Length == 0)
+                {
+                    Console.WriteLine();
+                    continue;
+                }
+
+                ConsoleColor color = line.StartsWith("Raise") || line.StartsWith("and let")
+                    ? ConsoleColor.Cyan
+                    : ConsoleColor.Gray;
+
+                WriteCentered(line, color);
+            }
+
+            RenderIntroFooter();
+        }
+
+        private static void RenderIntroFooter()
+        {
             Console.WriteLine();
-            Console.Write("Press any key to enter the realm of Tavaryn...");
+            WriteCentered(new string('=', IntroWidth), ConsoleColor.DarkYellow);
+            Console.WriteLine();
+            WriteCentered("Developed by Tombomeke Studios © 2025", ConsoleColor.DarkGray);
+            WriteCentered("www.tombomeke.com", ConsoleColor.DarkGray);
+            Console.WriteLine();
+        }
+
+        private static void WaitForEnterRealm()
+        {
+            DrainPendingKeys();
+            WriteCentered("Press any key to enter the realm of Tavaryn...", ConsoleColor.White);
             Console.ReadKey(true);
             Console.Clear();
+        }
 
-            // Launch the interactive game menu
-            GameMenu.Start();
+        private static void WaitForEnter()
+        {
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    return;
+                }
+            }
+        }
+
+        private static bool DelayWithSkip(int totalDelayMs)
+        {
+            const int SliceMs = 20;
+
+            for (int elapsed = 0; elapsed < totalDelayMs; elapsed += SliceMs)
+            {
+                if (IsSkipRequested())
+                {
+                    return true;
+                }
+
+                Thread.Sleep(Math.Min(SliceMs, totalDelayMs - elapsed));
+            }
+
+            return false;
+        }
+
+        private static void TypeCentered(string text, ConsoleColor color, int delayMs)
+        {
+            foreach (string wrappedLine in WrapForConsole(text))
+            {
+                int leftPadding = GetCenteredPadding(wrappedLine);
+                Console.Write(new string(' ', leftPadding));
+                Console.ForegroundColor = color;
+
+                foreach (char character in wrappedLine)
+                {
+                    Console.Write(character);
+
+                    if (DelayWithSkip(delayMs))
+                    {
+                        Console.ResetColor();
+                        Console.WriteLine();
+                        return;
+                    }
+                }
+
+                Console.ResetColor();
+                Console.WriteLine();
+            }
+        }
+
+        private static void WriteCentered(string text, ConsoleColor color)
+        {
+            foreach (string wrappedLine in WrapForConsole(text))
+            {
+                Console.ForegroundColor = color;
+                Console.WriteLine($"{new string(' ', GetCenteredPadding(wrappedLine))}{wrappedLine}");
+                Console.ResetColor();
+            }
+        }
+
+        private static int GetCenteredPadding(string text)
+        {
+            int width = GetUsableWindowWidth();
+            return Math.Max((width - text.Length) / 2, 0);
+        }
+
+        private static IEnumerable<string> WrapForConsole(string text)
+        {
+            int maxWidth = Math.Max(Math.Min(GetUsableWindowWidth() - 2, IntroWidth), MinimumContentWidth);
+
+            if (string.IsNullOrWhiteSpace(text) || text.Length <= maxWidth)
+            {
+                yield return text;
+                yield break;
+            }
+
+            string[] words = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string currentLine = string.Empty;
+
+            foreach (string word in words)
+            {
+                string candidate = string.IsNullOrEmpty(currentLine) ? word : $"{currentLine} {word}";
+                if (candidate.Length <= maxWidth)
+                {
+                    currentLine = candidate;
+                    continue;
+                }
+
+                if (!string.IsNullOrEmpty(currentLine))
+                {
+                    yield return currentLine;
+                }
+
+                currentLine = word;
+            }
+
+            if (!string.IsNullOrEmpty(currentLine))
+            {
+                yield return currentLine;
+            }
+        }
+
+        private static int GetUsableWindowWidth()
+        {
+            try
+            {
+                return Math.Max(Console.WindowWidth, MinimumContentWidth);
+            }
+            catch (IOException)
+            {
+                return IntroWidth + 4;
+            }
+        }
+
+        private static bool IsSkipRequested()
+        {
+            if (!Console.KeyAvailable)
+            {
+                return false;
+            }
+
+            ConsoleKeyInfo key = Console.ReadKey(true);
+            return key.Key == ConsoleKey.Escape;
+        }
+
+        private static void DrainPendingKeys()
+        {
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+            }
         }
     }
 }
