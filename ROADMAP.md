@@ -75,7 +75,7 @@ To build a fully modular, text-based RPG framework that provides:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-02-20 13:01**_
+_Last updated: **2026-03-22 15:38**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 14
@@ -176,6 +176,8 @@ _No unique public methods found._
 
 ### [Staff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/Staff.cs)
 *Inherits from: `Weapon`*  
+> Represents a staff weapon that can be used in combat, providing basic damage and durability attributes.
+
 _No unique public methods found._
 
 
@@ -196,7 +198,7 @@ _No unique public methods found._
 
 ### [Bow.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Bows/Bow.cs)
 *Inherits from: `Weapon`*  
-> Base type for bow-style ranged weapons.
+> Represents an abstract base class for all bow weapons, providing common properties and behaviors for derived bow types.
 
 _No unique public methods found._
 
@@ -211,7 +213,7 @@ _No unique public methods found._
 
 ### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axe.cs)
 *Inherits from: `Weapon`*  
-> A heavy melee weapon with strong base damage and slower cooldown.
+> Represents a melee weapon of type axe with predefined damage, durability, rarity, and inventory space attributes.
 
 _No unique public methods found._
 
@@ -238,7 +240,7 @@ _No unique public methods found._
 
 ### [SmallQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/SmallQuiver.cs)
 *Inherits from: `Quiver`*  
-> A small quiver with limited capacity and minimal inventory footprint.
+> Represents a small quiver designed to hold arrows, suitable for basic inventory needs.
 
 _No unique public methods found._
 
@@ -270,13 +272,13 @@ _No unique public methods found._
 
 ### [QuiverSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/QuiverSaveData.cs)
 *Inherits from: `EquipableSaveData`*  
-> Represents the data required to save and restore a quiver.
+> Represents the save data for a quiver, including its capacity and other equipable properties.
 
 **Public Methods:**
 - `ToEquipable()`
 
 ### [SaveManager.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/SaveManager.cs)
-> Loads a list of characters from a saved file.
+> Provides static methods for saving and loading character data in JSON format.
 
 **Public Methods:**
 - `LoadCharacters()`
@@ -284,7 +286,7 @@ _No unique public methods found._
 
 ### [WeaponSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/WeaponSaveData.cs)
 *Inherits from: `EquipableSaveData`*  
-> Represents the data required to save and restore the state of a weapon.
+> Represents the data required to serialize and reconstruct a weapon, including its type, damage, durability, level, and elemental affinity.
 
 **Public Methods:**
 - `ToEquipable()`
@@ -313,7 +315,7 @@ _No unique public methods found._
 - `CreateDefaultWeaponsMage()`
 
 **TODOs:**
-- [ ] Research for a more efficient way
+- [ ] Research for a more efficient way of creating default Weapons
 - [ ] Change this to an inventory management system, where you can add and remove items from your inventory, and the inventory will have a maximum capacity.
 
 ### [GameMenu.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/GameMenu.cs)
@@ -334,7 +336,7 @@ _No unique public methods found._
 
 ### [Quiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/Quiver.cs)
 *Inherits from: `IEquipable`*  
-> Base type for quivers that store ammunition for bows.
+> Represents an abstract base class for quivers, which are used to store and manage arrows in an inventory system.
 
 _No unique public methods found._
 
