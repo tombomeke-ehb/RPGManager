@@ -2,7 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-**Important:** The user codes everything themselves to learn C#. Do NOT write or suggest C# code unless explicitly asked. Help with planning, system design, story, and save/load data only.
+**Important:** The user codes everything themselves to learn C#. Do NOT write or suggest C# code unless explicitly asked. Help with planning, system design, story, save/load data, and tradeoff explanations only.
+
+This file is meant as a reference and design aid, not as a strict implementation script. Prefer explaining options, tradeoffs, and why one structure fits this project better than another. If a suggestion is made, explain when it is a good fit and what problem it avoids.
+
+For a more human-readable planning companion, see [docs/IMPLEMENTATION_GUIDE.md](docs/IMPLEMENTATION_GUIDE.md).
+
+## How To Use This File
+
+- Use it to understand the current architecture, planned systems, and data model direction.
+- Treat the TODO sections as design checkpoints, not mandatory code-generation instructions.
+- Prefer the simplest implementation that keeps the next system easy to add later.
+- Avoid solving future problems too early. Build one clean vertical slice first, then generalize.
+- When comparing structures, explain the reason behind the choice. Example: a `Dictionary` is useful when lookup by ID matters more than preserving insertion order.
 
 ---
 
@@ -178,266 +190,148 @@ The Court's long-game goal: repurpose the ancient Compact's magical seals to con
 
 ## System Plans
 
-These are the systems that need to be built, listed in dependency order.
+Design notes per system, listed roughly in dependency order. These are not instructions — they are explanations of why certain structures fit this game better than others, and what each system needs to connect to.
 
 ---
 
-### 1. Combat System
+### Combat
 **Branch:** `feature/combat`
 
-The first system to build. Everything else (XP, quests, loot, reputation) depends on combat existing.
+Everything meaningful in this game depends on combat: XP needs a source, loot needs a moment to drop, spells need a context, world flags need something to react to. It is the natural first system to build.
 
-**Key structural hints:**
+**Why an interface for combatants:** At some point your combat loop needs to treat heroes and enemies the same way — same `TakeDamage()`, same health check, same turn logic. If you put that logic in `Character`, enemies have to inherit from it, which makes no sense. An interface lets both sides of a fight implement the same contract without forcing a shared class hierarchy. Each type keeps its own structure; the interface just guarantees they both speak the same language to the combat loop.
 
-- **ICombatant interface:** Consider making both `Enemy` and `Character` implement a shared `ICombatant` interface (something like: has `Name`, `CurrentHealth`, `MaxHealth`, a `TakeDamage()` method, and an `IsAlive` property). That way `CombatManager` can hold a `List<ICombatant>` and treat players and enemies the same way in the loop — no special casing.
+**Why a state machine for the combat flow:** A fight has distinct phases — player acts, enemy acts, effects resolve, check for death, repeat. If you model those as an enum and a switch statement, each phase only decides what happens in that phase and where to go next. Compare that to a chain of nested `if` statements: it works for a simple loop, but the moment you add "enemy calls reinforcements at 40% HP" or "player is frozen and skips their turn", nested conditions become very hard to follow. A state machine stays clean regardless of how many special cases you add.
 
-- **CombatManager as a state machine:** A simple enum like `CombatPhase { PlayerTurn, EnemyTurn, ResolvingEffects, Victory, Defeat }` with a switch statement works really well here. Each state decides what happens next and transitions to the next state. Much cleaner than a big if/else chain as combat gets more complex.
+**Why a loot table as a list of chances instead of a fixed drop:** A fixed drop means every kill gives the same item. A list of entries — each pairing an item with a probability — means you control rarity without writing special-case logic. Roll once per entry, compare against the probability, drop or skip. This way a common item might drop 80% of the time and a rare one 5%, and adding a new drop to an enemy is just adding one entry to its list.
 
-- **Enemy loot table:** I'd store it as a list of entries, each with an item and a drop chance (a float between 0 and 1). When combat ends, loop through the entries and for each one roll `Random.NextDouble()` — if the roll is below the drop chance, that item drops. This way a common item might have a 0.8 chance and a rare one might have 0.05.
+**Why enemy behavior as an enum instead of hardcoded logic:** Even three behavior types — aggressive (always attacks), defensive (heals when low), random (picks from available actions) — make fights feel meaningfully different without building real AI. The behavior enum also makes it easy to add new types later without touching the combat loop itself.
 
-- **Enemy behavior:** Even a simple `BehaviorType` enum (`Aggressive`, `Defensive`, `Random`) gives you meaningful variety without building real AI. Aggressive always attacks, Defensive heals or guards when below half health, Random picks a random valid action.
+**Why status effects on a shared list instead of baked into the loop:** If you handle Burn inside the attack logic and Freeze inside the turn logic and Poison somewhere else, you end up with effects scattered across the whole combat flow. A list of active effects on each combatant, processed in one pass at the end of each round, keeps all effect logic in one place. Each effect knows its own duration and what it does per tick — the loop just iterates and asks each one to tick.
 
-- **Status effects:** Don't bake effects directly into the combat loop from the start. It's much cleaner to have an `ActiveEffect` list on each `ICombatant` and process all effects at the end of each round in one pass. Each effect knows its duration and what it does per tick (damage, stat reduction, skip turn, etc.).
-
-**TODO — feature/combat:**
-- [ ] Create `ICombatant` interface
-- [ ] Create `Enemy` class under `Characters/Enemies/` implementing `ICombatant`
-- [ ] Update `Character` to also implement `ICombatant`
-- [ ] Create `CombatManager` under `Combat/` with a `CombatPhase` state machine
-- [ ] Implement player action menu (Attack, Spell, Item, Flee)
-- [ ] Implement basic enemy AI using `BehaviorType` enum
-- [ ] Implement loot table and drop resolution on victory
-- [ ] Implement status effect list and per-round processing
-- [ ] Log combat result to `WorldState` when it exists
-- [ ] Hook `CombatManager` into `GameMenu` — replace the Fight stub
+**Connects to:** `GameMenu` Fight stub, `WorldState` (log the result), leveling (award XP on win), spells (Mage's actions during their turn).
 
 ---
 
-### 2. XP, Leveling & Character Roster
+### XP, Leveling & Character Roster
 **Branch:** `feature/leveling`
 
-Depends on: Combat (as the primary XP source).
+**Why an array for XP thresholds instead of a formula:** A formula like `level² × 100` is clean but inflexible — if level 5 to 6 feels too fast, you have to change the formula and rebalance everything. An array lets you tune each individual threshold independently. Index is the level, value is the total XP to reach the next level. Easy to read, easy to change.
 
-**Key structural hints:**
+**Why an abstract level-up method instead of a switch in `Character`:** If `Character.LevelUp()` has `if (this is Warrior) ... else if (this is Mage) ...`, you have violated the reason subclasses exist. Each subclass should know how it grows. An abstract `OnLevelUp()` means `Warrior` defines Warrior growth, `Mage` defines Mage growth, and the base class handles only what is truly shared: incrementing the level, checking the threshold, logging the event. Adding a new class later does not touch the base class at all.
 
-- **XP thresholds as an array:** The simplest approach is a static `int[]` where the index is the level and the value is the total XP needed to reach the *next* level. So `thresholds[1] = 100` means you need 100 XP to go from level 1 to 2. To check if the character should level up: compare `character.Experience` against `thresholds[character.Level]`. Easy to tune, easy to understand.
+**Why `CharacterRoster` as a wrapper instead of a raw list:** The roster has rules: you cannot add a character until a slot is unlocked, and the active character needs to be tracked. A raw `List<Character>` enforces nothing. A wrapper class is the gatekeeper — it owns the unlock logic, it knows which character is active, and it decides whether adding another hero is currently allowed. `GameMenu` asks the roster; it does not reimplement the rules itself.
 
-- **Per-class level-up bonuses:** Rather than putting a big switch in `Character`, consider an abstract method `OnLevelUp()` that each subclass overrides. `Warrior.OnLevelUp()` boosts MaxHealth and Power, `Mage.OnLevelUp()` boosts MaxMana and spell damage, etc. `Character.LevelUp()` handles the shared logic (increment level, log the event) and then calls `OnLevelUp()`. Clean separation.
+**Why store unlock conditions as `Dictionary<int, int>` (slot → required level):** Unlock conditions are a mapping. Slot 2 unlocks at level 10, slot 3 at level 20. A dictionary expresses that directly. If you hardcode `if (level >= 10) unlockSlot2` in multiple places, adding a fourth slot means hunting down every hardcoded check. With a dictionary, you add one entry.
 
-- **CharacterRoster:** Keep it as a single class holding a `List<Character>` with a reference to the active one. The unlock check is just a method called after every level-up: loop through the slot conditions and unlock any that are now satisfied. You could store unlock conditions as a `Dictionary<int, int>` mapping slot number to the level required to unlock it — simple and easy to extend.
-
-- **Locking new character creation:** The "Create new character" option in `GameMenu` should be disabled (or show an explanation) when the roster is full or the next slot hasn't been unlocked yet. The roster itself should expose a `CanAddCharacter` property so the menu doesn't need to know the unlock logic.
-
-**Save system impact:** `CharacterSaveData` needs `Experience` and `Level` fields. Roster max slots and unlock state need their own entry in the save file.
-
-**TODO — feature/leveling:**
-- [ ] Add `Experience` and `Level` to `Character`
-- [ ] Define XP threshold table
-- [ ] Add abstract `OnLevelUp()` to `Character`, implement in each subclass
-- [ ] Create `CharacterRoster` under `Characters/`
-- [ ] Implement slot unlock via `Dictionary<int, int>` (slot → required level)
-- [ ] Add `CanAddCharacter` property to `CharacterRoster`
-- [ ] Update `GameMenu` switch-character flow and creation lock
-- [ ] Update save system: add `Experience`, `Level`, roster state
+**Connects to:** `Character` (needs Level and Experience), `SaveManager` (needs to persist them), `GameMenu` (character creation needs to check roster state).
 
 ---
 
-### 3. Shared World State
+### Shared World State
 **Branch:** `feature/world-state`
 
-Depends on: nothing. Can be started alongside combat — combat just needs to call `WorldState.LogEvent()` and `WorldState.IncrementCounter()` when it exists.
+This is the core identity of the game. It can be started alongside combat — combat just needs somewhere to report results when it exists.
 
-**Key structural hints:**
+**Why `Dictionary<string, bool>` for flags instead of individual properties:** The Ashlands alone has ten flags. Across all regions you will have dozens. Storing each as a named property on a class means recompiling the save model every time the world grows. A dictionary lets the world expand without touching the class structure. The only risk is typos — which is why you define all the key names as constants in one place rather than writing string literals in every system that sets or reads a flag.
 
-- **Flags as a Dictionary with constant keys:** Use a `Dictionary<string, bool>` for world flags, but define all the key names as constants in one place — a static class like `WorldFlags` with entries like `const string BanditCampCleared = "AshlandsBanditCampCleared"`. If you scatter string literals everywhere and make a typo, the flag silently never gets set and it's very hard to debug. Central constants prevent that.
+**Why store reputation as a raw `int` and compute the tier:** If you store both the score (72) and the label ("Trusted"), you have two pieces of data describing the same truth. Sooner or later they get out of sync — a bug updates the score but not the label, and now your NPC reacts as "Trusted" when the score says "Known". The tier is always computed from the score. There is one source of truth.
 
-- **Counters the same way:** `Dictionary<string, int>` with a matching `WorldCounters` static class for key constants. `TotalEnemiesKilled`, `GoldSpent`, etc.
+**Why cap the event log:** Without a cap, a long play session generates thousands of entries. The log exists to let systems observe what happened recently, not to record the full history of the game. 200 entries is enough context; beyond that you are just growing the save file for no benefit.
 
-- **Reputation as raw ints, tiers computed:** Store reputation per region as a `Dictionary<string, int>` (region name → score). Don't store the tier label — compute it on the fly with a method like `GetReputationTier(string region)`. That way you never get a save file where the score and the tier are out of sync. The tiers are just: < 10 = Unknown, 10–29 = Stranger, 30–59 = Known, 60–99 = Trusted, 100–199 = Honored, 200+ = Legendary (negative: Suspicious, Distrusted, Feared, Enemy).
+**Why a singleton or static class:** World state is not per-character — it is per save file, shared across everyone. If you pass a `WorldState` instance through every method call, you are plumbing it through combat, dialogue, quests, and travel simultaneously. A singleton or static class makes it accessible from anywhere without that overhead. The tradeoff is testability, but for a single-player console game the tradeoff is worth it.
 
-- **Event log with a size cap:** A `List<string>` works fine, but add a cap (say, 200 entries) and trim the oldest when you exceed it. Without a cap, long play sessions will accumulate thousands of entries and bloat the save file noticeably.
-
-- **WorldState as a singleton:** Since there's only ever one world state per save file, a singleton pattern (or a static class) is a reasonable choice. It makes it easy to access from anywhere — `WorldState.SetFlag(WorldFlags.BanditCampCleared)` — without having to pass the instance through every method call.
-
-**Save system impact:** `WorldState` needs its own `WorldStateSaveData` class serialized alongside the character list. Easiest approach: add a `WorldState` property to the root save object that `SaveManager` already writes.
-
-**TODO — feature/world-state:**
-- [ ] Create `WorldState` class (singleton or static) under `Worlds/`
-- [ ] Add flags, counters, regional reputations, NPC relationships, event log
-- [ ] Create `WorldFlags` and `WorldCounters` static key-constant classes
-- [ ] Create `ReputationTier` enum and `GetReputationTier()` method
-- [ ] Cap event log at 200 entries
-- [ ] Create `WorldStateSaveData` and wire into `SaveManager`
-- [ ] Add helper methods: `SetFlag()`, `GetFlag()`, `AddReputation()`, `IncrementCounter()`, `LogEvent()`
+**Connects to:** virtually every other system eventually writes to it; `SaveManager` needs to serialize it alongside characters.
 
 ---
 
-### 4. NPC Dialogue System
+### NPC Dialogue
 **Branch:** `feature/npc-dialogue`
 
-Depends on: WorldState (conditions read flags and reputation).
+**Why store the tree in a `Dictionary<string, DialogueNode>`:** A dialogue tree is navigation by node ID. "After the player chooses option 2, go to node `blacksmith_post_quest`." If nodes are stored in a list, finding the next node means searching the whole list. A dictionary makes that lookup instant. It also makes the whole tree serializable later if you want to load dialogue from a data file — the structure maps cleanly to JSON.
 
-**Key structural hints:**
+**Why conditions and actions as interfaces instead of if/else:** You will need at least three kinds of conditions: flag checks, reputation tier checks, class checks. If all of that logic lives in `DialogueOption`, the class becomes a tangle of special cases. An `IDialogueCondition` interface with a single `IsMet()` method means each condition type is one small, focused class. Adding a new condition type later means adding a class, not editing existing logic. Same reasoning for actions: `SetFlagAction`, `AddReputationAction`, `GiveQuestAction` each do one thing and are composable per dialogue option.
 
-- **Store the tree in a Dictionary:** Use `Dictionary<string, DialogueNode>` where each key is a node ID string (like `"blacksmith_intro"` or `"blacksmith_post_quest"`). Then jumping between nodes is just a dictionary lookup by ID. This also makes it easy to serialize the whole dialogue tree later if you want to load it from a file instead of hardcoding it.
+**Why hardcode first, data-drive later:** You do not know what the dialogue structure needs to feel like until you have played through a conversation. Build the first NPC tree in plain C# — just objects linked by ID. Once it works and feels right, you have a clear picture of the data shape. Then you can decide whether it needs to be in a file. Designing the file format before you have a working tree is designing blind.
 
-- **Conditions as an interface:** An `IDialogueCondition` interface with a single `bool IsMet(WorldState state, Character character)` method is the cleanest approach here. Then you create separate small classes: `FlagCondition` (checks a world flag), `ReputationCondition` (checks tier in a region), `ClassCondition` (checks character type). Sounds like more work upfront, but once you have four or five NPCs with complex dialogue, you'll be very glad you did it this way instead of nesting if/else everywhere.
-
-- **Actions as an interface too:** Same idea for things that happen when a dialogue option is picked — `IDialogueAction` with an `Execute(WorldState state, Character character)` method. Concrete actions: `SetFlagAction`, `AddReputationAction`, `GiveQuestAction`, `GiveItemAction`. Each option can have a list of actions to fire.
-
-- **Start simple, hardcode first:** Don't try to load dialogue from JSON files or external data right away. Build the first few NPC trees as plain C# objects (just constructing nodes and linking them by ID in code). Get it working and feeling right first. You can always move to data-driven dialogue later — the interface-based conditions and actions will still work either way.
-
-- **DialogueRunner in UI:** The `DialogueRunner` class should live in `UI/` and just walk the tree: display the current node's text, show available options (filtered by conditions), wait for input, fire actions, move to the next node. Keep it decoupled from any specific NPC.
-
-**TODO — feature/npc-dialogue:**
-- [ ] Create `DialogueNode` and `DialogueOption` under `Characters/NPCs/Dialogue/`
-- [ ] Create `IDialogueCondition` interface + `FlagCondition`, `ReputationCondition`, `ClassCondition`
-- [ ] Create `IDialogueAction` interface + `SetFlagAction`, `AddReputationAction`, `GiveQuestAction`
-- [ ] Add `RootNodeId` and a node dictionary to the `NPC` base class
-- [ ] Create `DialogueRunner` in `UI/`
-- [ ] Rewrite `BlackSmith.Interact()` using the dialogue tree
-- [ ] Build 2–3 NPC trees that react to WorldState flags to prove the system works
+**Connects to:** `WorldState` (conditions read flags and reputation), `NPC` base class (needs to carry a tree), `UI/` (a runner that walks the tree for any NPC), quests (dialogue options that start quests).
 
 ---
 
-### 5. Inventory System
-**Note:** Build this before Economy (shops need a working inventory). Can be done as part of `feature/economy` or as a prerequisite step.
+### Inventory
+**Note:** No dedicated branch — can be done as part of `feature/economy` or as a standalone step before it.
 
-**Key structural hints:**
+**Why a wrapper class instead of a raw `List<IEquipable>` on `Character`:** A raw list has no rules. Any code anywhere can add items without checking capacity. An `Inventory` class owns the rules: `AddItem()` only succeeds if there is space, `RemoveItem()` handles missing items gracefully, and the rest of the game does not need to know how any of that works. The class is the gatekeeper.
 
-- **Wrap a List, don't expose it raw:** An `Inventory` class that internally holds a `List<IEquipable>` and enforces capacity is much safer than letting `Character` hold a plain list. The class is the gatekeeper — `AddItem()` checks space before adding, `RemoveItem()` handles "item not found" gracefully.
+**Why compute `UsedSlots` instead of storing it:** If you store a `usedSlots` counter and update it in `AddItem()` and `RemoveItem()`, you need to remember to update it correctly in every code path. If you ever forget once, the counter drifts from reality and you get a bug that is hard to reproduce. Summing the sizes of the items currently in the list always gives the correct answer. The computation is cheap; the synchronization problem is not worth creating.
 
-- **Slot count as computed property:** Don't store the used slot count separately — compute it from the items themselves: sum up the `InventorySpaceAmount` value of each item in the list. That way it's always accurate and you can never have a desync between the stored count and reality. `HasSpace(IEquipable item)` just checks if `UsedSlots + item.InventorySpaceAmount <= MaxSlots`.
-
-- **Replace CharacterFactory's default-weapons approach:** Right now weapons are added in a fairly ad-hoc way. Once `Inventory` exists, `CharacterFactory` should just create the character, then call `character.Inventory.AddItem(...)` for each starting item. Simple, consistent.
-
-**TODO — Inventory:**
-- [ ] Create `Inventory` class under `Items/`
-- [ ] Computed `UsedSlots` property (sum of item sizes)
-- [ ] `AddItem()` with capacity check, `RemoveItem()`, `HasSpace()`, `GetContents()`
-- [ ] Wire `Inventory` into `Character` (replace current item fields)
-- [ ] Update `CharacterFactory` to use the new inventory
-- [ ] Update save system: `CharacterSaveData` saves/loads the full inventory
+**Connects to:** `Character` (replaces loose weapon fields), `CharacterFactory` (starting items), `SaveManager` (save the full contents), economy/shops (buy and sell need a working inventory to operate on).
 
 ---
 
-### 6. World & Travel System
+### World & Travel
 **Branch:** `feature/travel`
 
-Depends on: WorldState (region locks), Combat (random encounters en route).
+**Why `Location` as a data bag, not a behavior class:** A location does not *do* things — it describes a place. Its name, what level is required to enter, whether it is currently accessible, which NPCs are there, what enemies can appear. Other systems read that data and decide what to do with it. Keeping a location as mostly-data makes it easy to add new locations without worrying about behavior.
 
-**Key structural hints:**
+**Why an encounter pool as a list of groups instead of individual enemies:** A single Ash Scavenger encounter and a group of three Ash Scavengers are different experiences. A pool of `EnemyGroup` entries — each representing a coherent encounter — gives you that variety. When travel triggers an encounter, pick one group at random from the pool. Easy to add new encounter configurations without changing the travel logic.
 
-- **Location as a data bag:** Each `Location` should know: its name, which region it belongs to, what the minimum level to enter is, whether it's currently unlocked (driven by a WorldState flag), which NPCs are present, and what enemy encounter pool it can draw from. It doesn't need to *do* much — it's mostly data that other systems read.
+**Why the Ashlands first:** The Ashlands is a complete, self-contained loop: starter hub, travel corridor, dungeon, end boss area. Building it end to end proves the travel system, encounter logic, and region unlocking all work together. Building three regions simultaneously before any of them is playable is building scaffolding with nothing to hang on it.
 
-- **Travel as a method with a chance roll:** `World.TravelTo(Location destination)` should: check the character meets the level requirement, then roll a random number against the encounter rate for the route. If it triggers, kick off a `CombatManager` encounter with enemies drawn from the destination's pool. If not, arrive without a fight.
-
-- **Encounter pools:** A `List<EnemyGroup>` where each `EnemyGroup` is a named set of enemies that can appear together. "3 bandits" is one group, "1 bandit captain + 2 bandits" is another. When an encounter triggers, pick randomly from the pool.
-
-- **The Ashlands as your test bed:** Build just one region first — the Ashlands. Three or four locations, a couple of enemy pools, and a travel route between them. Get the whole loop working (travel → encounter → fight → arrive) before building other regions.
-
-**TODO — feature/travel:**
-- [ ] Add `RequiredLevel`, `RegionName`, `IsUnlocked`, `EncounterPool` to `Location`
-- [ ] Create `EnemyGroup` class (named group of enemies)
-- [ ] Implement `World.TravelTo()` with encounter roll
-- [ ] Build Ashlands region: 3–4 locations + enemy pools + travel routes
-- [ ] Replace the Explore stub in `GameMenu` with the travel menu
-- [ ] Show current character location on the stat screen
+**Connects to:** `WorldState` (lock/unlock locations based on flags), combat (encounters trigger a fight), `GameMenu` Explore stub (replace with a real location menu).
 
 ---
 
-### 7. Quest System
+### Quests
 **Branch:** `feature/quests`
 
-Depends on: WorldState (completion flags + progress counters), NPC Dialogue (quest givers), Combat (kill objectives).
+**Why quest progress lives in `WorldState` instead of the `Quest` object:** Progress like "killed 3 of 5 bandits" is a counter in the world — it belongs in `WorldState`, not inside the quest. This means the counter persists automatically, is shared across all characters, and is written by combat (which already interacts with `WorldState`) rather than by some separate quest-notification system. The quest just checks the counter to know if its objective is complete.
 
-**Key structural hints:**
+**Why `IQuestObjective` as an interface:** Kill objectives read a counter. Reach objectives check a location flag. Talk objectives check an NPC dialogue flag. If all of that logic is inside `Quest`, you eventually get a class full of mixed concerns. An interface with `IsComplete()` and `GetProgressText()` lets each objective type handle its own logic. Adding a new type means adding a class, not editing `Quest`.
 
-- **Progress lives in WorldState:** Don't store quest progress inside the `Quest` object itself. Store it as counters in `WorldState`, with a naming convention like `"Quest_BanditHunt_Kill_Bandit"`. This automatically makes progress shared across all characters and persistent across sessions. When a bandit dies in combat, the combat system just calls `WorldState.IncrementCounter("Quest_BanditHunt_Kill_Bandit")` if that quest is active.
+**Why separate `Quest` (data) from `QuestTracker` (behavior):** A quest describes what needs to be done and what the reward is. It does not decide whether it can be accepted, whether it is complete, or what happens when it finishes. That is `QuestTracker`'s job. Keeping them separate means `Quest` objects are simple and reusable; `QuestTracker` is the single place where quest state is managed.
 
-- **IQuestObjective interface:** An interface with `bool IsComplete(WorldState state)` and `string GetProgressText(WorldState state)` (for the quest log display) makes adding new objective types easy without touching `Quest`. `KillObjective` reads a counter, `ReachObjective` reads a flag, `TalkObjective` checks an NPC dialogue flag.
-
-- **Quests as data, not logic:** The `Quest` class should be mostly data (title, description, objectives, reward, giver NPC, prerequisites) with no game logic inside it. `QuestTracker` holds the active/completed state and handles `StartQuest()`, `CheckCompletion()`, and `CompleteQuest()`. Separation of data from behavior.
-
-- **Class-exclusive quests:** A nullable `RequiredClass` property on `Quest`. `QuestTracker.CanAccept(Quest quest, Character character)` checks it before offering the quest. The NPC dialogue condition `ClassCondition` already handles only showing those dialogue options to the right class — the quest system just needs to enforce it on accept too.
-
-- **Completion is a world event:** When a quest completes, `QuestTracker` writes the completion flag to `WorldState`, logs the event, and hands out the reward (XP, gold, item, reputation change). No special casing needed — everything flows through the same systems.
-
-**TODO — feature/quests:**
-- [ ] Create `Quest`, `IQuestObjective`, `QuestReward` under `Quests/`
-- [ ] Implement `KillObjective`, `ReachObjective`, `TalkObjective`
-- [ ] Create `QuestTracker` — holds active/completed state, start/check/complete logic
-- [ ] Wire kill counting into `CombatManager` (increment WorldState counters)
-- [ ] Wire quest completion into `WorldState` (set flag, log event, add reputation)
-- [ ] Add quest log screen to `GameMenu`
-- [ ] Build 3–5 starter quests for the Ashlands to test the full pipeline
+**Connects to:** `WorldState` (progress counters and completion flags), dialogue (quest givers), combat (kill objectives), `GameMenu` (quest log screen).
 
 ---
 
-### 8. Economy System
+### Economy
 **Branch:** `feature/economy`
 
-Depends on: Inventory (items need to be addable/removable properly), WorldState (reputation affects prices).
+**Why `NPC` optionally owns a `Shop` instead of `Shop` depending on an NPC:** Not every NPC has a shop. If `Shop` requires an NPC, you cannot have a shop without one. If `NPC` has an optional `Shop` property, a shopkeeper NPC just has a shop attached, while a quest giver or traveler does not. The dependency points in the right direction.
 
-**Key structural hints:**
+**Why price calculation takes the character as an argument:** Reputation discounts need to know who is buying. A method that takes the character can look up their reputation in the current region and apply the appropriate discount. If price were a static property on the item, you would need to recalculate it every time reputation changed — or keep a separate "current price" somewhere that can drift out of sync.
 
-- **Shop doesn't own an NPC — NPC optionally owns a Shop:** Don't make `Shop` depend on a specific NPC class. Instead, add a nullable `Shop` property to `NPC`. Some NPCs have a shop, some don't. The `DialogueRunner` checks `npc.Shop != null` when deciding whether to show a "Trade" option.
+**Why sell price is always lower than buy price:** Standard RPG economy. The player always loses value selling — that is the friction that makes gold feel meaningful. Without it, players can exploit price differences between locations or buy-sell the same items for profit with no downside.
 
-- **Price calculation as a method:** `Shop.GetPrice(IEquipable item, Character character)` takes the item's base price and applies a reputation discount. Something like: each reputation tier above Stranger gives a 5% discount, to a maximum of 25%. Keeps pricing logic in one place and easy to tune.
-
-- **Sell price is always lower:** A simple convention like "sell price = 40% of buy price" works well. The player always takes a hit selling — that's standard RPG economy and prevents exploits.
-
-- **Gold on enemies:** Add a `GoldReward` range (min/max) to `Enemy` or its loot table. Combat resolves a random value in that range on win and adds it directly to the character's gold. Simple.
-
-**TODO — feature/economy:**
-- [ ] Create `Shop` class under `Economy/`
-- [ ] Add nullable `Shop` to `NPC` base class
-- [ ] Implement `GetPrice()` with reputation modifier
-- [ ] Implement buy and sell flows
-- [ ] Add gold reward range to `Enemy` loot table
-- [ ] Update `BlackSmith` to use the new `Shop`
-- [ ] Add buy/sell to `DialogueRunner` when NPC has a shop
-- [ ] Apply reputation-based discounts in `Shop.GetPrice()`
+**Connects to:** `Inventory` (buy adds, sell removes), `WorldState` (reputation affects prices), dialogue (Trade option only appears when `npc.Shop != null`).
 
 ---
 
-### 9. Spell System (expand existing)
-**Branch:** `feature/spells` *(already exists)*
+### Spells (expand existing)
+**Branch:** `feature/spells`
 
-Depends on: Combat (spells are cast during combat turns).
+**Why `Dictionary<Spell, int>` for cooldowns instead of a field on `Spell`:** A cooldown on the `Spell` object itself would be global — every Mage casting Fireball shares the same cooldown counter. A dictionary on the `Mage` maps each known spell to *that Mage's* remaining cooldown. Two Mages can each track their own state independently.
 
-**Key structural hints:**
+**Why mana regen per turn instead of fixed mana:** If mana does not regenerate, the Mage casts all spells immediately and then fights with basic attacks for the rest of the fight — there is no decision to make. Regen that is less than a full spell cost forces the player to think about timing: save mana for a big hit, or spend it early and regenerate into smaller casts?
 
-- **Spell is data + one method:** Each spell should carry its stats (mana cost, cooldown, damage range, element, target type, status effect it applies) and a `Cast(ICombatant caster, List<ICombatant> targets)` method. The heavy lifting (damage calculation, resistance lookup, status effect application) happens in `CombatManager` — the spell just describes what it wants to do and `CombatManager` resolves it. This keeps spells simple to add.
+**Why spells describe intent and `CombatManager` resolves it:** If each spell calculates its own damage, applies its own status effects, and checks its own resistances, adding a new spell means reimplementing all of that. If instead each spell says "I want to do fire damage to one target with a chance of Burn" and `CombatManager` resolves what that means given resistances and active effects, spell creation becomes much lighter. The complexity lives in one place.
 
-- **SpellBook as a list with cooldown tracking:** `Mage` gets a `SpellBook` — a list of known spells. But you also need to track how many turns remain on each spell's cooldown. A `Dictionary<Spell, int>` mapping each known spell to its remaining cooldown works well. At the start of the Mage's turn, decrement all values. A spell is castable if its cooldown value is 0.
-
-- **Mana regen:** The simplest version is: at the start of each of the Mage's turns, add a fixed mana regen amount (maybe 10–15% of max mana). This means the player has to think about when to cast — they can't open with all spells every fight.
-
-- **Status effects:** Tie directly to the `Element` enum you already have. Fire → Burn (damage per turn), Ice → Freeze (skip turn), Lightning → Shock (reduced damage output), Poison → Poison (damage per turn + reduced max health). Use the `ActiveEffect` list from the combat system — spells just add an effect to the target's list on hit.
-
-**TODO — feature/spells:**
-- [ ] Add `ManaCost`, `Cooldown`, `Element`, `TargetType`, `StatusEffect` to `Spell` base class
-- [ ] Give `Mage` a `SpellBook` (`List<Spell>`) and a cooldown tracker (`Dictionary<Spell, int>`)
-- [ ] Implement mana regen at the start of each Mage turn in `CombatManager`
-- [ ] Implement status effect application on hit via the ActiveEffect list
-- [ ] Complete `Fireball` as the first full implementation
-- [ ] Add `IceShard`, `LightningBolt`, `HealingLight` as further examples
-- [ ] Wire `CastSpell()` on `Mage` into the player action menu in `CombatManager`
+**Connects to:** combat (spells are player actions during their turn), `Element` enum already in the codebase (maps to status effects), `Mage` class (spell list and cooldown tracking).
 
 ---
 
 ## Development Phases
 
-Build in this order — each phase unlocks the next:
+This table shows a natural dependency order. It is not a mandate — you can start `feature/world-state` at any time since it depends on nothing, and `feature/spells` can run alongside combat once the basic loop exists.
 
-| Phase | Branch | What it enables |
-|---|---|---|
-| 1 | `feature/combat` | Fights, XP source, loot drops |
-| 2 | `feature/leveling` | Progression, character roster slots |
-| 3 | `feature/world-state` | Shared consequences, reputation (can start alongside phase 1) |
-| 4 | `feature/spells` | Mage depth, elemental combat (can run alongside phase 3) |
-| 5 | `feature/npc-dialogue` | Reactive NPCs, class-specific dialogue |
-| 6 | `feature/travel` | Exploration, regions, random encounters |
-| 7 | `feature/quests` | Structured goals, rewards, story beats |
-| 8 | `feature/economy` | Shops, inventory depth, gold loop |
+| Branch | What it enables |
+|---|---|
+| `feature/combat` | Fights, XP source, loot drops |
+| `feature/leveling` | Progression, character roster slots |
+| `feature/world-state` | Shared consequences, reputation |
+| `feature/spells` | Mage depth, elemental combat |
+| `feature/npc-dialogue` | Reactive NPCs, class-specific dialogue |
+| `feature/travel` | Exploration, regions, random encounters |
+| `feature/quests` | Structured goals, rewards, story beats |
+| `feature/economy` | Shops, inventory depth, gold loop |
