@@ -14,6 +14,7 @@ namespace RPGManagerLib.Saves
     /// files are overwritten when saving.</remarks>
     public static class SaveManager
     {
+        // TODO: Promote the root save payload from List<CharacterSaveData> to a SaveGame object when WorldState and roster data are added.
         private static readonly string SaveFolder =
             string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("RPGMANAGER_SAVE_DIR"))
                 ? "Save"
@@ -48,6 +49,7 @@ namespace RPGManagerLib.Saves
                     PropertyNameCaseInsensitive = true
                 };
 
+                // TODO: Load schema version, WorldState, and roster metadata here once the save format expands beyond character snapshots.
                 var saveDataList = JsonSerializer.Deserialize<List<CharacterSaveData>>(json, options)
                     ?? new List<CharacterSaveData>();
 
@@ -95,6 +97,7 @@ namespace RPGManagerLib.Saves
                 Converters = { new JsonStringEnumConverter() }
             };
 
+            // TODO: Serialize WorldState, roster unlocks, and future save-version metadata alongside characters.
             string json = JsonSerializer.Serialize(saveData, options);
             File.WriteAllText(SaveFile, json);
             Console.WriteLine($"Saved to: {SaveFile}");

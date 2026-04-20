@@ -8,6 +8,7 @@ namespace RPGManagerLib.Spells
 {
     public abstract class Spell
     {
+        // TODO: Move spell metadata toward unlockable/progression-aware content once leveling and spell acquisition are added.
         public string Name { get; set; }
         public MagicType MagicType { get; set; }
         public double BaseDamage { get; set; }
@@ -23,6 +24,7 @@ namespace RPGManagerLib.Spells
 
         public virtual void Cast(Mage caster, Character target)
         {
+            // TODO: Integrate combat logging, target validation, and status-effect resolution with CombatManager instead of direct console-only flow.
             if (caster.Mana < ManaCost)
             {
                 Console.WriteLine("Not enough mana!");

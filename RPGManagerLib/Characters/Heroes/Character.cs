@@ -12,6 +12,7 @@ namespace RPGManagerLib.Characters.Heroes
     /// state.</remarks>
     public abstract class Character
     {
+        // TODO: Introduce Level/Experience and shared combat-facing members here when Character implements the combat system contract.
         /// <summary>
         /// Represents the health value of an entity.
         /// </summary>
@@ -155,6 +156,7 @@ namespace RPGManagerLib.Characters.Heroes
 
         public void TravelTo(World world)
         {
+            // TODO: Replace this with region travel rules that consult WorldState, unlock flags, and travel requirements.
             if (world.IsUnlocked)
             {
                 CurrentWorld = world;

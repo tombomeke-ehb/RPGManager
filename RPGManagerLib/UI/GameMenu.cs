@@ -17,6 +17,7 @@ namespace RPGManagerLib.UI
         /// </summary>
         public static void Start()
         {
+            // TODO: Replace the raw character list with a CharacterRoster once slot unlocks and active-hero tracking are implemented.
             // Load saved characters
             characters = SaveManager.LoadCharacters();
 
@@ -44,6 +45,7 @@ namespace RPGManagerLib.UI
                 return;
             }
 
+            // TODO: Bootstrap the starting region from saved WorldState/region data instead of creating a one-off world here.
             // Generate world and travel there
             World Tavaryn = new("Tavaryn", "A quite small starter world with not that many dangerous monsters");
             Tavaryn.Unlock();
@@ -67,6 +69,7 @@ namespace RPGManagerLib.UI
 
             mainMenu.AddOption("1", "New Character", () =>
             {
+                // TODO: Prevent creation when the roster is full and surface the next slot unlock requirement in the menu.
                 var newChar = CharacterFactory.CreateCharacter();
                 characters.Add(newChar);
                 currentCharacter = newChar;
@@ -75,6 +78,7 @@ namespace RPGManagerLib.UI
 
             mainMenu.AddOption("2", "Switch Character", () =>
             {
+                // TODO: Persist the active character in save data so the last played hero is restored on launch.
                 SwitchCharacter();
                 SaveManager.SaveCharacters(characters);
             }, "swap to another hero in your roster");
@@ -87,7 +91,9 @@ namespace RPGManagerLib.UI
                     Console.WriteLine("No character selected.");
             }, "inspect stats and equipment");
 
+            // TODO: Route Explore into the travel/location loop once regions, encounters, and quest hooks exist.
             mainMenu.AddOption("4", "Explore", () => Explore(), "travel the world of Tavaryn");
+            // TODO: Replace this stub with CombatManager once combat, loot, and post-fight rewards are implemented.
             mainMenu.AddOption("5", "Fight", () => Fight(), "enter combat");
             mainMenu.AddOption("6", "Quit", () =>
             {
@@ -154,6 +160,7 @@ namespace RPGManagerLib.UI
                 return;
             }
 
+            // TODO: Present region/location choices here and resolve travel, random encounters, dialogue, and world-flag updates.
             Console.WriteLine($"{currentCharacter.Name} is exploring the world...");
         }
 
@@ -170,6 +177,7 @@ namespace RPGManagerLib.UI
                 return;
             }
 
+            // TODO: Start CombatManager here and replace this placeholder once enemies, actions, and rewards exist.
             Console.WriteLine($"{currentCharacter.Name} is preparing for battle!");
         }
 

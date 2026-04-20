@@ -4,6 +4,7 @@ namespace RPGManagerLib.Worlds
 {
     public class World
     {
+        // TODO: Evolve this into region/world data that can participate in travel routes, encounter tables, and reputation/world-flag checks.
         public string Name { get; set; }
         public string Description { get; set; }
         public int DifficultyLevel { get; set; }

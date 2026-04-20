@@ -55,6 +55,7 @@ namespace RPGManagerLib.Characters.Heroes
 
         public void CastSpell(int i, Character target)
         {
+            // TODO: Route casting through the combat turn system so spell selection, mana spend, and status effects are resolved consistently.
             if (i < 0 || i >= Spells.Count)
             {
                 Console.WriteLine("Invalid spell.");

@@ -10,6 +10,7 @@ namespace RPGManagerLib.Saves
     /// </summary>
     public class CharacterSaveData
     {
+        // TODO: Add Level and Experience here when the leveling system replaces the current PowerLevel-only progression.
         /// <summary>
         /// Discriminator describing the concrete character type (e.g., Warrior, Mage).
         /// </summary>
@@ -69,6 +70,7 @@ namespace RPGManagerLib.Saves
             CharacterType = c.CharacterType;
             Gold = c.Gold;
 
+            // TODO: Extend this conversion when full inventory, spellbook, and other per-character systems need persistence.
             // Helper function to convert list of IEquipable to correct SaveData type
             List<EquipableSaveData> ConvertEquipables(IEnumerable<IEquipable> items)
             {
@@ -107,6 +109,7 @@ namespace RPGManagerLib.Saves
         /// <exception cref="Exception">Thrown if the character type specified in the save data is not recognized.</exception>
         public Character ToCharacter()
         {
+            // TODO: Restore Level/Experience and other new subsystems here as CharacterSaveData grows.
             Character c = CharacterType switch
             {
                 "Warrior" => new Warrior(Name),
