@@ -45,7 +45,9 @@ namespace RPGManagerLib.Saves
         /// Mana boost value for mages.
         /// </summary>
         public double Mana { get; set; } // alleen voor Mage
-
+        /// <summary>
+        /// Gold that a player has
+        /// </summary>
         public int Gold { get; set; }
 
         public CharacterSaveData() { }
