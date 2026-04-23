@@ -81,6 +81,8 @@ namespace RPGManagerLib.Saves
                 WeaponType.SPEAR => new Spear(),
                 WeaponType.DAGGER => new Dagger(),
                 WeaponType.SIMPLEBOW => new SimpleBow(),
+                WeaponType.HUNTINGBOW => new HuntingBow(),
+                WeaponType.WARBOW => new WarBow(),
                 _ => throw new Exception($"Unknown weapon type: {WeaponType}")
             };
 
