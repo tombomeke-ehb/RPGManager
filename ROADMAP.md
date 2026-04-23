@@ -139,13 +139,13 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-04-20 00:14**_
+_Last updated: **2026-04-23 14:14**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 14
 - **Classes:** 34
 - **Unique Methods:** 33
-- **Pending TODOs:** 3
+- **Pending TODOs:** 23
 
 
 ## 🧱 RPGManagerLib.Characters.Heroes
@@ -165,6 +165,8 @@ _No unique public methods found._
 - `TravelTo()`
 
 **TODOs:**
+- [ ] Introduce Level/Experience and shared combat-facing members here when Character implements the combat system contract.
+- [ ] Replace this with region travel rules that consult WorldState, unlock flags, and travel requirements.
 - [ ] Add functionality to travel to different worlds, which may require additional properties and methods related to world management.
 - [ ] Research need for all constructors or only those to create a character
 
@@ -177,6 +179,7 @@ _No unique public methods found._
 
 **TODOs:**
 - [ ] Implement spells and mana system (ESP)
+- [ ] Route casting through the combat turn system so spell selection, mana spend, and status effects are resolved consistently.
 
 ### [Warrior.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Characters/Heroes/Warrior.cs)
 *Inherits from: `Character`*  
@@ -330,6 +333,11 @@ _No unique public methods found._
 **Public Methods:**
 - `ToCharacter()`
 
+**TODOs:**
+- [ ] Add Level and Experience here when the leveling system replaces the current PowerLevel-only progression.
+- [ ] Extend this conversion when full inventory, spellbook, and other per-character systems need persistence.
+- [ ] Restore Level/Experience and other new subsystems here as CharacterSaveData grows.
+
 ### [EquipableSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/EquipableSaveData.cs)
 > Base class for all saveable equipable items. Uses polymorphic JSON serialization to handle different item types cleanly.
 
@@ -350,6 +358,11 @@ _No unique public methods found._
 - `LoadCharacters()`
 - `SaveCharacters()`
 
+**TODOs:**
+- [ ] Promote the root save payload from List<CharacterSaveData> to a SaveGame object when WorldState and roster data are added.
+- [ ] Load schema version, WorldState, and roster metadata here once the save format expands beyond character snapshots.
+- [ ] Serialize WorldState, roster unlocks, and future save-version metadata alongside characters.
+
 ### [WeaponSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/WeaponSaveData.cs)
 *Inherits from: `EquipableSaveData`*  
 > Represents the data required to serialize and reconstruct a weapon, including its type, damage, durability, level, and elemental affinity.
@@ -368,6 +381,10 @@ _No unique public methods found._
 **Public Methods:**
 - `Cast()`
 
+**TODOs:**
+- [ ] Move spell metadata toward unlockable/progression-aware content once leveling and spell acquisition are added.
+- [ ] Integrate combat logging, target validation, and status-effect resolution with CombatManager instead of direct console-only flow.
+
 
 ## 🧱 RPGManagerLib.UI
 
@@ -385,6 +402,16 @@ _No unique public methods found._
 
 **Public Methods:**
 - `Start()`
+
+**TODOs:**
+- [ ] Replace the raw character list with a CharacterRoster once slot unlocks and active-hero tracking are implemented.
+- [ ] Bootstrap the starting region from saved WorldState/region data instead of creating a one-off world here.
+- [ ] Prevent creation when the roster is full and surface the next slot unlock requirement in the menu.
+- [ ] Persist the active character in save data so the last played hero is restored on launch.
+- [ ] Route Explore into the travel/location loop once regions, encounters, and quest hooks exist.
+- [ ] Replace this stub with CombatManager once combat, loot, and post-fight rewards are implemented.
+- [ ] Present region/location choices here and resolve travel, random encounters, dialogue, and world-flag updates.
+- [ ] Start CombatManager here and replace this placeholder once enemies, actions, and rewards exist.
 
 ### [MenuSystem.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/MenuSystem.cs)
 > Minimal console menu helper that maps string keys to labeled actions with optional hints.
@@ -413,4 +440,7 @@ _No unique public methods found._
 - `RemoveLocation()`
 - `Unlock()`
 - `Lock()`
+
+**TODOs:**
+- [ ] Evolve this into region/world data that can participate in travel routes, encounter tables, and reputation/world-flag checks.
 
