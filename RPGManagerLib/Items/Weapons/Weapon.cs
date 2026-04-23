@@ -134,7 +134,7 @@ namespace RPGManagerLib.Items.Weapons
     /// <summary>
     /// Supported concrete weapon kinds.
     /// </summary>
-    public enum WeaponType { SWORD, STAFF, AXE, SPEAR, DAGGER, SIMPLEBOW }
+    public enum WeaponType { SWORD, STAFF, AXE, SPEAR, DAGGER, SIMPLEBOW, HUNTINGBOW, WARBOW }
 
     /// <summary>
     /// Optional elemental affinities attachable to weapons.
