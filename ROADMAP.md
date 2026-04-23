@@ -139,11 +139,11 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-04-23 14:14**_
+_Last updated: **2026-04-23 14:44**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 14
-- **Classes:** 34
+- **Classes:** 38
 - **Unique Methods:** 33
 - **Pending TODOs:** 23
 
@@ -271,10 +271,18 @@ _No unique public methods found._
 
 _No unique public methods found._
 
+### [HuntingBow.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Bows/HuntingBow.cs)
+*Inherits from: `Bow`*  
+_No unique public methods found._
+
 ### [SimpleBow.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Bows/SimpleBow.cs)
 *Inherits from: `Bow`*  
 > A basic bow with common stats suitable for early gameplay.
 
+_No unique public methods found._
+
+### [WarBow.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Bows/WarBow.cs)
+*Inherits from: `Bow`*  
 _No unique public methods found._
 
 
@@ -306,6 +314,14 @@ _No unique public methods found._
 
 
 ## 🧭 RPGManagerLib.Items.Weapons.Quivers
+
+### [BigQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/BigQuiver.cs)
+*Inherits from: `Quiver`*  
+_No unique public methods found._
+
+### [MediumQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/MediumQuiver.cs)
+*Inherits from: `Quiver`*  
+_No unique public methods found._
 
 ### [SmallQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/SmallQuiver.cs)
 *Inherits from: `Quiver`*  
