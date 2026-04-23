@@ -1,6 +1,6 @@
 # RPG Manager
 
-[![CI](https://github.com/tombomeke-ehb/RPGManager/actions/workflows/ci.yml/badge.svg)](https://github.com/tombomeke-ehb/RPGManager/actions/workflows/ci.yml)
+[![.NET CI](https://github.com/tombomeke-ehb/RPGManager/actions/workflows/dotnet-ci.yml/badge.svg)](https://github.com/tombomeke-ehb/RPGManager/actions/workflows/dotnet-ci.yml)
 [![Release](https://github.com/tombomeke-ehb/RPGManager/actions/workflows/release.yml/badge.svg)](https://github.com/tombomeke-ehb/RPGManager/actions/workflows/release.yml)
 [![GitHub release](https://img.shields.io/github/v/release/tombomeke-ehb/RPGManager)](https://github.com/tombomeke-ehb/RPGManager/releases/latest)
 [![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4)](https://dotnet.microsoft.com/download)
@@ -146,6 +146,15 @@ dotnet run --project RPGManager
 ---
 
 ## Building & Publishing
+
+### CI test artifacts & coverage
+
+Elke run van de `.NET CI` workflow publiceert ook:
+
+- testresultaten als `.trx` artifact,
+- code coverage als `coverage.cobertura.xml` artifact.
+
+Je vindt deze onder de betreffende run in GitHub Actions bij `Artifacts`.
 
 Self-contained single-file binaries for all platforms:
 
