@@ -180,13 +180,13 @@ Key files:
 
 ## Documentation
 
-| Document | Description |
-|---|---|
-| [ROADMAP.md](ROADMAP.md) | Feature board and milestone targets |
-| [CHANGELOG.md](CHANGELOG.md) | Version history |
-| [CLAUDE.md](CLAUDE.md) | System design plans and architectural guidance |
-| [docs/lore/](docs/lore/) | World lore — Tavaryn, regions, NPCs, factions |
-| [PRESS.md](PRESS.md) | Press kit |
+| Document                     | Description                                    |
+| ---------------------------- | ---------------------------------------------- |
+| [ROADMAP.md](ROADMAP.md)     | Feature board and milestone targets            |
+| [CHANGELOG.md](CHANGELOG.md) | Version history                                |
+| [CLAUDE.md](CLAUDE.md)       | System design plans and architectural guidance |
+| [docs/lore](docs/lore)       | World lore — Tavaryn, regions, NPCs, factions  |
+| [PRESS.md](PRESS.md)         | Press kit                                      |
 
 ---
 
