@@ -9,6 +9,8 @@
     /// essential weapon attributes like damage, durability, and rarity.</remarks>
     public abstract class Bow : Weapon
     {
+        public BowVariant Variant { get; }
+
         /// <summary>
         /// Initializes a new instance of the Bow class with the specified attributes.
         /// </summary>
@@ -17,12 +19,13 @@
         /// <param name="rarity">The rarity level of the bow, which may affect its value and performance.</param>
         /// <param name="level">The required character level to equip or use the bow.</param>
         /// <param name="name">The name of the bow, used for identification and display purposes.</param>
-        /// <param name="weaponType">The type of weapon, indicating the category of the bow within the game.</param>
+        /// <param name="variant">The concrete bow variant.</param>
         /// <param name="element">The elemental attribute of the bow, which may influence its damage type or effects.</param>
         /// <param name="inventorySpaceAmount">The amount of inventory space required to store the bow.</param>
-        public Bow(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element, InventorySpaceAmount inventorySpaceAmount)
-            : base(damageAmount, durability, rarity, level, name, weaponType, element, inventorySpaceAmount)
+        public Bow(int damageAmount, int durability, Rarity rarity, int level, string name, BowVariant variant, Element element, InventorySpaceAmount inventorySpaceAmount)
+            : base(damageAmount, durability, rarity, level, name, WeaponType.BOW, element, inventorySpaceAmount)
         {
+            Variant = variant;
         }
     }
 }

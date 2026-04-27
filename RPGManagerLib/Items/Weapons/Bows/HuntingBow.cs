@@ -15,7 +15,7 @@ namespace RPGManagerLib.Items.Weapons.Bows
                   rarity: Rarity.UNCOMMON,
                   level: 5,
                   name: "Hunting Bow",
-                  weaponType: WeaponType.HUNTINGBOW,
+                  variant: BowVariant.HUNTING,
                   element: Element.NONE,
                   inventorySpaceAmount: InventorySpaceAmount.LARGE) { }
     }
