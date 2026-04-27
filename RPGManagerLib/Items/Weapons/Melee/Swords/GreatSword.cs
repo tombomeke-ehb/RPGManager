@@ -1,6 +1,4 @@
-using RPGManagerLib.Items.Weapons;
-
-namespace RPGManagerLib.Items.Weapons.Melee
+namespace RPGManagerLib.Items.Weapons.Melee.Swords
 {
     public class GreatSword : Sword
     {

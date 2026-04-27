@@ -42,6 +42,8 @@ namespace RPGManagerLib.Items.Weapons
         /// </summary>
         public WeaponType Type { get; set; }
 
+        public SwordVariant Variant { get; set; }
+
         /// <summary>
         /// Optional elemental affinity for the weapon.
         /// </summary>
@@ -68,7 +70,7 @@ namespace RPGManagerLib.Items.Weapons
         /// <param name="weaponType">Concrete weapon kind.</param>
         /// <param name="element">Elemental attribute.</param>
         /// <param name="inventorySpaceAmount">Inventory footprint.</param>
-        public Weapon(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, Element element, InventorySpaceAmount inventorySpaceAmount)
+        public Weapon(int damageAmount, int durability, Rarity rarity, int level, string name, WeaponType weaponType, SwordVariant variant, Element element, InventorySpaceAmount inventorySpaceAmount)
         {
             DamageAmount = damageAmount;
             Durability = durability;
@@ -76,6 +78,7 @@ namespace RPGManagerLib.Items.Weapons
             Level = level;
             Name = name;
             Type = weaponType;
+            Variant = variant;
             Element = element;
             InventorySpaceAmount = inventorySpaceAmount;
         }

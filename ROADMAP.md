@@ -152,7 +152,7 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-04-27 15:25**_
+_Last updated: **2026-04-27 15:15**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 14

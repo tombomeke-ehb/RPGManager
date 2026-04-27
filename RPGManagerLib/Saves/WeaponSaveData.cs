@@ -3,6 +3,7 @@ using RPGManagerLib.Items.Weapons.Bows;
 using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Staffs;
 using RPGManagerLib.Items;
+using RPGManagerLib.Items.Weapons.Melee.Swords;
 
 namespace RPGManagerLib.Saves
 {
