@@ -12,6 +12,11 @@ namespace RPGManagerLib.Weapons.Quivers
     public abstract class Quiver : IEquipable
     {
         /// <summary>
+        /// Concrete quiver variant.
+        /// </summary>
+        public QuiverVariant Variant { get; set; }
+
+        /// <summary>
         /// Display name of the quiver.
         /// </summary>
         public string Name { get; set; }
@@ -46,12 +51,16 @@ namespace RPGManagerLib.Weapons.Quivers
         /// <param name="rarity">The rarity level of the quiver, which determines its quality and value.</param>
         /// <param name="inventorySpaceAmount">The amount of inventory space that the quiver occupies.</param>
         /// <param name="capacity">The maximum number of items that the quiver can hold.</param>
-        protected Quiver(string name, Rarity rarity, InventorySpaceAmount inventorySpaceAmount, int capacity)
+        /// <param name="variant">The concrete quiver variant.</param>
+        protected Quiver(string name, Rarity rarity, InventorySpaceAmount inventorySpaceAmount, int capacity, QuiverVariant variant)
         {
             Name = name;
             Rarity = rarity;
             InventorySpaceAmount = inventorySpaceAmount;
             Capacity = capacity;
+            Variant = variant;
         }
     }
+
+    public enum QuiverVariant { SMALL, MEDIUM, BIG }
 }

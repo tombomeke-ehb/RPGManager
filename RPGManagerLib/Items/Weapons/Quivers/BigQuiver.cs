@@ -4,11 +4,12 @@ namespace RPGManagerLib.Items.Weapons.Quivers
 {
     public class BigQuiver : Quiver
     {
-        BigQuiver()
+        public BigQuiver()
             : base(name: "Big Quiver",
                     rarity: Rarity.RARE,
                     inventorySpaceAmount: InventorySpaceAmount.LARGE,
-                    capacity: 50)
+                    capacity: 50,
+                    variant: QuiverVariant.BIG)
         {
         }
     }

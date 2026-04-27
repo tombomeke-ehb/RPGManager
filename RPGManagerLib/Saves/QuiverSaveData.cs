@@ -12,6 +12,7 @@ namespace RPGManagerLib.Saves
     public class QuiverSaveData : EquipableSaveData
     {
         public int Capacity { get; set; }
+        public QuiverVariant? QuiverVariant { get; set; }
 
         public QuiverSaveData() { }
         /// <summary>
@@ -30,6 +31,7 @@ namespace RPGManagerLib.Saves
 
             // Specific properties
             Capacity = quiver.Capacity;
+            QuiverVariant = quiver.Variant;
         }
         /// <summary>
         /// Creates an equipable quiver instance based on the current object's properties.
@@ -39,15 +41,24 @@ namespace RPGManagerLib.Saves
         /// <returns>An instance of IEquipable representing the quiver with initialized properties.</returns>
         public override IEquipable ToEquipable()
         {
-            // Create instance (currently only supporting SmallQuiver)
-            // Add more logic once more quivers get introduced
-            Quiver q = new SmallQuiver();
+            Quiver q = QuiverVariant switch
+            {
+                Weapons.Quivers.QuiverVariant.SMALL => new SmallQuiver(),
+                Weapons.Quivers.QuiverVariant.MEDIUM => new MediumQuiver(),
+                Weapons.Quivers.QuiverVariant.BIG => new BigQuiver(),
+                null => new SmallQuiver(),
+                _ => throw new Exception($"Unknown quiver variant: {QuiverVariant}")
+            };
 
             // Overwrite properties
             q.Name = Name;
             q.Rarity = Rarity;
             q.InventorySpaceAmount = InventorySpaceAmount;
             q.Capacity = Capacity;
+            if (QuiverVariant.HasValue)
+            {
+                q.Variant = QuiverVariant.Value;
+            }
 
             return q;
         }
