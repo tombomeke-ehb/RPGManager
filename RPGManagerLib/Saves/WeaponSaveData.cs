@@ -1,6 +1,7 @@
 ﻿using RPGManagerLib.Items.Weapons;
 using RPGManagerLib.Items.Weapons.Bows;
 using RPGManagerLib.Items.Weapons.Melee;
+using RPGManagerLib.Items.Staffs;
 using RPGManagerLib.Items;
 
 namespace RPGManagerLib.Saves
@@ -18,6 +19,31 @@ namespace RPGManagerLib.Saves
         /// The concrete weapon kind to reconstruct.
         /// </summary>
         public WeaponType WeaponType { get; set; }
+
+        /// <summary>
+        /// Bow variant used when <see cref="WeaponType"/> is <see cref="Items.Weapons.WeaponType.BOW"/>.
+        /// </summary>
+        public BowVariant? BowVariant { get; set; }
+
+        /// <summary>
+        /// Staff variant used when <see cref="WeaponType"/> is <see cref="Items.Weapons.WeaponType.STAFF"/>.
+        /// </summary>
+        public StaffVariant? StaffVariant { get; set; }
+
+        /// <summary>
+        /// Sword variant used when <see cref="WeaponType"/> is <see cref="Items.Weapons.WeaponType.SWORD"/>.
+        /// </summary>
+        public SwordVariant? SwordVariant { get; set; }
+
+        /// <summary>
+        /// Axe variant used when <see cref="WeaponType"/> is <see cref="Items.Weapons.WeaponType.AXE"/>.
+        /// </summary>
+        public AxeVariant? AxeVariant { get; set; }
+
+        /// <summary>
+        /// Dagger variant used when <see cref="WeaponType"/> is <see cref="Items.Weapons.WeaponType.DAGGER"/>.
+        /// </summary>
+        public DaggerVariant? DaggerVariant { get; set; }
 
         /// <summary>
         /// Base damage amount.
@@ -56,6 +82,11 @@ namespace RPGManagerLib.Saves
 
             // Specific properties
             WeaponType = weapon.Type;
+            BowVariant = weapon is Bow bow ? bow.Variant : null;
+            StaffVariant = weapon is Staff staff ? staff.Variant : null;
+            SwordVariant = weapon is Sword sword ? sword.Variant : null;
+            AxeVariant = weapon is Axe axe ? axe.Variant : null;
+            DaggerVariant = weapon is Dagger dagger ? dagger.Variant : null;
             DamageAmount = weapon.DamageAmount;
             Durability = weapon.Durability;
             Level = weapon.Level;
@@ -76,13 +107,44 @@ namespace RPGManagerLib.Saves
             // 1. Create the specific weapon instance with default values
             Weapon w = WeaponType switch
             {
-                WeaponType.SWORD => new Sword(),
-                WeaponType.AXE => new Axe(),
+                WeaponType.SWORD => SwordVariant switch
+                {
+                    Items.Weapons.SwordVariant.GREAT => new GreatSword(),
+                    Items.Weapons.SwordVariant.BROAD => new BroadSword(),
+                    Items.Weapons.SwordVariant.BASIC => new Sword(),
+                    null => new Sword(),
+                    _ => throw new Exception($"Unknown sword variant: {SwordVariant}")
+                },
+                WeaponType.STAFF => StaffVariant switch
+                {
+                    Items.Weapons.StaffVariant.BASIC => new BasicStaff(),
+                    Items.Weapons.StaffVariant.WIND => new WindStaff(),
+                    null => new BasicStaff(),
+                    _ => throw new Exception($"Unknown staff variant: {StaffVariant}")
+                },
+                WeaponType.AXE => AxeVariant switch
+                {
+                    Items.Weapons.AxeVariant.BATTLE => new BattleAxe(),
+                    Items.Weapons.AxeVariant.GREAT => new GreatAxe(),
+                    Items.Weapons.AxeVariant.BASIC => new Axe(),
+                    null => new Axe(),
+                    _ => throw new Exception($"Unknown axe variant: {AxeVariant}")
+                },
                 WeaponType.SPEAR => new Spear(),
-                WeaponType.DAGGER => new Dagger(),
-                WeaponType.SIMPLEBOW => new SimpleBow(),
-                WeaponType.HUNTINGBOW => new HuntingBow(),
-                WeaponType.WARBOW => new WarBow(),
+                WeaponType.DAGGER => DaggerVariant switch
+                {
+                    Items.Weapons.DaggerVariant.BASIC => new Dagger(),
+                    null => new Dagger(),
+                    _ => throw new Exception($"Unknown dagger variant: {DaggerVariant}")
+                },
+                WeaponType.BOW => BowVariant switch
+                {
+                    Items.Weapons.BowVariant.SIMPLE => new SimpleBow(),
+                    Items.Weapons.BowVariant.HUNTING => new HuntingBow(),
+                    Items.Weapons.BowVariant.WAR => new WarBow(),
+                    null => new SimpleBow(),
+                    _ => throw new Exception($"Unknown bow variant: {BowVariant}")
+                },
                 _ => throw new Exception($"Unknown weapon type: {WeaponType}")
             };
 

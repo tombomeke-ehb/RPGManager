@@ -77,7 +77,7 @@ namespace RPGManagerLib.UI
             return new List<IEquipable>
             {
                 new Dagger(),
-                new Staff()
+                new BasicStaff()
             };
         }
 
