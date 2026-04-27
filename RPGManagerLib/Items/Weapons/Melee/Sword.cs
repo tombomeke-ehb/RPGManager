@@ -7,19 +7,36 @@ namespace RPGManagerLib.Items.Weapons.Melee
     /// </summary>
     public class Sword : Weapon
     {
+        public SwordVariant Variant { get; }
+
         /// <summary>
         /// Initializes a new <see cref="Sword"/> with default values.
         /// </summary>
         public Sword()
-            : base
-                  (damageAmount: 13, 
-                  durability: 100, 
-                  rarity: Rarity.COMMON, 
-                  level: 1, 
-                  name: "Basic Sword", 
-                  weaponType: WeaponType.SWORD, 
-                  element: Element.NONE, 
+            : this(
+                  damageAmount: 13,
+                  durability: 100,
+                  rarity: Rarity.COMMON,
+                  level: 1,
+                  name: "Short Sword",
+                  element: Element.NONE,
+                  variant: SwordVariant.BASIC,
                   inventorySpaceAmount: InventorySpaceAmount.SMALL)
-        { }
+        {
+        }
+
+        protected Sword(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, SwordVariant variant, InventorySpaceAmount inventorySpaceAmount)
+            : base
+                  (damageAmount: damageAmount,
+                  durability: durability,
+                  rarity: rarity,
+                  level: level,
+                  name: name,
+                  weaponType: WeaponType.SWORD,
+                  element: element,
+                  inventorySpaceAmount: inventorySpaceAmount)
+        {
+            Variant = variant;
+        }
     }
 }
