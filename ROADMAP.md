@@ -42,6 +42,19 @@ The long-term goal is a fully playable, story-driven console RPG where:
 - [ ] **Spell System:** Mana costs, spell casting in combat, elemental damage
 - [ ] **World & Location Travel:** Travel between locations, encounter rolls on the road
 - [ ] **NPC Foundation:** Interaction structure ready for dialogue trees
+- [x] **Weapons Refactor (`feature/weapons`):** generalized weapon categories + per-family variants (bow/staff/sword/axe/dagger/quiver)
+
+### Active Branches
+
+- `feature/combat`
+- `feature/leveling`
+- `feature/world-state`
+- `feature/npc-dialogue`
+- `feature/travel`
+- `feature/quests`
+- `feature/economy`
+- `feature/spells`
+- `feature/weapons`
 
 ### Characters & Classes
 
@@ -139,11 +152,11 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-04-23 14:44**_
+_Last updated: **2026-04-27 15:25**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 14
-- **Classes:** 38
+- **Classes:** 44
 - **Unique Methods:** 33
 - **Pending TODOs:** 23
 
@@ -243,10 +256,20 @@ _No unique public methods found._
 
 ## 🧙 RPGManagerLib.Items.Staffs
 
+### [BasicStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/BasicStaff.cs)
+*Inherits from: `Staff`*  
+> Represents a staff weapon that can be used in combat, providing basic damage and durability attributes.
+
+_No unique public methods found._
+
 ### [Staff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/Staff.cs)
 *Inherits from: `Weapon`*  
 > Represents a staff weapon that can be used in combat, providing basic damage and durability attributes.
 
+_No unique public methods found._
+
+### [WindStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/WindStaff.cs)
+*Inherits from: `Staff`*  
 _No unique public methods found._
 
 
@@ -294,10 +317,26 @@ _No unique public methods found._
 
 _No unique public methods found._
 
+### [BattleAxe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/BattleAxe.cs)
+*Inherits from: `Axe`*  
+_No unique public methods found._
+
+### [BroadSword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/BroadSword.cs)
+*Inherits from: `Sword`*  
+_No unique public methods found._
+
 ### [Dagger.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Dagger.cs)
 *Inherits from: `Weapon`*  
 > A fast melee weapon with low damage and short cooldown.
 
+_No unique public methods found._
+
+### [GreatAxe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/GreatAxe.cs)
+*Inherits from: `Axe`*  
+_No unique public methods found._
+
+### [GreatSword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/GreatSword.cs)
+*Inherits from: `Sword`*  
 _No unique public methods found._
 
 ### [Spear.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Spear.cs)

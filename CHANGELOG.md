@@ -15,10 +15,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 - CI workflow — build check on every push and pull request
 - CONTRIBUTING.md
 - docs/lore/ — world lore documents for Tavaryn and the Ashlands
+- Weapon variant model: `BowVariant`, `StaffVariant`, `SwordVariant`, `AxeVariant`, `DaggerVariant`
+- New weapon variants/classes: `WindStaff`, `GreatSword`, `BroadSword`, `BattleAxe`, `GreatAxe`
+- Quiver variant model with `QuiverVariant` and variant-aware save/load
 
 ### Changed
 - README.md — professional rewrite reflecting the shared world mechanic and Keeper of Destiny concept
 - PRESS.md — rewritten to match the current vision
+- `WeaponType` generalized to category-level (`BOW` instead of per-bow concrete values)
+- `Staff` refactored into an abstract base class with default `WeaponType.STAFF` and `InventorySpaceAmount.LARGE`
+- `BasicStaff` now inherits from `Staff`; mage default loadout now uses `BasicStaff`
+- `WeaponSaveData` extended to persist and restore weapon variants (bow/staff/sword/axe/dagger)
+- `Sword` default basic weapon renamed to `Short Sword`
 
 ---
 
