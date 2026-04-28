@@ -1,6 +1,4 @@
-﻿using RPGManagerLib.Items.Weapons;
-
-namespace RPGManagerLib.Items.Weapons.Melee
+﻿namespace RPGManagerLib.Items.Weapons.Melee.Daggers
 {
     /// <summary>
     /// A fast melee weapon with low damage and short cooldown.
@@ -8,22 +6,6 @@ namespace RPGManagerLib.Items.Weapons.Melee
     public class Dagger : Weapon
     {
         public DaggerVariant Variant { get; }
-
-        /// <summary>
-        /// Initializes a new <see cref="Dagger"/> with default values.
-        /// </summary>
-        public Dagger()
-            : this(
-                  damageAmount: 8,
-                  durability: 50,
-                  rarity: Rarity.COMMON,
-                  level: 1,
-                  name: "Basic Dagger",
-                  element: Element.NONE,
-                  variant: DaggerVariant.BASIC,
-                  inventorySpaceAmount: InventorySpaceAmount.SMALL)
-        {
-        }
 
         protected Dagger(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, DaggerVariant variant, InventorySpaceAmount inventorySpaceAmount)
             : base(damageAmount: damageAmount,

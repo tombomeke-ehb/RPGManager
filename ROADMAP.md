@@ -152,11 +152,11 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-04-27 15:15**_
+_Last updated: **2026-04-28 02:03**_
 
 ### 📊 Codebase Stats
-- **Namespaces:** 14
-- **Classes:** 44
+- **Namespaces:** 17
+- **Classes:** 47
 - **Unique Methods:** 33
 - **Pending TODOs:** 23
 
@@ -311,48 +311,75 @@ _No unique public methods found._
 
 ## 🏰 RPGManagerLib.Items.Weapons.Melee
 
-### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axe.cs)
-*Inherits from: `Weapon`*  
-> Represents a melee weapon of type axe with predefined damage, durability, rarity, and inventory space attributes.
-
-_No unique public methods found._
-
-### [BattleAxe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/BattleAxe.cs)
-*Inherits from: `Axe`*  
-_No unique public methods found._
-
-### [BroadSword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/BroadSword.cs)
-*Inherits from: `Sword`*  
-_No unique public methods found._
-
-### [Dagger.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Dagger.cs)
-*Inherits from: `Weapon`*  
-> A fast melee weapon with low damage and short cooldown.
-
-_No unique public methods found._
-
-### [GreatAxe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/GreatAxe.cs)
-*Inherits from: `Axe`*  
-_No unique public methods found._
-
-### [GreatSword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/GreatSword.cs)
-*Inherits from: `Sword`*  
-_No unique public methods found._
-
 ### [Spear.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Spear.cs)
 *Inherits from: `Weapon`*  
 > A reach melee weapon with solid durability and moderate cooldown.
 
 _No unique public methods found._
 
-### [Sword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Sword.cs)
+
+## 🧭 RPGManagerLib.Items.Weapons.Melee.Axes
+
+### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axes/Axe.cs)
+*Inherits from: `Weapon`*  
+> Represents a melee weapon of type axe with predefined damage, durability, rarity, and inventory space attributes.
+
+_No unique public methods found._
+
+### [BasicAxe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axes/BasicAxe.cs)
+*Inherits from: `Axe`*  
+> Initializes a new instance of the Axe class with predefined attributes for a basic axe weapon.
+
+_No unique public methods found._
+
+### [BattleAxe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axes/BattleAxe.cs)
+*Inherits from: `Axe`*  
+_No unique public methods found._
+
+### [GreatAxe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axes/GreatAxe.cs)
+*Inherits from: `Axe`*  
+_No unique public methods found._
+
+
+## 🪄 RPGManagerLib.Items.Weapons.Melee.Daggers
+
+### [BasicDagger.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Daggers/BasicDagger.cs)
+*Inherits from: `Dagger`*  
+> Initializes a new <see cref="Dagger"/> with default values.
+
+_No unique public methods found._
+
+### [Dagger.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Daggers/Dagger.cs)
+*Inherits from: `Weapon`*  
+> A fast melee weapon with low damage and short cooldown.
+
+_No unique public methods found._
+
+
+## 🧰 RPGManagerLib.Items.Weapons.Melee.Swords
+
+### [BasicSword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Swords/BasicSword.cs)
+*Inherits from: `Sword`*  
+> Initializes a new <see cref="Sword"/> with default values.
+
+_No unique public methods found._
+
+### [BroadSword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Swords/BroadSword.cs)
+*Inherits from: `Sword`*  
+_No unique public methods found._
+
+### [GreatSword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Swords/GreatSword.cs)
+*Inherits from: `Sword`*  
+_No unique public methods found._
+
+### [Sword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Swords/Sword.cs)
 *Inherits from: `Weapon`*  
 > A balanced melee weapon with moderate damage and cooldown.
 
 _No unique public methods found._
 
 
-## 🧭 RPGManagerLib.Items.Weapons.Quivers
+## 🎯 RPGManagerLib.Items.Weapons.Quivers
 
 ### [BigQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/BigQuiver.cs)
 *Inherits from: `Quiver`*  
@@ -369,7 +396,7 @@ _No unique public methods found._
 _No unique public methods found._
 
 
-## 🪄 RPGManagerLib.Locations
+## 🧱 RPGManagerLib.Locations
 
 ### [Location.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Locations/Location.cs)
 > Adds a non-player character (NPC) to the current list of NPCs.
@@ -380,7 +407,7 @@ _No unique public methods found._
 - `GetNPCs()`
 
 
-## 🧰 RPGManagerLib.Saves
+## ⚔️ RPGManagerLib.Saves
 
 ### [CharacterSaveData.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Saves/CharacterSaveData.cs)
 > Serializable snapshot of a character for saving and loading.
@@ -426,7 +453,7 @@ _No unique public methods found._
 - `ToEquipable()`
 
 
-## 🎯 RPGManagerLib.Spells
+## 📜 RPGManagerLib.Spells
 
 ### [Fireball.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Spells/Fireball.cs)
 *Inherits from: `Spell`*  
@@ -441,7 +468,7 @@ _No unique public methods found._
 - [ ] Integrate combat logging, target validation, and status-effect resolution with CombatManager instead of direct console-only flow.
 
 
-## 🧱 RPGManagerLib.UI
+## 🧙 RPGManagerLib.UI
 
 ### [CharacterFactory.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/UI/CharacterFactory.cs)
 > Provides functionality to create character instances based on user input.
@@ -476,7 +503,7 @@ _No unique public methods found._
 - `Show()`
 
 
-## ⚔️ RPGManagerLib.Weapons.Quivers
+## 🏹 RPGManagerLib.Weapons.Quivers
 
 ### [Quiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/Quiver.cs)
 *Inherits from: `IEquipable`*  
@@ -485,7 +512,7 @@ _No unique public methods found._
 _No unique public methods found._
 
 
-## 📜 RPGManagerLib.Worlds
+## 🐉 RPGManagerLib.Worlds
 
 ### [World.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Worlds/World.cs)
 > Unlocks the current instance, allowing access to its features.

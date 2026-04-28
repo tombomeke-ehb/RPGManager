@@ -5,7 +5,7 @@
     /// </summary>
     public abstract class Sword : Weapon
     {
-
+        public SwordVariant Variant {  get; set; }
 
         public Sword(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, SwordVariant variant, InventorySpaceAmount inventorySpaceAmount)
             : base
@@ -15,10 +15,10 @@
                   level: level,
                   name: name,
                   weaponType: WeaponType.SWORD,
-                  variant: variant,
                   element: element,
                   inventorySpaceAmount: inventorySpaceAmount)
         {
+            Variant = variant;
         }
     }
 }

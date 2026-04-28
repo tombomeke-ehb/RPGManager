@@ -23,7 +23,14 @@
         /// <param name="element">The elemental attribute of the bow, which may influence its damage type or effects.</param>
         /// <param name="inventorySpaceAmount">The amount of inventory space required to store the bow.</param>
         public Bow(int damageAmount, int durability, Rarity rarity, int level, string name, BowVariant variant, Element element, InventorySpaceAmount inventorySpaceAmount)
-            : base(damageAmount, durability, rarity, level, name, WeaponType.BOW, element, inventorySpaceAmount)
+            : base(damageAmount, 
+                  durability, 
+                  rarity, 
+                  level, 
+                  name, 
+                  WeaponType.BOW, 
+                  element, 
+                  inventorySpaceAmount)
         {
             Variant = variant;
         }

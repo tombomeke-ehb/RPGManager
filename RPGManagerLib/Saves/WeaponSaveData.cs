@@ -4,6 +4,8 @@ using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Staffs;
 using RPGManagerLib.Items;
 using RPGManagerLib.Items.Weapons.Melee.Swords;
+using RPGManagerLib.Items.Weapons.Melee.Axes;
+using RPGManagerLib.Items.Weapons.Melee.Daggers;
 
 namespace RPGManagerLib.Saves
 {
@@ -112,8 +114,8 @@ namespace RPGManagerLib.Saves
                 {
                     Items.Weapons.SwordVariant.GREAT => new GreatSword(),
                     Items.Weapons.SwordVariant.BROAD => new BroadSword(),
-                    Items.Weapons.SwordVariant.BASIC => new Sword(),
-                    null => new Sword(),
+                    Items.Weapons.SwordVariant.BASIC => new BasicSword(),
+                    null => new BasicSword(),
                     _ => throw new Exception($"Unknown sword variant: {SwordVariant}")
                 },
                 WeaponType.STAFF => StaffVariant switch
@@ -127,15 +129,15 @@ namespace RPGManagerLib.Saves
                 {
                     Items.Weapons.AxeVariant.BATTLE => new BattleAxe(),
                     Items.Weapons.AxeVariant.GREAT => new GreatAxe(),
-                    Items.Weapons.AxeVariant.BASIC => new Axe(),
-                    null => new Axe(),
+                    Items.Weapons.AxeVariant.BASIC => new BasicAxe(),
+                    null => new BasicAxe(),
                     _ => throw new Exception($"Unknown axe variant: {AxeVariant}")
                 },
                 WeaponType.SPEAR => new Spear(),
                 WeaponType.DAGGER => DaggerVariant switch
                 {
-                    Items.Weapons.DaggerVariant.BASIC => new Dagger(),
-                    null => new Dagger(),
+                    Items.Weapons.DaggerVariant.BASIC => new BasicDagger(),
+                    null => new BasicDagger(),
                     _ => throw new Exception($"Unknown dagger variant: {DaggerVariant}")
                 },
                 WeaponType.BOW => BowVariant switch

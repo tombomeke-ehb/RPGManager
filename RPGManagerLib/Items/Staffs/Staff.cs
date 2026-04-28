@@ -10,6 +10,7 @@ namespace RPGManagerLib.Items.Staffs
     /// attributes.</remarks>
     public abstract class Staff : Weapon
     {
+
         public StaffVariant Variant { get; }
 
         /// <summary>
