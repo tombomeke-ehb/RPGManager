@@ -48,7 +48,7 @@ public class MageAndSpellTests
     {
         var mage = new Mage("Ezra") { Mana = 100 };
         mage.Spells.Add(new Fireball());
-        mage.Weapons.Add(new Staff(100, Rarity.COMMON, 1, "Flame Staff", Element.FIRE));
+        mage.Weapons.Add(new TestFireStaff());
         var target = new Warrior();
 
         mage.CastSpell(0, target);
@@ -70,5 +70,13 @@ public class MageAndSpellTests
         Assert.Equal("Ice Spike", iceSpike.Name);
         Assert.Equal(25, iceSpike.BaseDamage);
         Assert.Equal(15, iceSpike.ManaCost);
+    }
+
+    private sealed class TestFireStaff : Staff
+    {
+        public TestFireStaff()
+            : base(3, 100, Rarity.COMMON, 1, "Flame Staff", Element.FIRE, StaffVariant.BASIC)
+        {
+        }
     }
 }

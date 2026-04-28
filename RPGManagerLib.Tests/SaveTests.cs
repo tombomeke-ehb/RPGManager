@@ -1,7 +1,11 @@
 using System.Text.Json;
 using RPGManagerLib.Characters.Heroes;
-using RPGManagerLib.Items.Weapons.Melee;
+using RPGManagerLib.Items.Staffs;
+using RPGManagerLib.Items.Weapons;
+using RPGManagerLib.Items.Weapons.Melee.Swords;
+using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.Saves;
+using RPGManagerLib.UI;
 
 namespace RPGManagerLib.Tests;
 
@@ -23,26 +27,47 @@ public class SaveTests : IDisposable
     public void CharacterSaveData_Warrior_RoundTripsWeapons()
     {
         var warrior = new Warrior("Bjorn");
-        warrior.Weapons.Add(new Sword());
+        warrior.Weapons.Add(new GreatSword());
+        warrior.Weapons.Add(new SmallQuiver());
 
         var save = new CharacterSaveData(warrior);
         var restored = save.ToCharacter() as Warrior;
 
         Assert.NotNull(restored);
-        Assert.Single(restored!.Weapons);
+        Assert.Equal(2, restored!.Weapons.Count);
         Assert.Equal("Bjorn", restored.Name);
+        Assert.Contains(restored.Weapons, item => item is GreatSword);
+        Assert.Contains(restored.Weapons, item => item is SmallQuiver);
     }
 
     [Fact]
-    public void CharacterSaveData_Mage_RoundTripsMana()
+    public void CharacterSaveData_Mage_RoundTripsManaAndWeapons()
     {
         var mage = new Mage("Nia") { Mana = 88 };
+        mage.Weapons.AddRange(CharacterFactory.CreateDefaultWeaponsMage());
 
         var save = new CharacterSaveData(mage);
         var restored = save.ToCharacter() as Mage;
 
         Assert.NotNull(restored);
         Assert.Equal(88, restored!.Mana);
+        Assert.Contains(restored.Weapons, item => item.Name == "Basic Staff");
+        Assert.Contains(restored.Weapons, item => item.Name == "Basic Dagger");
+    }
+
+    [Fact]
+    public void CharacterSaveData_Archer_RoundTripsBowAndQuiver()
+    {
+        var archer = new Archer("Vale");
+        archer.Weapons.AddRange(CharacterFactory.CreateDefaultWeaponsArcher());
+
+        var save = new CharacterSaveData(archer);
+        var restored = save.ToCharacter() as Archer;
+
+        Assert.NotNull(restored);
+        Assert.Equal("Vale", restored!.Name);
+        Assert.Contains(restored.Weapons, item => item is Weapon weapon && weapon.Type == WeaponType.BOW);
+        Assert.Contains(restored.Weapons, item => item is SmallQuiver);
     }
 
     [Fact]

@@ -15,7 +15,7 @@
                   rarity: Rarity.COMMON,
                   level: 1,
                   name: "Simple Bow",
-                  weaponType: WeaponType.SIMPLEBOW,
+                  variant: BowVariant.SIMPLE,
                   element: Element.NONE,
                   inventorySpaceAmount: InventorySpaceAmount.LARGE) { }
     }

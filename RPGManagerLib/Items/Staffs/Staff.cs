@@ -8,26 +8,10 @@ namespace RPGManagerLib.Items.Staffs
     /// <remarks>The Staff class inherits from the Weapon class and is designed for use in various combat
     /// scenarios. It can be customized with different durability, rarity, level, name, and elemental
     /// attributes.</remarks>
-    public class Staff : Weapon
+    public abstract class Staff : Weapon
     {
-        /// <summary>
-        /// Initializes a new instance of the Staff class representing a basic staff weapon with predefined attributes
-        /// suitable for entry-level gameplay.
-        /// </summary>
-        /// <remarks>This constructor creates a staff with a damage amount of 3, durability of 100, common
-        /// rarity, level 1, the name "Basic Staff", weapon type set to staff, no elemental affinity, and a large
-        /// inventory space requirement. Use this constructor to add a standard staff to a player's inventory or as a
-        /// default weapon option.</remarks>
-        public Staff()
-            : base(damageAmount: 3,
-                  durability: 100,
-                  rarity: Rarity.COMMON,
-                  level: 1,
-                  name: "Basic Staff",
-                  weaponType: WeaponType.STAFF,
-                  element: Element.NONE,
-                  inventorySpaceAmount: InventorySpaceAmount.LARGE)
-        { }
+
+        public StaffVariant Variant { get; }
 
         /// <summary>
         /// Initializes a new instance of the Staff class with the specified durability, rarity, level, name, and
@@ -40,8 +24,8 @@ namespace RPGManagerLib.Items.Staffs
         /// <param name="level">The level of the staff, indicating its strength and effectiveness.</param>
         /// <param name="name">The name of the staff, used for identification and display.</param>
         /// <param name="element">The elemental type of the staff, which influences its magical properties and effects.</param>
-        public Staff(int durability, Rarity rarity, int level, string name, Element element)
-            : base(damageAmount: 3,
+        public Staff(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, StaffVariant variant)
+            : base(damageAmount: damageAmount,
                   durability: durability,
                   rarity: rarity,
                   level: level,
@@ -49,6 +33,8 @@ namespace RPGManagerLib.Items.Staffs
                   weaponType: WeaponType.STAFF,
                   element: element,
                   inventorySpaceAmount: InventorySpaceAmount.LARGE)
-        { }
+        {
+            Variant = variant;
+        }
     }
 }

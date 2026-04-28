@@ -38,7 +38,7 @@ namespace RPGManagerLib.Items.Weapons
         public string Name { get; set; }
 
         /// <summary>
-        /// Concrete weapon kind (e.g., <see cref="WeaponType.SWORD"/>).
+        /// Weapon family/category (e.g., <see cref="WeaponType.SWORD"/> or <see cref="WeaponType.BOW"/>).
         /// </summary>
         public WeaponType Type { get; set; }
 
@@ -132,13 +132,38 @@ namespace RPGManagerLib.Items.Weapons
     public enum InventorySpaceAmount { SMALL, LARGE }
 
     /// <summary>
-    /// Supported concrete weapon kinds.
+    /// Supported weapon categories.
     /// </summary>
-    public enum WeaponType { SWORD, STAFF, AXE, SPEAR, DAGGER, SIMPLEBOW, HUNTINGBOW, WARBOW }
+    public enum WeaponType { SWORD, STAFF, AXE, SPEAR, DAGGER, BOW }
+
+    /// <summary>
+    /// Supported bow variants.
+    /// </summary>
+    public enum BowVariant { SIMPLE, HUNTING, WAR }
+
+    /// <summary>
+    /// Supported staff variants.
+    /// </summary>
+    public enum StaffVariant { BASIC, WIND }
+
+    /// <summary>
+    /// Supported sword variants.
+    /// </summary>
+    public enum SwordVariant { BASIC, GREAT, BROAD }
+
+    /// <summary>
+    /// Supported axe variants.
+    /// </summary>
+    public enum AxeVariant { BASIC, BATTLE, GREAT }
+
+    /// <summary>
+    /// Supported dagger variants.
+    /// </summary>
+    public enum DaggerVariant { BASIC }
 
     /// <summary>
     /// Optional elemental affinities attachable to weapons.
     /// </summary>
-    public enum Element { NONE, FIRE, ICE, LIGHTNING, POISON }
+    public enum Element { NONE, FIRE, ICE, LIGHTNING, POISON, WIND }
 }
 

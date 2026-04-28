@@ -1,8 +1,12 @@
 using RPGManagerLib.Items.Weapons;
-using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Staffs;
+using RPGManagerLib.Items.Weapons.Melee;
+using RPGManagerLib.Items.Weapons.Melee.Axes;
+using RPGManagerLib.Items.Weapons.Melee.Daggers;
+using RPGManagerLib.Items.Weapons.Melee.Swords;
 using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.Saves;
+using RPGManagerLib.Weapons.Quivers;
 
 namespace RPGManagerLib.Tests;
 
@@ -16,7 +20,7 @@ public class WeaponTests
     [InlineData(Rarity.LEGENDARY, 3.0)]
     public void GetRarityMultiplier_ReturnsExpectedValue(Rarity rarity, double expected)
     {
-        var sword = new Sword { Rarity = rarity };
+        var sword = new TestSword { Rarity = rarity };
 
         Assert.Equal(expected, sword.GetRarityMultiplier());
     }
@@ -24,7 +28,7 @@ public class WeaponTests
     [Fact]
     public void EffectiveStats_ApplyRarityMultiplier()
     {
-        var sword = new Sword
+        var sword = new TestSword
         {
             DamageAmount = 10,
             Durability = 20,
@@ -38,7 +42,7 @@ public class WeaponTests
     [Fact]
     public void UpgradeWeapon_ProgressesUntilLegendary()
     {
-        var sword = new Sword { Rarity = Rarity.COMMON };
+        var sword = new TestSword { Rarity = Rarity.COMMON };
 
         Assert.Equal(Rarity.UNCOMMON, sword.UpgradeWeapon());
         Assert.Equal(Rarity.RARE, sword.UpgradeWeapon());
@@ -48,25 +52,24 @@ public class WeaponTests
     }
 
     [Fact]
-    public void DefaultWeaponConstructors_AssignExpectedTypes()
+    public void WeaponFamilies_AssignExpectedTypes()
     {
-        Assert.Equal(WeaponType.SWORD, new Sword().Type);
-        Assert.Equal(WeaponType.AXE, new Axe().Type);
+        Assert.Equal(WeaponType.SWORD, new TestSword().Type);
+        Assert.Equal(WeaponType.AXE, new TestAxe().Type);
         Assert.Equal(WeaponType.SPEAR, new Spear().Type);
-        Assert.Equal(WeaponType.DAGGER, new Dagger().Type);
-        Assert.Equal(WeaponType.STAFF, new Staff().Type);
+        Assert.Equal(WeaponType.DAGGER, new TestDagger().Type);
+        Assert.Equal(WeaponType.STAFF, new TestStaff().Type);
+        Assert.Equal(WeaponType.BOW, new TestBow().Type);
     }
 
     [Fact]
-    public void Staff_CustomConstructor_SetsProvidedValues()
+    public void WeaponFamilies_AssignExpectedVariantValues()
     {
-        var staff = new Staff(80, Rarity.EPIC, 5, "Storm Staff", Element.LIGHTNING);
-
-        Assert.Equal(80, staff.Durability);
-        Assert.Equal(Rarity.EPIC, staff.Rarity);
-        Assert.Equal(5, staff.Level);
-        Assert.Equal("Storm Staff", staff.Name);
-        Assert.Equal(Element.LIGHTNING, staff.Element);
+        Assert.Equal(SwordVariant.BASIC, new TestSword().Variant);
+        Assert.Equal(AxeVariant.BASIC, new TestAxe().Variant);
+        Assert.Equal(DaggerVariant.BASIC, new TestDagger().Variant);
+        Assert.Equal(StaffVariant.BASIC, new TestStaff().Variant);
+        Assert.Equal(BowVariant.SIMPLE, new TestBow().Variant);
     }
 
     [Fact]
@@ -74,15 +77,20 @@ public class WeaponTests
     {
         var small = new SmallQuiver();
         var medium = new MediumQuiver();
+        var large = new BigQuiver();
 
         Assert.Equal(15, small.Capacity);
         Assert.Equal(30, medium.Capacity);
+        Assert.Equal(50, large.Capacity);
+        Assert.Equal(QuiverVariant.SMALL, small.Variant);
+        Assert.Equal(QuiverVariant.MEDIUM, medium.Variant);
+        Assert.Equal(QuiverVariant.BIG, large.Variant);
     }
 
     [Fact]
     public void WeaponSaveData_ToEquipable_ReconstructsWeapon()
     {
-        var original = new Sword
+        var original = new GreatSword
         {
             Name = "Test Sword",
             Rarity = Rarity.EPIC,
@@ -103,6 +111,37 @@ public class WeaponTests
         Assert.Equal(6, restored.Level);
         Assert.Equal(Element.FIRE, restored.Element);
         Assert.Equal(WeaponType.SWORD, restored.Type);
+        Assert.Equal(nameof(GreatSword), restored.GetType().Name);
+    }
+
+    [Fact]
+    public void WeaponSaveData_ToEquipable_ReconstructsBowVariant()
+    {
+        var saveData = new WeaponSaveData
+        {
+            Name = "Siege Bow",
+            Rarity = Rarity.RARE,
+            InventorySpaceAmount = InventorySpaceAmount.LARGE,
+            WeaponType = WeaponType.BOW,
+            BowVariant = BowVariant.WAR,
+            DamageAmount = 51,
+            Durability = 65,
+            Level = 4,
+            Element = Element.POISON
+        };
+
+        var restored = saveData.ToEquipable() as Weapon;
+
+        Assert.NotNull(restored);
+        Assert.Equal("Siege Bow", restored!.Name);
+        Assert.Equal(Rarity.RARE, restored.Rarity);
+        Assert.Equal(51, restored.DamageAmount);
+        Assert.Equal(65, restored.Durability);
+        Assert.Equal(4, restored.Level);
+        Assert.Equal(Element.POISON, restored.Element);
+        Assert.Equal(WeaponType.BOW, restored.Type);
+        Assert.Equal(InventorySpaceAmount.LARGE, restored.InventorySpaceAmount);
+        Assert.Equal("WarBow", restored.GetType().Name);
     }
 
     [Fact]
@@ -112,13 +151,58 @@ public class WeaponTests
         {
             Name = "Quick Quiver",
             Rarity = Rarity.RARE,
-            Capacity = 55
+            Capacity = 55,
+            InventorySpaceAmount = InventorySpaceAmount.LARGE
         };
 
         var saveData = new QuiverSaveData(original);
-        var restored = saveData.ToEquipable();
+        var restored = saveData.ToEquipable() as Quiver;
 
-        Assert.Equal("Quick Quiver", restored.Name);
+        Assert.NotNull(restored);
+        Assert.IsType<SmallQuiver>(restored);
+        Assert.Equal("Quick Quiver", restored!.Name);
         Assert.Equal(Rarity.RARE, restored.Rarity);
+        Assert.Equal(55, restored.Capacity);
+        Assert.Equal(InventorySpaceAmount.LARGE, restored.InventorySpaceAmount);
+    }
+
+    private sealed class TestSword : Sword
+    {
+        public TestSword()
+            : base(10, 100, Rarity.COMMON, 1, "Test Sword", Element.NONE, SwordVariant.BASIC, InventorySpaceAmount.SMALL)
+        {
+        }
+    }
+
+    private sealed class TestAxe : Axe
+    {
+        public TestAxe()
+            : base(10, 100, Rarity.COMMON, 1, "Test Axe", Element.NONE, AxeVariant.BASIC, InventorySpaceAmount.LARGE)
+        {
+        }
+    }
+
+    private sealed class TestDagger : Dagger
+    {
+        public TestDagger()
+            : base(10, 100, Rarity.COMMON, 1, "Test Dagger", Element.NONE, DaggerVariant.BASIC, InventorySpaceAmount.SMALL)
+        {
+        }
+    }
+
+    private sealed class TestStaff : Staff
+    {
+        public TestStaff()
+            : base(3, 100, Rarity.COMMON, 1, "Test Staff", Element.NONE, StaffVariant.BASIC)
+        {
+        }
+    }
+
+    private sealed class TestBow : RPGManagerLib.Items.Weapons.Bows.Bow
+    {
+        public TestBow()
+            : base(10, 100, Rarity.COMMON, 1, "Test Bow", BowVariant.SIMPLE, Element.NONE, InventorySpaceAmount.LARGE)
+        {
+        }
     }
 }

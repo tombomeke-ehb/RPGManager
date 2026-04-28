@@ -8,7 +8,8 @@ namespace RPGManagerLib.Items.Weapons.Quivers
             : base(name: "Medium Quiver",
                     rarity: Rarity.UNCOMMON,
                     inventorySpaceAmount: InventorySpaceAmount.SMALL,
-                    capacity: 30)
+                    capacity: 30,
+                    variant: QuiverVariant.MEDIUM)
         {
 
         }

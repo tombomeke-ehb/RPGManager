@@ -3,6 +3,9 @@ using RPGManagerLib.Items;
 using RPGManagerLib.Items.Staffs;
 using RPGManagerLib.Items.Weapons.Bows;
 using RPGManagerLib.Items.Weapons.Melee;
+using RPGManagerLib.Items.Weapons.Melee.Axes;
+using RPGManagerLib.Items.Weapons.Melee.Daggers;
+using RPGManagerLib.Items.Weapons.Melee.Swords;
 using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.Spells;
 
@@ -53,7 +56,7 @@ namespace RPGManagerLib.UI
         /// </summary>
         public static List<IEquipable> CreateDefaultWeaponsWarrior()
         {
-            return new List<IEquipable> { new Sword() };
+            return new List<IEquipable> { new BasicSword() };
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace RPGManagerLib.UI
         {
             return new List<IEquipable>
             {
-                new Dagger(),
+                new BasicDagger(),
                 new SimpleBow(),
                 new SmallQuiver()
             };
@@ -76,8 +79,8 @@ namespace RPGManagerLib.UI
         {
             return new List<IEquipable>
             {
-                new Dagger(),
-                new Staff()
+                new BasicDagger(),
+                new BasicStaff()
             };
         }
 
@@ -89,9 +92,9 @@ namespace RPGManagerLib.UI
             // Each entry defines the menu key, display text, slot cost, and the item object to create.
             var options = new (string Key, string Label, string Hint, int Slots, Func<IEquipable> CreateItem)[]
             {
-                ("1", "Sword", "balanced melee weapon", 1, () => new Sword()),
-                ("2", "Axe", "heavy melee, high damage", 2, () => new Axe()),
-                ("3", "Dagger", "fast, low damage", 1, () => new Dagger()),
+                ("1", "Sword", "balanced melee weapon", 1, () => new BasicSword()),
+                ("2", "Axe", "heavy melee, high damage", 2, () => new BasicAxe()),
+                ("3", "Dagger", "fast, low damage", 1, () => new BasicDagger()),
                 ("4", "Spear", "reach weapon, solid durability", 2, () => new Spear())
             };
 

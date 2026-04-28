@@ -15,7 +15,7 @@ namespace RPGManagerLib.Items.Weapons.Bows
                   rarity: Rarity.RARE,
                   level: 10,
                   name: "War Bow",
-                  weaponType: WeaponType.WARBOW,
+                  variant: BowVariant.WAR,
                   element: Element.NONE,
                   inventorySpaceAmount: InventorySpaceAmount.LARGE) { }
     }
