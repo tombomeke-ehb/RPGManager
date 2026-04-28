@@ -152,7 +152,7 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-04-28 03:24**_
+_Last updated: **2026-04-28 03:27**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 17
@@ -380,14 +380,6 @@ _No unique public methods found._
 
 
 ## 🎯 RPGManagerLib.Items.Weapons.Quivers
-
-### [BigQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/BigQuiver.cs)
-*Inherits from: `Quiver`*  
-_No unique public methods found._
-
-### [MediumQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/MediumQuiver.cs)
-*Inherits from: `Quiver`*  
-_No unique public methods found._
 
 ### [BigQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/BigQuiver.cs)
 *Inherits from: `Quiver`*  
