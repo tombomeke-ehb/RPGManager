@@ -389,6 +389,14 @@ _No unique public methods found._
 *Inherits from: `Quiver`*  
 _No unique public methods found._
 
+### [BigQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/BigQuiver.cs)
+*Inherits from: `Quiver`*  
+_No unique public methods found._
+
+### [MediumQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/MediumQuiver.cs)
+*Inherits from: `Quiver`*  
+_No unique public methods found._
+
 ### [SmallQuiver.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Quivers/SmallQuiver.cs)
 *Inherits from: `Quiver`*  
 > Represents a small quiver designed to hold arrows, suitable for basic inventory needs.
