@@ -1,5 +1,6 @@
 using RPGManagerLib.Saves;
 using RPGManagerLib.UI;
+using System.Linq;
 
 namespace RPGManager
 {
@@ -70,11 +71,28 @@ namespace RPGManager
                 "and let the tale begin."
             };
 
-            foreach (string line in storyLines)
+            // Remember the starting console width. If the user resizes the window during the animation
+            // we'll stop the typing animation and render the remaining text immediately to avoid
+            // visual reflow/jumps.
+            int initialWidth = GetUsableWindowWidth();
+
+            for (int i = 0; i < storyLines.Length; i++)
             {
+                string line = storyLines[i];
+
                 if (IsSkipRequested())
                 {
                     RenderFullIntroBody(storyLines);
+                    WaitForEnterRealm();
+                    return;
+                }
+
+                // If the window was resized since the intro started, stop animating and render the
+                // remaining lines immediately centered using the current console width. This avoids
+                // lines shifting unexpectedly while typing.
+                if (GetUsableWindowWidth() != initialWidth)
+                {
+                    RenderFullIntroBody(storyLines.Skip(i));
                     WaitForEnterRealm();
                     return;
                 }
