@@ -1,5 +1,7 @@
 using System.Reflection;
 using RPGManagerLib.Characters.Heroes;
+using RPGManagerLib.Items.Weapons;
+using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.UI;
 
 namespace RPGManagerLib.Tests;
@@ -9,9 +11,19 @@ public class UiTests
     [Fact]
     public void CharacterFactory_DefaultWeaponLists_ReturnExpectedCounts()
     {
-        Assert.Single(CharacterFactory.CreateDefaultWeaponsWarrior());
-        Assert.Equal(3, CharacterFactory.CreateDefaultWeaponsArcher().Count);
-        Assert.Equal(2, CharacterFactory.CreateDefaultWeaponsMage().Count);
+        var warriorLoadout = CharacterFactory.CreateDefaultWeaponsWarrior();
+        var archerLoadout = CharacterFactory.CreateDefaultWeaponsArcher();
+        var mageLoadout = CharacterFactory.CreateDefaultWeaponsMage();
+
+        Assert.Single(warriorLoadout);
+        Assert.Equal(3, archerLoadout.Count);
+        Assert.Equal(2, mageLoadout.Count);
+        Assert.Contains(warriorLoadout, item => item.Name == "Basic Sword");
+        Assert.Contains(archerLoadout, item => item.Name == "Basic Dagger");
+        Assert.Contains(archerLoadout, item => item is Weapon weapon && weapon.Type == WeaponType.BOW);
+        Assert.Contains(archerLoadout, item => item is SmallQuiver);
+        Assert.Contains(mageLoadout, item => item.Name == "Basic Dagger");
+        Assert.Contains(mageLoadout, item => item.Name == "Basic Staff");
     }
 
     [Fact]
@@ -22,6 +34,8 @@ public class UiTests
         Assert.Equal("Mina", mage.Name);
         Assert.Equal(2, mage.Weapons.Count);
         Assert.Equal(2, mage.Spells.Count);
+        Assert.Contains(mage.Weapons, item => item.Name == "Basic Dagger");
+        Assert.Contains(mage.Weapons, item => item.Name == "Basic Staff");
     }
 
     [Fact]
@@ -31,6 +45,9 @@ public class UiTests
 
         Assert.Equal("Rook", archer.Name);
         Assert.Equal(3, archer.Weapons.Count);
+        Assert.Contains(archer.Weapons, item => item.Name == "Basic Dagger");
+        Assert.Contains(archer.Weapons, item => item is Weapon weapon && weapon.Type == WeaponType.BOW);
+        Assert.Contains(archer.Weapons, item => item is SmallQuiver);
     }
 
     [Fact]
@@ -43,6 +60,8 @@ public class UiTests
 
         Assert.Equal("Brak", warrior.Name);
         Assert.Equal(2, warrior.Weapons.Count);
+        Assert.Contains(warrior.Weapons, item => item.Name == "Basic Sword");
+        Assert.Contains(warrior.Weapons, item => item.Name == "Basic Dagger");
     }
 
     [Fact]

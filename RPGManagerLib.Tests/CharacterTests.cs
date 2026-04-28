@@ -1,6 +1,6 @@
 using RPGManagerLib.Characters.Heroes;
-using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Staffs;
+using RPGManagerLib.Items.Weapons.Melee.Swords;
 using RPGManagerLib.Worlds;
 
 namespace RPGManagerLib.Tests;
@@ -127,28 +127,28 @@ public class CharacterTests
     public void ToString_IncludesEquipmentLine()
     {
         var warrior = new Warrior("Hero");
-        warrior.Weapons.Add(new Sword());
+        warrior.Weapons.Add(new GreatSword());
 
         var text = warrior.ToString();
 
         Assert.Contains("Hero the Warrior", text);
-        Assert.Contains("Basic Sword", text);
+        Assert.Contains("Great Sword", text);
     }
 
     [Fact]
     public void ToString_ForArcherAndMage_UsesClassSpecificEquipmentLine()
     {
         var archer = new Archer("Arrow");
-        archer.Weapons.Add(new Sword());
+        archer.Weapons.Add(new BroadSword());
 
         var mage = new Mage("Arc");
-        mage.Weapons.Add(new Staff());
+        mage.Weapons.Add(new BasicStaff());
 
         var archerText = archer.ToString();
         var mageText = mage.ToString();
 
         Assert.Contains("Arrow the Archer", archerText);
-        Assert.Contains("Basic Sword", archerText);
+        Assert.Contains("Broad Sword", archerText);
         Assert.Contains("Arc the Mage", mageText);
         Assert.Contains("Basic Staff", mageText);
     }

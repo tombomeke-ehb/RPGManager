@@ -88,6 +88,7 @@ namespace RPGManagerLib.Saves
             }
             else if (c is Mage m)
             {
+                Equipables = ConvertEquipables(m.Weapons);
                 Mana = m.Mana;
             }
             else if (c is Archer a)
@@ -136,6 +137,8 @@ namespace RPGManagerLib.Saves
             }
             else if (c is Mage m)
             {
+                m.Weapons.Clear();
+                m.Weapons.AddRange(this.Equipables.Select(e => e.ToEquipable()));
                 m.Mana = this.Mana;
             }
 
