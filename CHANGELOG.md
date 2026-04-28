@@ -27,6 +27,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
 - `BasicStaff` now inherits from `Staff`; mage default loadout now uses `BasicStaff`
 - `WeaponSaveData` extended to persist and restore weapon variants (bow/staff/sword/axe/dagger)
 - `Sword` default basic weapon renamed to `Short Sword`
+- Startup intro screen extracted out of `Program.cs` into `StartupScreens` and cleaned up after a merge regression restored duplicated startup code
+- Intro animation resize/fullscreen behavior reworked so centered text is redrawn cleanly without stopping the animation or flickering per character
+- Weapon/equipable tests updated for the variant-based weapon model and concrete loadouts used by `CharacterFactory`
+- `CharacterSaveData` now persists and restores mage equipables as well as mana
 
 ---
 
