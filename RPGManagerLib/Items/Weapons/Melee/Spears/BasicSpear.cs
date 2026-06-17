@@ -23,7 +23,7 @@ namespace RPGManagerLib.Items.Weapons.Melee.Spears
              name: "Basic Spear",
              weaponType: WeaponType.SPEAR,
              element: Element.NONE,
-             inventorySpaceAmount: InventorySpaceAmount.SMALL)
+             inventorySpaceAmount: InventorySpaceAmount.LARGE)
         {
 
         }

@@ -4,6 +4,7 @@ using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Weapons.Melee.Axes;
 using RPGManagerLib.Items.Weapons.Melee.Daggers;
 using RPGManagerLib.Items.Weapons.Melee.Swords;
+using RPGManagerLib.Items.Weapons.Melee.Spears;
 using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.Saves;
 using RPGManagerLib.Weapons.Quivers;
@@ -56,7 +57,7 @@ public class WeaponTests
     {
         Assert.Equal(WeaponType.SWORD, new TestSword().Type);
         Assert.Equal(WeaponType.AXE, new TestAxe().Type);
-        Assert.Equal(WeaponType.SPEAR, new Spear().Type);
+        Assert.Equal(WeaponType.SPEAR, new TestSpear().Type);
         Assert.Equal(WeaponType.DAGGER, new TestDagger().Type);
         Assert.Equal(WeaponType.STAFF, new TestStaff().Type);
         Assert.Equal(WeaponType.BOW, new TestBow().Type);
@@ -68,6 +69,7 @@ public class WeaponTests
         Assert.Equal(SwordVariant.BASIC, new TestSword().Variant);
         Assert.Equal(AxeVariant.BASIC, new TestAxe().Variant);
         Assert.Equal(DaggerVariant.BASIC, new TestDagger().Variant);
+        Assert.Equal(SpearVariant.BASIC, new TestSpear().Variant);
         Assert.Equal(StaffVariant.BASIC, new TestStaff().Variant);
         Assert.Equal(BowVariant.SIMPLE, new TestBow().Variant);
     }
@@ -178,6 +180,14 @@ public class WeaponTests
     {
         public TestAxe()
             : base(10, 100, Rarity.COMMON, 1, "Test Axe", Element.NONE, AxeVariant.BASIC, InventorySpaceAmount.LARGE)
+        {
+        }
+    }
+
+    private sealed class TestSpear : Spear
+    {
+        public TestSpear()
+            : base(10, 100, Rarity.COMMON, 1, "Test Spear", Element.NONE, SpearVariant.BASIC, InventorySpaceAmount.SMALL)
         {
         }
     }
