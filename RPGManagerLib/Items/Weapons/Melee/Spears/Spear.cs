@@ -1,17 +1,17 @@
-﻿namespace RPGManagerLib.Items.Weapons.Melee.Swords
+﻿namespace RPGManagerLib.Items.Weapons.Melee.Spears
 {
     /// <summary>
-    /// A versatile melee weapon with balanced damage and durability, suitable for close combat.
+    /// A reach melee weapon with solid durability and moderate cooldown.
     /// </summary>
-    public abstract class Sword : Weapon
+    public class Spear : Weapon
     {
         /// <summary>
-        /// Specific variant/type of the sword, which may affect its stats or appearance.
+        /// Specific variant/type of the spear, which may affect its stats or appearance.
         /// </summary>
-        public SwordVariant Variant {  get; set; }
+        public SpearVariant Variant { get; set; }
 
         /// <summary>
-        /// Initializes a new <see cref="Sword"/> with specified values.
+        /// Initializes a new <see cref="Spear"/> with specified values.
         /// </summary>
         /// <param name="damageAmount"></param>
         /// <param name="durability"></param>
@@ -21,14 +21,15 @@
         /// <param name="element"></param>
         /// <param name="variant"></param>
         /// <param name="inventorySpaceAmount"></param>
-        public Sword(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, SwordVariant variant, InventorySpaceAmount inventorySpaceAmount)
+
+        public Spear(int damageAmount, int durability, Rarity rarity, int level, string name, Element element, SpearVariant variant, InventorySpaceAmount inventorySpaceAmount)
             : base
                   (damageAmount: damageAmount,
                   durability: durability,
                   rarity: rarity,
                   level: level,
                   name: name,
-                  weaponType: WeaponType.SWORD,
+                  weaponType: WeaponType.SPEAR,
                   element: element,
                   inventorySpaceAmount: inventorySpaceAmount)
         {

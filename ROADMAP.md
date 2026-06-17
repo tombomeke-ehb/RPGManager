@@ -152,11 +152,11 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-04-28 03:27**_
+_Last updated: **2026-06-17 11:50**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 17
-- **Classes:** 47
+- **Classes:** 48
 - **Unique Methods:** 33
 - **Pending TODOs:** 23
 
@@ -309,16 +309,7 @@ _No unique public methods found._
 _No unique public methods found._
 
 
-## 🏰 RPGManagerLib.Items.Weapons.Melee
-
-### [Spear.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Spear.cs)
-*Inherits from: `Weapon`*  
-> A reach melee weapon with solid durability and moderate cooldown.
-
-_No unique public methods found._
-
-
-## 🧭 RPGManagerLib.Items.Weapons.Melee.Axes
+## 🏰 RPGManagerLib.Items.Weapons.Melee.Axes
 
 ### [Axe.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Axes/Axe.cs)
 *Inherits from: `Weapon`*  
@@ -341,7 +332,7 @@ _No unique public methods found._
 _No unique public methods found._
 
 
-## 🪄 RPGManagerLib.Items.Weapons.Melee.Daggers
+## 🧭 RPGManagerLib.Items.Weapons.Melee.Daggers
 
 ### [BasicDagger.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Daggers/BasicDagger.cs)
 *Inherits from: `Dagger`*  
@@ -352,6 +343,21 @@ _No unique public methods found._
 ### [Dagger.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Daggers/Dagger.cs)
 *Inherits from: `Weapon`*  
 > A fast melee weapon with low damage and short cooldown.
+
+_No unique public methods found._
+
+
+## 🪄 RPGManagerLib.Items.Weapons.Melee.Spears
+
+### [BasicSpear.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Spears/BasicSpear.cs)
+*Inherits from: `Weapon`*  
+> A basic spear with balanced damage and durability, suitable for close combat.
+
+_No unique public methods found._
+
+### [Spear.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Spears/Spear.cs)
+*Inherits from: `Weapon`*  
+> A reach melee weapon with solid durability and moderate cooldown.
 
 _No unique public methods found._
 
@@ -374,7 +380,7 @@ _No unique public methods found._
 
 ### [Sword.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Weapons/Melee/Swords/Sword.cs)
 *Inherits from: `Weapon`*  
-> A balanced melee weapon with moderate damage and cooldown.
+> A versatile melee weapon with balanced damage and durability, suitable for close combat.
 
 _No unique public methods found._
 

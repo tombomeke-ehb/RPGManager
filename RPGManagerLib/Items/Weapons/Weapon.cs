@@ -161,6 +161,8 @@ namespace RPGManagerLib.Items.Weapons
     /// </summary>
     public enum DaggerVariant { BASIC }
 
+    public enum SpearVariant { BASIC, JAVELIN }
+
     /// <summary>
     /// Optional elemental affinities attachable to weapons.
     /// </summary>

@@ -6,6 +6,7 @@ using RPGManagerLib.Items;
 using RPGManagerLib.Items.Weapons.Melee.Swords;
 using RPGManagerLib.Items.Weapons.Melee.Axes;
 using RPGManagerLib.Items.Weapons.Melee.Daggers;
+using RPGManagerLib.Items.Weapons.Melee.Spears;
 
 namespace RPGManagerLib.Saves
 {
@@ -47,6 +48,8 @@ namespace RPGManagerLib.Saves
         /// Dagger variant used when <see cref="WeaponType"/> is <see cref="Items.Weapons.WeaponType.DAGGER"/>.
         /// </summary>
         public DaggerVariant? DaggerVariant { get; set; }
+
+        public SpearVariant? SpearVariant { get; set; }
 
         /// <summary>
         /// Base damage amount.
@@ -133,7 +136,12 @@ namespace RPGManagerLib.Saves
                     null => new BasicAxe(),
                     _ => throw new Exception($"Unknown axe variant: {AxeVariant}")
                 },
-                WeaponType.SPEAR => new Spear(),
+                WeaponType.SPEAR => SpearVariant switch
+                {
+                    Items.Weapons.SpearVariant.BASIC => new BasicSpear(),
+                    null => new BasicSpear(),
+                    _ => throw new Exception($"Unknown spear variant: {SpearVariant}")
+                },
                 WeaponType.DAGGER => DaggerVariant switch
                 {
                     Items.Weapons.DaggerVariant.BASIC => new BasicDagger(),

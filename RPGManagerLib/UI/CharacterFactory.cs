@@ -5,6 +5,7 @@ using RPGManagerLib.Items.Weapons.Bows;
 using RPGManagerLib.Items.Weapons.Melee;
 using RPGManagerLib.Items.Weapons.Melee.Axes;
 using RPGManagerLib.Items.Weapons.Melee.Daggers;
+using RPGManagerLib.Items.Weapons.Melee.Spears;
 using RPGManagerLib.Items.Weapons.Melee.Swords;
 using RPGManagerLib.Items.Weapons.Quivers;
 using RPGManagerLib.Spells;
@@ -95,7 +96,7 @@ namespace RPGManagerLib.UI
                 ("1", "Sword", "balanced melee weapon", 1, () => new BasicSword()),
                 ("2", "Axe", "heavy melee, high damage", 2, () => new BasicAxe()),
                 ("3", "Dagger", "fast, low damage", 1, () => new BasicDagger()),
-                ("4", "Spear", "reach weapon, solid durability", 2, () => new Spear())
+                ("4", "Spear", "reach weapon, solid durability", 2, () => new BasicSpear())
             };
 
             const int maxSlots = 4;
