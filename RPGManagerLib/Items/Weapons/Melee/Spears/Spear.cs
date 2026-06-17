@@ -36,3 +36,4 @@
             Variant = variant;
         }
     }
+}
