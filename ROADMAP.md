@@ -25,13 +25,13 @@ The long-term goal is a fully playable, story-driven console RPG where:
 | Version | Milestone | Status | Target |
 |:---|:---|:---|:---|
 | **v0.1** | Core Engine — classes, weapons, save system | Done | Oct 2025 |
-| **v0.2** | World & Travel — locations, regions, travel loop | In Progress | May 2026 |
-| **v0.3** | Combat System — turn-based fights, enemies, loot | Planned | Jul 2026 |
-| **v0.4** | Spells & Leveling — mana system, XP, character roster | Planned | Sep 2026 |
-| **v0.5** | Shared World State — reputation, world flags, NPC memory | Planned | Nov 2026 |
-| **v0.6** | NPCs & Dialogue — dialogue trees, class reactions, quests | Planned | Q1 2027 |
-| **v0.7** | Quests & Economy — quest system, shops, gold loop | Planned | Q2 2027 |
-| **v1.0** | Full CLI Release — complete first story arc, polished UI | Planned | Q4 2027 |
+| **v0.2** | World & Travel — locations, regions, travel loop | In Progress | Oct 2026 |
+| **v0.3** | Combat System — turn-based fights, enemies, loot | Planned | January 2026 |
+| **v0.4** | Spells & Leveling — mana system, XP, character roster | Planned | March 2027 |
+| **v0.5** | Shared World State — reputation, world flags, NPC memory | Planned | May 2027 |
+| **v0.6** | NPCs & Dialogue — dialogue trees, class reactions, quests | Planned | July 2027 |
+| **v0.7** | Quests & Economy — quest system, shops, gold loop | Planned | August 2027 |
+| **v1.0** | Full CLI Release — complete first story arc, polished UI | Planned | Ocober 2027 |
 
 ---
 
@@ -145,6 +145,11 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 ---
 
+### Refactors
+
+- [X] Refactor of Weapons
+- [ ] Refactor Elements/Type and how they work (There are currently double fields)
+ 
 
 <!-- AUTO-GENERATED BELOW – DO NOT EDIT -->
 
