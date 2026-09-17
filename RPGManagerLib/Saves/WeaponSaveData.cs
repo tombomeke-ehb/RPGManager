@@ -125,6 +125,9 @@ namespace RPGManagerLib.Saves
                 {
                     Items.Weapons.StaffVariant.BASIC => new BasicStaff(),
                     Items.Weapons.StaffVariant.WIND => new WindStaff(),
+                    Items.Weapons.StaffVariant.FIRE => new FireStaff(),
+                    Items.Weapons.StaffVariant.ICE => new IceStaff(),
+                    Items.Weapons.StaffVariant.WATER => new WaterStaff(),
                     null => new BasicStaff(),
                     _ => throw new Exception($"Unknown staff variant: {StaffVariant}")
                 },

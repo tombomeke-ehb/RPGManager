@@ -144,7 +144,7 @@ namespace RPGManagerLib.Items.Weapons
     /// <summary>
     /// Supported staff variants.
     /// </summary>
-    public enum StaffVariant { BASIC, WIND }
+    public enum StaffVariant { BASIC, FIRE, ICE, LIGHTNING, POISON, WIND, WATER }
 
     /// <summary>
     /// Supported sword variants.
@@ -162,10 +162,5 @@ namespace RPGManagerLib.Items.Weapons
     public enum DaggerVariant { BASIC }
 
     public enum SpearVariant { BASIC, JAVELIN }
-
-    /// <summary>
-    /// Optional elemental affinities attachable to weapons.
-    /// </summary>
-    public enum Element { NONE, FIRE, ICE, LIGHTNING, POISON, WIND }
 }
 

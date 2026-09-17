@@ -1,3 +1,4 @@
+using RPGManagerLib.Items;
 using RPGManagerLib.Items.Weapons;
 using RPGManagerLib.Items.Staffs;
 using RPGManagerLib.Items.Weapons.Melee;

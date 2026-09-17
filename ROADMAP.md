@@ -25,13 +25,13 @@ The long-term goal is a fully playable, story-driven console RPG where:
 | Version | Milestone | Status | Target |
 |:---|:---|:---|:---|
 | **v0.1** | Core Engine — classes, weapons, save system | Done | Oct 2025 |
-| **v0.2** | World & Travel — locations, regions, travel loop | In Progress | May 2026 |
-| **v0.3** | Combat System — turn-based fights, enemies, loot | Planned | Jul 2026 |
-| **v0.4** | Spells & Leveling — mana system, XP, character roster | Planned | Sep 2026 |
-| **v0.5** | Shared World State — reputation, world flags, NPC memory | Planned | Nov 2026 |
-| **v0.6** | NPCs & Dialogue — dialogue trees, class reactions, quests | Planned | Q1 2027 |
-| **v0.7** | Quests & Economy — quest system, shops, gold loop | Planned | Q2 2027 |
-| **v1.0** | Full CLI Release — complete first story arc, polished UI | Planned | Q4 2027 |
+| **v0.2** | World & Travel — locations, regions, travel loop | In Progress | Oct 2026 |
+| **v0.3** | Combat System — turn-based fights, enemies, loot | Planned | January 2026 |
+| **v0.4** | Spells & Leveling — mana system, XP, character roster | Planned | March 2027 |
+| **v0.5** | Shared World State — reputation, world flags, NPC memory | Planned | May 2027 |
+| **v0.6** | NPCs & Dialogue — dialogue trees, class reactions, quests | Planned | July 2027 |
+| **v0.7** | Quests & Economy — quest system, shops, gold loop | Planned | August 2027 |
+| **v1.0** | Full CLI Release — complete first story arc, polished UI | Planned | Ocober 2027 |
 
 ---
 
@@ -145,6 +145,11 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 ---
 
+### Refactors
+
+- [X] Refactor of Weapons
+- [x] Refactor Elements/Type and how they work (There are currently double fields)
+
 
 <!-- AUTO-GENERATED BELOW – DO NOT EDIT -->
 
@@ -152,11 +157,11 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-06-17 11:50**_
+_Last updated: **2026-09-17 21:44**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 17
-- **Classes:** 48
+- **Classes:** 51
 - **Unique Methods:** 33
 - **Pending TODOs:** 23
 
@@ -262,10 +267,22 @@ _No unique public methods found._
 
 _No unique public methods found._
 
+### [FireStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/FireStaff.cs)
+*Inherits from: `Staff`*  
+_No unique public methods found._
+
+### [IceStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/IceStaff.cs)
+*Inherits from: `Staff`*  
+_No unique public methods found._
+
 ### [Staff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/Staff.cs)
 *Inherits from: `Weapon`*  
 > Represents a staff weapon that can be used in combat, providing basic damage and durability attributes.
 
+_No unique public methods found._
+
+### [WaterStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/WaterStaff.cs)
+*Inherits from: `Staff`*  
 _No unique public methods found._
 
 ### [WindStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/WindStaff.cs)

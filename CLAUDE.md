@@ -64,7 +64,7 @@ Three projects in the solution:
 ### Key Design Conventions
 
 - All public APIs carry XML doc comments (`<summary>`, `<param>`, `<returns>`, `<exception>`).
-- Enums for game constants: `Rarity`, `Element`, `WeaponType`, `EquipableType`, `MagicType`, `InventorySpaceAmount`.
+- Enums for game constants: `Rarity`, `Element`, `WeaponType`, `EquipableType`, `InventorySpaceAmount`. `Element` (in `Items/Element.cs`) is the single shared damage-type enum for both weapons and spells — used for resistance/status-effect resolution; there is no separate spell-only damage-type enum.
 - When adding a new weapon type: class in subfolder + `*SaveData` class + register discriminator in save config.
 
 ---

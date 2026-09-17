@@ -10,14 +10,14 @@ namespace RPGManagerLib.Spells
     {
         // TODO: Move spell metadata toward unlockable/progression-aware content once leveling and spell acquisition are added.
         public string Name { get; set; }
-        public MagicType MagicType { get; set; }
+        public Element Element { get; set; }
         public double BaseDamage { get; set; }
         public double ManaCost { get; set; }
 
-        protected Spell(string name, MagicType type, double damage, double manaCost)
+        protected Spell(string name, Element element, double damage, double manaCost)
         {
             Name = name;
-            MagicType = type;
+            Element = element;
             BaseDamage = damage;
             ManaCost = manaCost;
         }
@@ -47,8 +47,7 @@ namespace RPGManagerLib.Spells
                 .OfType<Staff>()
                 .FirstOrDefault();
 
-            // Map Element -> MagicType by name where possible, fail-safe if not mappable
-            if (staff != null && Enum.TryParse<MagicType>(staff.Element.ToString(), out var mappedMagic) && mappedMagic == this.MagicType)
+            if (staff != null && staff.Element == this.Element)
             {
                 damage *= 1.25;
             }
