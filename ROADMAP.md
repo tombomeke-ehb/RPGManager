@@ -148,8 +148,8 @@ The long-term goal is a fully playable, story-driven console RPG where:
 ### Refactors
 
 - [X] Refactor of Weapons
-- [ ] Refactor Elements/Type and how they work (There are currently double fields)
- 
+- [x] Refactor Elements/Type and how they work (There are currently double fields)
+
 
 <!-- AUTO-GENERATED BELOW – DO NOT EDIT -->
 
@@ -157,11 +157,11 @@ The long-term goal is a fully playable, story-driven console RPG where:
 
 > Automatically generated from RPGManagerLib source files.
 
-_Last updated: **2026-06-17 11:50**_
+_Last updated: **2026-09-17 21:44**_
 
 ### 📊 Codebase Stats
 - **Namespaces:** 17
-- **Classes:** 48
+- **Classes:** 51
 - **Unique Methods:** 33
 - **Pending TODOs:** 23
 
@@ -267,10 +267,22 @@ _No unique public methods found._
 
 _No unique public methods found._
 
+### [FireStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/FireStaff.cs)
+*Inherits from: `Staff`*  
+_No unique public methods found._
+
+### [IceStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/IceStaff.cs)
+*Inherits from: `Staff`*  
+_No unique public methods found._
+
 ### [Staff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/Staff.cs)
 *Inherits from: `Weapon`*  
 > Represents a staff weapon that can be used in combat, providing basic damage and durability attributes.
 
+_No unique public methods found._
+
+### [WaterStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/WaterStaff.cs)
+*Inherits from: `Staff`*  
 _No unique public methods found._
 
 ### [WindStaff.cs](https://github.com/tombomeke-ehb/RPGManager/main/RPGManagerLib/Items/Staffs/WindStaff.cs)
